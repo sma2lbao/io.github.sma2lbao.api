@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { join } from 'path';
+import { GraphQLModule } from '@nestjs/graphql';
 import { schemas, configs } from './config';
 import { AuthModule } from './shared/auth/auth.module';
 import { UsersModule } from './shared/users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { join } from 'path';
+import { GraphQLError } from 'graphql';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { AppService } from './app.service';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (config: ConfigService) => ({
+      useFactory: (config: ConfigService) => ({
         type: config.get<any>('database.type'),
         host: config.get<string>('database.host'),
         port: config.get<number>('database.port'),
@@ -31,8 +33,36 @@ import { AppService } from './app.service';
         // entities: [join(__dirname, './', '/**/*.entity{.ts,.js}')],
       }),
     }),
-    // AuthModule,
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        typePaths: [join(__dirname, '../', '/**/*.graphql')],
+        autoSchemaFile: 'schema.gql',
+        // engine: {
+        //     apiKey: '',
+        //     schemaTag: ''
+        // },
+        context: ({ req }) => ({ req }),
+        formatError: (error: GraphQLError) => {
+          const {
+            message,
+            path,
+            extensions: { code },
+          } = error;
+          return {
+            message: message,
+            code: code,
+            path: path,
+          };
+        },
+        buildSchemaOptions: {
+          dateScalarMode: 'timestamp',
+        },
+      }),
+    }),
     UsersModule,
+    // AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

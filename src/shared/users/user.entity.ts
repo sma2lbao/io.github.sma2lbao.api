@@ -1,15 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity, CreateDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  CreateDateColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ThirdPlatform } from './interfaces/users.interface';
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  
   @Field(type => ID)
   @PrimaryGeneratedColumn('uuid')
   uid: string;
-  
+
   @Field()
   @Column({ unique: true, length: 30, comment: '用戶名' })
   username: string;
@@ -44,17 +51,15 @@ export class User extends BaseEntity {
 
   @Field()
   @CreateDateColumn({
-      type: 'timestamp',
-      comment: '创建时间'
+    type: 'timestamp',
+    comment: '创建时间',
   })
-  public create_at: Date
+  public create_at: Date;
 }
-
 
 @ObjectType()
 @Entity()
 export class ThirdUser {
-
   @Field(type => ID)
   @PrimaryGeneratedColumn()
   id: number;
@@ -77,8 +82,8 @@ export class ThirdUser {
 
   @Field()
   @CreateDateColumn({
-      type: 'timestamp',
-      comment: '创建时间'
+    type: 'timestamp',
+    comment: '创建时间',
   })
   create_at: Date;
 
