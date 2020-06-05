@@ -1,8 +1,8 @@
-import { registerAs } from "@nestjs/config";
+import { registerAs } from '@nestjs/config';
 
-const { env } = process
+const { env } = process;
 
-export default registerAs("global", () => ({
+export default registerAs('global', () => ({
   node: env.NODE_ENV,
-  port: env.PORT
+  port: env.PORT,
 }));
