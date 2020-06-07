@@ -3,12 +3,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { schemas, configs } from './config';
-import { AuthModule } from './shared/auth/auth.module';
-import { UsersModule } from './shared/users/users.module';
+import { AuthModule } from './core/auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { GraphQLError } from 'graphql';
+import { UsersModule } from './app/users/users.module';
 
 @Module({
   imports: [
@@ -62,7 +62,7 @@ import { GraphQLError } from 'graphql';
       }),
     }),
     UsersModule,
-    // AuthModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
