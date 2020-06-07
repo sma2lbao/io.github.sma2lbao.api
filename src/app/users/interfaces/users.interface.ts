@@ -1,9 +1,9 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 // 第三方可选值
-export enum ThirdPlatform {
-  Github = 'github',
+export enum ThirdPlatformEnum {
+  GITHUB = 'github',
 }
-registerEnumType(ThirdPlatform, {
-  name: 'ThirdPlatform',
+registerEnumType(ThirdPlatformEnum, {
+  name: 'ThirdPlatformEnum',
 });

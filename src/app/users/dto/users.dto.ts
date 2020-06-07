@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 import { InputType, Field } from '@nestjs/graphql';
-import { ThirdPlatform } from '../interfaces/users.interface';
+import { ThirdPlatformEnum } from '../interfaces/users.interface';
 
 @InputType()
 export class UpdateUserInput {
@@ -73,7 +73,7 @@ export class NewThirdUserInput {
   readonly description?: string;
 
   @Field()
-  readonly platform: ThirdPlatform;
+  readonly platform: ThirdPlatformEnum;
 
   @Field(type => NewUserInput)
   readonly user: NewUserInput;
