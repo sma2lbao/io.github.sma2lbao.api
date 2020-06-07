@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { ThirdPlatform } from './interfaces/users.interface';
+import { ThirdPlatform } from '../interfaces/users.interface';
 
 @ObjectType()
 @Entity()
