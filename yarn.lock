@@ -1638,6 +1638,13 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.13.9.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-13.13.9.tgz#79df4ae965fb76d31943b54a6419599307a21394"
   integrity sha1-ed9K6WX7dtMZQ7VKZBlZkweiE5Q=
 
+"@types/nodemailer@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.npm.taobao.org/@types/nodemailer/download/@types/nodemailer-6.4.0.tgz?cache=0&sync_timestamp=1589543265220&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnodemailer%2Fdownload%2F%40types%2Fnodemailer-6.4.0.tgz#d8c039be3ed685c4719a026455555be82c124b74"
+  integrity sha1-2MA5vj7WhcRxmgJkVVVb6CwSS3Q=
+  dependencies:
+    "@types/node" "*"
+
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.npm.taobao.org/@types/normalize-package-data/download/@types/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -6972,6 +6979,11 @@ node-notifier@^7.0.0:
     shellwords "^0.1.1"
     uuid "^7.0.3"
     which "^2.0.2"
+
+nodemailer@^6.4.8:
+  version "6.4.8"
+  resolved "https://registry.npm.taobao.org/nodemailer/download/nodemailer-6.4.8.tgz?cache=0&sync_timestamp=1590668679920&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnodemailer%2Fdownload%2Fnodemailer-6.4.8.tgz#aca52886e4e56f71f6b8a65f5ca6b767ca751fc7"
+  integrity sha1-rKUohuTlb3H2uKZfXKa3Z8p1H8c=
 
 normalize-package-data@^2.3.2, normalize-package-data@^2.5.0:
   version "2.5.0"
