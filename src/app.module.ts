@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -10,15 +10,22 @@ import { join } from 'path';
 import { GraphQLError } from 'graphql';
 import { UsersModule } from './app/users/users.module';
 import { MailerModule } from './core/mailer/mailer.module';
-import { CacheService } from './core/cache/cache.service';
-import { CacheModule } from './core/cache/cache.module';
 import { TagsModule } from './app/tags/tags.module';
 import { CategoriesModule } from './app/categories/categories.module';
 import { MediumsModule } from './app/mediums/mediums.module';
 import { BulletsModule } from './app/bullets/bullets.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
+    CacheModule.register({
+      store: redisStore,
+      host: 'localhost',
+      port: 6379,
+      ttl: 10,
+      max: 10,
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: configs,
@@ -72,13 +79,18 @@ import { BulletsModule } from './app/bullets/bullets.module';
     UsersModule,
     AuthModule,
     MailerModule,
-    CacheModule,
     TagsModule,
     CategoriesModule,
     MediumsModule,
     BulletsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CacheService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}

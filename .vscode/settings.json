@@ -1,5 +1,6 @@
 {
     "files.exclude": {
         "**/*.spec.*": true
-    }
+    },
+    "editor.formatOnSave": true
 }

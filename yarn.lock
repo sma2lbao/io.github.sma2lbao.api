@@ -2961,6 +2961,13 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+cache-manager-redis-store@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/cache-manager-redis-store/download/cache-manager-redis-store-2.0.0.tgz#25db93656c4ab7b3591bd6ca370e188ef90754c9"
+  integrity sha1-JduTZWxKt7NZG9bKNw4YjvkHVMk=
+  dependencies:
+    redis "^3.0.2"
+
 cache-manager@^3.3.0:
   version "3.3.0"
   resolved "https://registry.npm.taobao.org/cache-manager/download/cache-manager-3.3.0.tgz#eb75fb45709ba4eb67a32054d72b5fb9e5ac717e"
