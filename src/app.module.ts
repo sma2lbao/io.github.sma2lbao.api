@@ -3,12 +3,19 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { schemas, configs } from './config';
-import { AuthModule } from './shared/auth/auth.module';
-import { UsersModule } from './shared/users/users.module';
+import { AuthModule } from './core/auth/auth.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { join } from 'path';
 import { GraphQLError } from 'graphql';
+import { UsersModule } from './app/users/users.module';
+import { MailerModule } from './core/mailer/mailer.module';
+import { CacheService } from './core/cache/cache.service';
+import { CacheModule } from './core/cache/cache.module';
+import { TagsModule } from './app/tags/tags.module';
+import { CategoriesModule } from './app/categories/categories.module';
+import { MediumsModule } from './app/mediums/mediums.module';
+import { BulletsModule } from './app/bullets/bullets.module';
 
 @Module({
   imports: [
@@ -28,8 +35,9 @@ import { GraphQLError } from 'graphql';
         username: config.get<string>('database.username'),
         password: config.get<string>('database.password'),
         database: config.get<string>('database.database'),
-        synchronize: config.get('synchronize'),
+        synchronize: config.get('database.synchronize'),
         autoLoadEntities: true,
+        logging: 'all',
         // entities: [join(__dirname, './', '/**/*.entity{.ts,.js}')],
       }),
     }),
@@ -62,9 +70,15 @@ import { GraphQLError } from 'graphql';
       }),
     }),
     UsersModule,
-    // AuthModule,
+    AuthModule,
+    MailerModule,
+    CacheModule,
+    TagsModule,
+    CategoriesModule,
+    MediumsModule,
+    BulletsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CacheService],
 })
 export class AppModule {}
