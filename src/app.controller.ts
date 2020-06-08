@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { noop, timer } from 'rxjs';
+import { Cache } from 'cache-manager';
 
 @Controller()
 @UseInterceptors(CacheInterceptor)
@@ -19,10 +20,9 @@ export class AppController {
     @Inject(CACHE_MANAGER) private readonly cache: Cache,
   ) {}
 
-  @CacheKey('custom_key')
-  @CacheTTL(20)
   @Get()
   async getHello(): Promise<string> {
+    console.log(this.cache);
     await timer(2000).toPromise();
     return this.appService.getHello();
   }
