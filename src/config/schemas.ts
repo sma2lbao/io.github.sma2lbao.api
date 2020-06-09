@@ -30,7 +30,7 @@ const schemas = Joi.object({
   // apollo setting
   APOLLO_KEY: Joi.string(),
   APOLLO_API_KEY: Joi.string(),
-  APOLLO_SCHEMA_TAG: Joi.string(),
+  APOLLO_GRAPH_VARIANT: Joi.string(),
 });
 
 export default schemas;

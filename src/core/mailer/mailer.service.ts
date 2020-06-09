@@ -12,16 +12,27 @@ export class MailerService {
   ) {}
 
   async sendMail(options: SendMailOptions): Promise<SentMessageInfo> {
-    return await this.transport.sendMail(options);
+    return new Promise((resolve, reject) => {
+      this.transport.sendMail(options, (error, response) => {
+        if (error) {
+          console.error(error);
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      });
+    });
   }
 
-  sendMailTest() {
-    this.transport.sendMail({
+  async sendMailTest() {
+    const mail = {
       from: this.config.get<string>('mail.from'),
       to: 'sma2lbao@gmail.com',
       subject: 'test',
       text: '请勿回复',
       template: 'test.template',
-    });
+    };
+    const res: SentMessageInfo = await this.sendMail(mail);
+    console.log('发送结果', res);
   }
 }

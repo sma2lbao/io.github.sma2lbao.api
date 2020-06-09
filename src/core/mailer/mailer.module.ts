@@ -25,12 +25,13 @@ import { join } from 'path';
         transport.use(
           'compile',
           hbs({
-            viewPath: join(__dirname, 'templates'),
+            viewPath: join(__dirname, './templates'),
+            extName: '.hbs',
             viewEngine: exphbs.create({
               extname: '.hbs',
-              layoutsDir: join(__dirname, 'templates/layouts'),
-              partialsDir: join(__dirname, 'templates/partials'),
-              defaultLayout: 'default.layout',
+              layoutsDir: join(__dirname, './templates/layouts'),
+              partialsDir: join(__dirname, './templates/partials'),
+              defaultLayout: '', // default.layout.hbs
               helpers: {
                 subtract: function() {
                   return 'subtract';

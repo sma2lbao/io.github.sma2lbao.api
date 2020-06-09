@@ -14,7 +14,7 @@ import { join } from 'path';
         autoSchemaFile: 'schema.gql',
         engine: {
           apiKey: config.get<string>('apollo.apiKey'),
-          schemaTag: config.get<string>('apollo.schemaTag'),
+          graphVariant: config.get<string>('apollo.graphVariant'),
         },
         context: ({ req }) => ({ req }),
         formatError: (error: GraphQLError) => {
