@@ -10,12 +10,10 @@
 //   }
 
 //   async validate(token: string) {
-//     // console.log(token);
-//     // const user = await this.authServive.validateUser(token);
-//     // console.log(user);
-//     // if (!user) {
-//     //     throw new UnauthorizedException();
-//     // }
-//     // return user;
+//     const user = await this.authServive.validateHttpUser(token);
+//     if (!user) {
+//       throw new UnauthorizedException();
+//     }
+//     return user;
 //   }
 // }

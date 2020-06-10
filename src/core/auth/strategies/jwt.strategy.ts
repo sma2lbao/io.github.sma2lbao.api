@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { AuthenticationError } from 'apollo-server-core';
 import { AuthService } from '../auth.service';
-import { jwtConstants, UserJwtPayload } from '../interfaces/auth.interface';
+import { UserJwtPayload } from '../interfaces/auth.interface';
+import { JWT_SECRET } from '../auth.constants';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -11,16 +11,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: jwtConstants.secret,
+      secretOrKey: JWT_SECRET,
     });
   }
 
   async validate(userPayload: UserJwtPayload) {
     const { uid } = userPayload;
-    const user = await this.authService.getUserByUid(uid);
-    // if (!user) {
-    //   throw new AuthenticationError('认证失败');
-    // }
+    const user = await this.authService.validateJwtUser(uid);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
     return user;
   }
 }

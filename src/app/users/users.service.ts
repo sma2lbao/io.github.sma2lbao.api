@@ -5,6 +5,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService {
+  findUserByToken(token: string): any {
+    throw new Error('Method not implemented.');
+  }
+  findUserByUsernameAndPassword(username: string, password: string): any {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     @InjectRepository(User) private readonly usersRepository: Repository<User>,
   ) {}
