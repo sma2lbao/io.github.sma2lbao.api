@@ -15,7 +15,6 @@ export class UsersModule implements OnModuleInit {
   constructor(private readonly userService: UsersService) {}
 
   async onModuleInit() {
-    const user = this.userService.findOne('1');
-    console.log(user);
+    // const user = this.userService.findOne('1');
   }
 }

@@ -4,6 +4,7 @@ import { DatabaseModule } from './database/database.module';
 import { GraphqlModule } from './graphql/graphql.module';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from './mailer/mailer.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { MailerModule } from './mailer/mailer.module';
     GraphqlModule,
     AuthModule,
     MailerModule,
+    UsersModule,
   ],
 })
 export class CoreModule {}

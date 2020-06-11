@@ -8,8 +8,8 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { User } from '../../users/entities/user.entity';
 import { Medium } from '../../mediums/entities/medium.entity';
+import { User } from '@core/users/entities/user.entity';
 
 @ObjectType()
 @Entity()
