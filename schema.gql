@@ -21,5 +21,10 @@ type User {
 scalar Timestamp
 
 type Query {
+  me: User!
   user(uid: String!): User!
+}
+
+type Mutation {
+  login(password: String!, username: String!): String!
 }
