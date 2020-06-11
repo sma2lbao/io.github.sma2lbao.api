@@ -5,6 +5,12 @@ const schemas = Joi.object({
     .valid('development', 'production', 'test', 'local')
     .default('local'),
   PORT: Joi.number().default(3000),
+  // REDIS 配置
+  REDIS_HOST: Joi.string(),
+  REDIS_PORT: Joi.number(),
+  REDIS_TTL: Joi.number(),
+  REDIS_MAX: Joi.number(),
+
   // 数据库设置
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().required(),
