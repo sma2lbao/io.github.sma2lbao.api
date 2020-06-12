@@ -3,13 +3,11 @@ import {
   Get,
   UseInterceptors,
   CacheInterceptor,
-  CacheKey,
-  CacheTTL,
   Inject,
   CACHE_MANAGER,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { noop, timer } from 'rxjs';
+import { timer } from 'rxjs';
 import { Cache } from 'cache-manager';
 
 @Controller()

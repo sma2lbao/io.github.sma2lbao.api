@@ -1,9 +1,13 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { GraphQLError } from 'graphql';
 import { join } from 'path';
+import { PUB_SUB } from './constants/graphql.constant';
+import { PubSub } from 'graphql-subscriptions';
+import { DateScalar } from './scalars/date.scalar';
 
+@Global()
 @Module({
   imports: [
     GraphQLModule.forRootAsync({
@@ -12,6 +16,10 @@ import { join } from 'path';
       useFactory: (config: ConfigService) => ({
         typePaths: [join(__dirname, '../', '/**/*.graphql')],
         autoSchemaFile: 'schema.gql',
+        installSubscriptionHandlers: true, // subscription
+        subscriptions: {
+          keepAlive: 5000,
+        },
         engine: {
           apiKey: config.get<string>('apollo.apiKey'),
           graphVariant: config.get<string>('apollo.graphVariant'),
@@ -35,5 +43,13 @@ import { join } from 'path';
       }),
     }),
   ],
+  providers: [
+    {
+      provide: PUB_SUB,
+      useValue: new PubSub(),
+    },
+    DateScalar,
+  ],
+  exports: [PUB_SUB],
 })
 export class GraphqlModule {}

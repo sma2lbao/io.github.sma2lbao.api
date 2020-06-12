@@ -1,13 +1,18 @@
-import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Query, Subscription } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { UnauthorizedException, UseGuards } from '@nestjs/common';
+import { UnauthorizedException, UseGuards, Inject } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { GqlJwtAuthGuard } from './guards/gql-auth.guard';
 import { CurrUser } from './decorators/auth.decorator';
+import { PUB_SUB } from '../graphql/constants/graphql.constant';
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver('Auth')
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    @Inject(PUB_SUB) private readonly pubsub: PubSub,
+  ) {}
 
   @Mutation(returns => String)
   async login(
@@ -26,5 +31,10 @@ export class AuthResolver {
   @UseGuards(GqlJwtAuthGuard)
   async me(@CurrUser() user: User): Promise<User | undefined> {
     return user;
+  }
+
+  @Subscription(returns => User)
+  user_added() {
+    return this.pubsub.asyncIterator('user_added');
   }
 }
