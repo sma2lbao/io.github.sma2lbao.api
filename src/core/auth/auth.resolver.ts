@@ -1,4 +1,4 @@
-import { Resolver, Args, Mutation, Query, Subscription } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UnauthorizedException, UseGuards, Inject } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
@@ -31,10 +31,5 @@ export class AuthResolver {
   @UseGuards(GqlJwtAuthGuard)
   async me(@CurrUser() user: User): Promise<User | undefined> {
     return user;
-  }
-
-  @Subscription(returns => User)
-  user_added() {
-    return this.pubsub.asyncIterator('user_added');
   }
 }
