@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, OnModuleInit, Global } from '@nestjs/common';
 import { MailerService } from './mailer.service';
 import { MAILER_TRANSPORTER, MAILER_INTERCEPTOR } from './mailer.constant';
 import { ConfigService } from '@nestjs/config';
@@ -8,6 +8,7 @@ import * as hbs from 'nodemailer-express-handlebars';
 import * as exphbs from 'express-handlebars';
 import { join } from 'path';
 
+@Global()
 @Module({
   providers: [
     {
@@ -50,6 +51,7 @@ import { join } from 'path';
     },
     MailerService,
   ],
+  exports: [MailerService],
 })
 export class MailerModule implements OnModuleInit {
   constructor(private readonly mailerService: MailerService) {}

@@ -20,7 +20,6 @@ export class AppController {
 
   @Get()
   async getHello(): Promise<string> {
-    console.log(this.cache);
     await timer(2000).toPromise();
     return this.appService.getHello();
   }

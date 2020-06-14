@@ -24,7 +24,7 @@ export class UpdateUserInput {
 }
 
 @InputType()
-export class NewUserInput {
+export class CreateUserInput {
   @Field()
   @IsNotEmpty({ message: '用户名不能为空' })
   readonly username: string;
@@ -55,7 +55,7 @@ export class NewUserInput {
 }
 
 @InputType()
-export class NewUserWithCodeInput extends NewUserInput {
+export class CreateUserWithCodeInput extends CreateUserInput {
   @Field()
   @IsNotEmpty({ message: '验证码不能为空' })
   readonly code: string;
@@ -75,6 +75,6 @@ export class NewThirdUserInput {
   @Field()
   readonly platform: ThirdPlatformEnum;
 
-  @Field(type => NewUserInput)
-  readonly user: NewUserInput;
+  @Field(type => CreateUserInput)
+  readonly user: CreateUserInput;
 }

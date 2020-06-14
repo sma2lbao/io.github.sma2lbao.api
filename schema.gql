@@ -20,13 +20,45 @@ scalar Date
 
 type Query {
   me: User!
+
+  """find user by uid."""
   user(uid: String!): User!
 }
 
 type Mutation {
   login(password: String!, username: String!): String!
+
+  """create user."""
+  create_user(user: CreateUserInput!): User!
+
+  """create user with verif code."""
+  create_user_with_code(user: CreateUserWithCodeInput!): User!
+  send_register_email(email: String!): String!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  email: String!
+  nickname: String
+  avatar: String
+  mobile: String
+  address: String
+  description: String
+}
+
+input CreateUserWithCodeInput {
+  username: String!
+  password: String!
+  email: String!
+  nickname: String
+  avatar: String
+  mobile: String
+  address: String
+  description: String
+  code: String!
 }
 
 type Subscription {
-  user_added: User!
+  user_created: User!
 }

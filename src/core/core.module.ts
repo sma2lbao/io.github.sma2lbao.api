@@ -5,6 +5,8 @@ import { GraphqlModule } from './graphql/graphql.module';
 import { AuthModule } from './auth/auth.module';
 import { MailerModule } from './mailer/mailer.module';
 import { UsersModule } from './users/users.module';
+import { CoreResolver } from './core.resolver';
+import { CoreService } from './core.service';
 
 @Module({
   imports: [
@@ -15,5 +17,7 @@ import { UsersModule } from './users/users.module';
     MailerModule,
     UsersModule,
   ],
+  providers: [CoreResolver, CoreService],
+  exports: [CoreService],
 })
 export class CoreModule {}
