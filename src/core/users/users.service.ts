@@ -17,11 +17,15 @@ export class UsersService {
     private readonly mailerService: MailerService,
   ) {}
 
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
+
   findUserByToken(token: string): any {
     throw new Error('Method not implemented.');
   }
 
-  async findUserByUsernameAndPassword(
+  async findByUsernameAndPassword(
     username: string,
     password: string,
   ): Promise<User> {
@@ -66,7 +70,7 @@ export class UsersService {
     return result.response;
   }
 
-  async findUserByUid(uid: string): Promise<User> {
+  async findByUid(uid: string): Promise<User> {
     return await this.usersRepository.findOne(uid);
   }
 }

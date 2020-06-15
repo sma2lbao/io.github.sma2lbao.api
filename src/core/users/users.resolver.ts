@@ -5,7 +5,11 @@ import { Inject } from '@nestjs/common';
 import { PUB_SUB } from '../graphql/constants/graphql.constant';
 import { PubSub } from 'graphql-subscriptions';
 import { USER_CREATED } from './constants/users.constant';
-import { CreateUserInput, CreateUserWithCodeInput } from './dto/users.dto';
+import {
+  CreateUserInput,
+  CreateUserWithCodeInput,
+  UserPaginated,
+} from './dto/users.dto';
 
 @Resolver('User')
 export class UsersResolver {
@@ -16,8 +20,20 @@ export class UsersResolver {
 
   @Query(returns => User, { description: 'find user by uid.' })
   async user(@Args('uid') uid: string): Promise<User> {
-    const user = await this.usersService.findUserByUid(uid);
+    const user = await this.usersService.findByUid(uid);
     return user;
+  }
+
+  @Query(returns => [User], { description: 'all user.' })
+  async users(): Promise<User[]> {
+    const users = await this.usersService.findAll();
+    return users;
+  }
+
+  @Query(returns => UserPaginated, { description: 'all user with paginated.' })
+  async users_paginated(): Promise<UserPaginated> {
+    const users = await this.usersService.findAll();
+    return users;
   }
 
   @Mutation(returns => User, { description: 'create user.' })

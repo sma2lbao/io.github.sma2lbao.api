@@ -23,6 +23,9 @@ type Query {
 
   """find user by uid."""
   user(uid: String!): User!
+
+  """all user."""
+  users: [User!]!
 }
 
 type Mutation {

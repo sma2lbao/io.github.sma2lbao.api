@@ -12,14 +12,14 @@ export class AuthService {
   ) {}
 
   async validateLocalUser(username: string, password: string): Promise<any> {
-    return await this.usersService.findUserByUsernameAndPassword(
+    return await this.usersService.findByUsernameAndPassword(
       username,
       password,
     );
   }
 
   async validateJwtUser(uid: string): Promise<any> {
-    return await this.usersService.findUserByUid(uid);
+    return await this.usersService.findByUid(uid);
   }
 
   async validateHttpUser(token: string): Promise<any> {

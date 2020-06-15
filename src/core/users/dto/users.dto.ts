@@ -1,6 +1,8 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
 import { ThirdPlatformEnum } from '../interfaces/users.interface';
+import { Paginated } from '@/global/types/paginated.type';
+import { User } from '../entities/user.entity';
 
 @InputType()
 export class UpdateUserInput {
@@ -78,3 +80,6 @@ export class CreateThirdUserInput {
   @Field(type => CreateUserInput)
   readonly user: CreateUserInput;
 }
+
+@ObjectType()
+export class UserPaginated extends Paginated(User) {}
