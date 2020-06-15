@@ -5,7 +5,7 @@ import {
   BaseEntity,
   CreateDateColumn,
 } from 'typeorm';
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, HideField } from '@nestjs/graphql';
 
 @ObjectType()
 @Entity()
@@ -15,41 +15,42 @@ export class User extends BaseEntity {
   uid: string;
 
   @Field()
-  @Column({ unique: true, length: 30, comment: '用戶名' })
+  @Column({ unique: true, length: 30, comment: 'username' })
   username: string;
 
   @Field()
-  @Column({ comment: '密码' })
+  @HideField()
+  @Column({ comment: 'password' })
   password: string;
 
   @Field()
-  @Column({ unique: true, length: 200, comment: '邮箱' })
+  @Column({ unique: true, length: 200, comment: 'email' })
   email: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, length: 30, comment: '昵称' })
+  @Column({ nullable: true, length: 30, comment: 'nickname' })
   nickname: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, comment: '头像地址' })
+  @Column({ nullable: true, comment: 'avatar' })
   avatar: string;
 
   @Field({ nullable: true })
-  @Column({ unique: true, nullable: true, length: 30, comment: '手机号' })
+  @Column({ unique: true, nullable: true, length: 30, comment: 'mobile' })
   mobile: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, comment: '住址' })
+  @Column({ nullable: true, comment: 'address' })
   address: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, comment: '用户自我描述' })
+  @Column({ nullable: true, comment: 'description' })
   description: string;
 
   @Field()
   @CreateDateColumn({
     type: 'timestamp',
-    comment: '创建时间',
+    comment: 'create time',
   })
   public create_at: Date;
 }

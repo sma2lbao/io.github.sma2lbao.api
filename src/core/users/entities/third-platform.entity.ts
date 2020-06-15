@@ -4,43 +4,43 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  OneToOne,
-  JoinColumn,
+  ManyToOne,
+  BaseEntity,
 } from 'typeorm';
 import { ThirdPlatformEnum } from '../interfaces/users.interface';
 import { User } from './user.entity';
 
 @ObjectType()
 @Entity()
-export class ThirdPlatform {
+export class ThirdPlatform extends BaseEntity {
   @Field(type => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
-  @Column({ comment: '唯一标识' })
+  @Column({ comment: 'openid' })
   openid: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, comment: 'uid' })
-  uid: string;
+  @Column({ nullable: true, comment: 'tuid' })
+  third_uid: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, comment: '描述' })
+  @Column({ nullable: true, comment: 'description' })
   description: string;
 
   @Field(type => ThirdPlatformEnum)
-  @Column('enum', { comment: '平台', enum: ThirdPlatformEnum })
+  @Column('enum', { comment: 'platform', enum: ThirdPlatformEnum })
   platform: ThirdPlatformEnum;
 
   @Field()
   @CreateDateColumn({
     type: 'timestamp',
-    comment: '创建时间',
+    comment: 'create time',
   })
   create_at: Date;
 
-  @OneToOne(type => User)
-  @JoinColumn()
+  @Field(type => User)
+  @ManyToOne(type => User)
   user: User;
 }

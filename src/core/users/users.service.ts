@@ -2,11 +2,12 @@ import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserInput } from './dto/users.dto';
+import { CreateUserInput, CreateUserWithCodeInput } from './dto/users.dto';
 import { Cache } from 'cache-manager';
 import { LOGIN_OTP_PREFIX } from './constants/users.constant';
 import { MailerService } from '../mailer/mailer.service';
-import { SentMessageInfo } from 'nodemailer/lib/smtp-connection';
+import * as randomize from 'randomatic';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -19,34 +20,53 @@ export class UsersService {
   findUserByToken(token: string): any {
     throw new Error('Method not implemented.');
   }
-  findUserByUsernameAndPassword(username: string, password: string): any {
-    throw new Error('Method not implemented.');
+
+  async findUserByUsernameAndPassword(
+    username: string,
+    password: string,
+  ): Promise<User> {
+    const user: User = await this.usersRepository.findOne({ username });
+    if (!user) {
+      throw new Error();
+    }
+    const match = bcrypt.compareSync(password, user.password);
+    if (match) {
+      return user;
+    } else {
+      throw new Error();
+    }
   }
 
-  create(createUser: CreateUserInput): Promise<User> {
-    throw new Error('Method not implemented.');
+  async create(createUser: CreateUserInput): Promise<User> {
+    const user = await this.usersRepository.create(createUser);
+    const hash = bcrypt.hashSync(user.password, 5);
+    const userWithHash = Object.assign({}, user, { password: hash });
+    return await this.usersRepository.save(userWithHash);
   }
 
-  createWithCode(createUserWithCode: any): Promise<User> {
-    throw new Error('Method not implemented.');
+  async createWithCode(
+    createUserWithCode: CreateUserWithCodeInput,
+  ): Promise<User> {
+    const { email, code } = createUserWithCode;
+    const codeRedis = await this.cache.get(LOGIN_OTP_PREFIX + email);
+    if (codeRedis !== code) {
+      throw new Error();
+    }
+    return await this.create(createUserWithCode);
   }
 
   async sendRegisterEmail(email: string): Promise<string> {
-    const opt = '12345';
+    const otp = randomize('0', 6);
     const codeOfStore = await this.cache.get(LOGIN_OTP_PREFIX + email);
     if (codeOfStore) {
       throw new Error();
     }
-    await this.cache.set(LOGIN_OTP_PREFIX + email, opt, { ttl: 24 * 60 * 60 });
+    await this.cache.set(LOGIN_OTP_PREFIX + email, otp, { ttl: 24 * 60 * 60 });
     const result = await this.mailerService.sendRegisterEmailTemplate(email);
     return result.response;
   }
 
   async findUserByUid(uid: string): Promise<User> {
-    return null;
-  }
-
-  async findOne(id: string): Promise<User> {
-    return this.usersRepository.findOne(id);
+    return await this.usersRepository.findOne(uid);
   }
 }

@@ -4,6 +4,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { AuthService } from '../auth.service';
 import { UserJwtPayload } from '../interfaces/auth.interface';
 import { JWT_SECRET } from '../auth.constants';
+import { User } from '@/core/users/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +16,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(userPayload: UserJwtPayload) {
+  async validate(userPayload: UserJwtPayload): Promise<User | undefined> {
     const { uid } = userPayload;
     const user = await this.authService.validateJwtUser(uid);
     if (!user) {

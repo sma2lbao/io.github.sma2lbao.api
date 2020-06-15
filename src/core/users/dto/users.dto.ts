@@ -26,16 +26,16 @@ export class UpdateUserInput {
 @InputType()
 export class CreateUserInput {
   @Field()
-  @IsNotEmpty({ message: '用户名不能为空' })
+  @IsNotEmpty({ message: "username can't be null" })
   readonly username: string;
 
   @Field()
-  @IsNotEmpty({ message: '密码不能为空' })
+  @IsNotEmpty({ message: "password can't be null" })
   readonly password: string;
 
   @Field()
-  @IsEmail({}, { message: '邮箱格式错误' })
-  @IsNotEmpty({ message: '邮箱不能为空' })
+  @IsEmail({}, { message: 'email format error' })
+  @IsNotEmpty({ message: "eamil can't be null" })
   readonly email: string;
 
   @Field({ nullable: true })
@@ -57,12 +57,12 @@ export class CreateUserInput {
 @InputType()
 export class CreateUserWithCodeInput extends CreateUserInput {
   @Field()
-  @IsNotEmpty({ message: '验证码不能为空' })
+  @IsNotEmpty({ message: "verify code can't be null" })
   readonly code: string;
 }
 
 @InputType()
-export class NewThirdUserInput {
+export class CreateThirdUserInput {
   @Field()
   readonly openid?: string;
 
