@@ -17,8 +17,8 @@ export class UsersService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return await this.usersRepository.find();
+  async findAll(): Promise<[User[], number]> {
+    return await this.usersRepository.findAndCount();
   }
 
   findUserByToken(token: string): any {

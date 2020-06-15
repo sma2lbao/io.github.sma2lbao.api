@@ -18,14 +18,26 @@ type User {
 """Date custom scalar type"""
 scalar Date
 
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+type UserPaginated {
+  edges: [UserEdge!]
+  nodes: [User!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Query {
   me: User!
 
   """find user by uid."""
   user(uid: String!): User!
 
-  """all user."""
-  users: [User!]!
+  """all user with paginated."""
+  users_paginated(after: String!, first: Int!): UserPaginated!
 }
 
 type Mutation {

@@ -1,4 +1,11 @@
-import { Resolver, Query, Args, Subscription, Mutation } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  Subscription,
+  Mutation,
+  Int,
+} from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { Inject } from '@nestjs/common';
@@ -24,16 +31,18 @@ export class UsersResolver {
     return user;
   }
 
-  @Query(returns => [User], { description: 'all user.' })
-  async users(): Promise<User[]> {
-    const users = await this.usersService.findAll();
-    return users;
-  }
-
   @Query(returns => UserPaginated, { description: 'all user with paginated.' })
-  async users_paginated(): Promise<UserPaginated> {
-    const users = await this.usersService.findAll();
-    return users;
+  async users_paginated(
+    @Args({ name: 'first', type: () => Int }) frist: number,
+    @Args('after') after: string,
+  ): Promise<UserPaginated> {
+    const [users, total]: [User[], number] = await this.usersService.findAll();
+    return {
+      edges: users.map(user => ({ node: user, cursor: 'cursor' })),
+      nodes: users,
+      totalCount: total,
+      hasNextPage: true,
+    } as UserPaginated;
   }
 
   @Mutation(returns => User, { description: 'create user.' })
