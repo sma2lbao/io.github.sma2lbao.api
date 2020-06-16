@@ -33,12 +33,20 @@ export class UsersResolver {
 
   @Query(returns => UserPaginated, { description: 'all user with paginated.' })
   async users_paginated(
-    @Args({ name: 'first', type: () => Int }) frist: number,
-    @Args('after') after: string,
+    @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
+    @Args('after', { nullable: true }) after: string,
   ): Promise<UserPaginated> {
-    const [users, total]: [User[], number] = await this.usersService.findAll();
+    const [users, total]: [User[], number] = await this.usersService.findAll(
+      frist,
+      after,
+    );
     return {
-      edges: users.map(user => ({ node: user, cursor: 'cursor' })),
+      edges: users.map(user => ({
+        node: user,
+        cursor: Buffer.from(user.create_at.getTime().toString()).toString(
+          'base64',
+        ),
+      })),
       nodes: users,
       totalCount: total,
       hasNextPage: true,

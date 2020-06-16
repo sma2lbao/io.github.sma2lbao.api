@@ -37,7 +37,7 @@ type Query {
   user(uid: String!): User!
 
   """all user with paginated."""
-  users_paginated(after: String!, first: Int!): UserPaginated!
+  users_paginated(after: String, first: Int): UserPaginated!
 }
 
 type Mutation {

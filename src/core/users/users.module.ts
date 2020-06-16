@@ -4,6 +4,7 @@ import { UsersResolver } from './users.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { ThirdPlatform } from './entities/third-platform.entity';
+import { CreateUserInput } from './dto/users.dto';
 
 @Global()
 @Module({
@@ -12,9 +13,16 @@ import { ThirdPlatform } from './entities/third-platform.entity';
   exports: [UsersService],
 })
 export class UsersModule implements OnModuleInit {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   async onModuleInit() {
-    // const user = this.userService.findOne('1');
+    // for (let i = 1; i <= 99; i++) {
+    //   const user: CreateUserInput = {
+    //     username: `sma2lbao${i + ''.padStart(3, '0')}`,
+    //     password: '000000',
+    //     email: `sma2lbao${i + ''.padStart(3, '0')}`,
+    //   };
+    //   await this.usersService.create(user);
+    // }
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
+import { Injectable, Inject, CACHE_MANAGER, Logger } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,8 +17,15 @@ export class UsersService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async findAll(): Promise<[User[], number]> {
-    return await this.usersRepository.findAndCount();
+  async findAll(take = 10, after: string): Promise<[User[], number]> {
+    console.log(take, after);
+    return await this.usersRepository.findAndCount({
+      take: take,
+    });
+  }
+
+  async findAllAsync() {
+    return await this.usersRepository.createQueryBuilder;
   }
 
   findUserByToken(token: string): any {

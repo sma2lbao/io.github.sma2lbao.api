@@ -17,14 +17,14 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   // app.use(csurf());
   app.useGlobalPipes(new ValidationPipe());
-  app.use(compression());
-  app.use(helmet());
-  app.use(
-    rateLimit({
-      windowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100, // limit each IP to 100 requests per windowMs
-    }),
-  );
+  // app.use(compression());
+  // app.use(helmet());
+  // app.use(
+  //   rateLimit({
+  //     windowMs: 15 * 60 * 1000, // 15 minutes
+  //     max: 100, // limit each IP to 100 requests per windowMs
+  //   }),
+  // );
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
