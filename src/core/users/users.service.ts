@@ -1,6 +1,6 @@
 import { Injectable, Inject, CACHE_MANAGER, Logger } from '@nestjs/common';
 import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, MoreThan, MoreThanOrEqual } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserInput, CreateUserWithCodeInput } from './dto/users.dto';
 import { Cache } from 'cache-manager';
@@ -24,8 +24,18 @@ export class UsersService {
     });
   }
 
-  async findAllAsync() {
-    return await this.usersRepository.createQueryBuilder;
+  async findByCreateAt(limit = 10, after: Date): Promise<[User[], number]> {
+    return await this.usersRepository.findAndCount({
+      take: limit,
+      order: {
+        create_at: 'ASC',
+      },
+      where: after
+        ? {
+            create_at: MoreThan(after.getTime()),
+          }
+        : undefined,
+    });
   }
 
   findUserByToken(token: string): any {

@@ -36,9 +36,14 @@ export class UsersResolver {
     @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
     @Args('after', { nullable: true }) after: string,
   ): Promise<UserPaginated> {
-    const [users, total]: [User[], number] = await this.usersService.findAll(
+    const [users, total]: [
+      User[],
+      number,
+    ] = await this.usersService.findByCreateAt(
       frist,
-      after,
+      after
+        ? new Date(+Buffer.from(after, 'base64').toString('ascii'))
+        : undefined,
     );
     return {
       edges: users.map(user => ({
@@ -47,9 +52,7 @@ export class UsersResolver {
           'base64',
         ),
       })),
-      nodes: users,
       totalCount: total,
-      hasNextPage: true,
     } as UserPaginated;
   }
 

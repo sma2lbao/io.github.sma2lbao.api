@@ -18,9 +18,9 @@ export class UsersModule implements OnModuleInit {
   async onModuleInit() {
     // for (let i = 1; i <= 99; i++) {
     //   const user: CreateUserInput = {
-    //     username: `sma2lbao${i + ''.padStart(3, '0')}`,
+    //     username: `sma2lbao${i.toString().padStart(3, '0')}`,
     //     password: '000000',
-    //     email: `sma2lbao${i + ''.padStart(3, '0')}`,
+    //     email: `sma2lbao${i.toString().padStart(3, '0')}`,
     //   };
     //   await this.usersService.create(user);
     // }
