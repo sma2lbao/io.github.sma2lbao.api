@@ -24,18 +24,43 @@ export class UsersService {
     });
   }
 
-  async findByCreateAt(limit = 10, after: Date): Promise<[User[], number]> {
+  async findPagitionByUid(
+    limit = 10,
+    after: string,
+  ): Promise<[User[], number]> {
+    console.log(after);
     return await this.usersRepository.findAndCount({
       take: limit,
       order: {
-        create_at: 'ASC',
+        uid: 'ASC',
       },
       where: after
         ? {
-            create_at: MoreThan(after.getTime()),
+            uid: MoreThan(after),
           }
         : undefined,
     });
+  }
+
+  async findPagitionByDate(limit = 10, after: Date): Promise<[User[], number]> {
+    const query = this.usersRepository.createQueryBuilder('user');
+    if (after) {
+      const users = await query
+        .take(limit)
+        .orderBy('user.create_at', 'ASC')
+        // unix_timestamp(user.create_at)
+        .where('user.create_at > :after', {
+          after: after,
+        })
+        .getMany();
+      return [users, 20];
+    } else {
+      const users = await query
+        .take(limit)
+        .orderBy('user.create_at', 'ASC')
+        .getMany();
+      return [users, 20];
+    }
   }
 
   findUserByToken(token: string): any {

@@ -12,11 +12,13 @@ type User {
   mobile: String
   address: String
   description: String
-  create_at: Date!
+  create_at: DateTime!
 }
 
-"""Date custom scalar type"""
-scalar Date
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type UserEdge {
   cursor: String!
@@ -38,6 +40,9 @@ type Query {
 
   """all user with paginated."""
   users_paginated(after: String, first: Int): UserPaginated!
+
+  """all user with paginated."""
+  users_paginated_date(after: String, first: Int): UserPaginated!
 }
 
 type Mutation {

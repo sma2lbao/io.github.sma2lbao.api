@@ -39,19 +39,41 @@ export class UsersResolver {
     const [users, total]: [
       User[],
       number,
-    ] = await this.usersService.findByCreateAt(
+    ] = await this.usersService.findPagitionByUid(
       frist,
-      after
-        ? new Date(+Buffer.from(after, 'base64').toString('ascii'))
-        : undefined,
+      after ? after : undefined,
     );
     return {
-      edges: users.map(user => ({
-        node: user,
-        cursor: Buffer.from(user.create_at.getTime().toString()).toString(
-          'base64',
-        ),
-      })),
+      edges: users.map(user => {
+        console.log(user.uid);
+        return {
+          node: user,
+          cursor: user.uid,
+        };
+      }),
+      totalCount: total,
+    } as UserPaginated;
+  }
+
+  @Query(returns => UserPaginated, { description: 'all user with paginated.' })
+  async users_paginated_date(
+    @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
+    @Args('after', { nullable: true }) after: string,
+  ): Promise<UserPaginated> {
+    const [users, total]: [
+      User[],
+      number,
+    ] = await this.usersService.findPagitionByDate(
+      frist,
+      after ? new Date(+after) : undefined,
+    );
+    return {
+      edges: users.map(user => {
+        return {
+          node: user,
+          cursor: user.create_at.getTime(),
+        };
+      }),
       totalCount: total,
     } as UserPaginated;
   }

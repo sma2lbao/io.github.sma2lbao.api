@@ -5,7 +5,7 @@ import { GraphQLError } from 'graphql';
 import { join } from 'path';
 import { PUB_SUB } from './constants/graphql.constant';
 import { PubSub } from 'graphql-subscriptions';
-import { DateScalar } from './scalars/date.scalar';
+// import { DateScalar } from './scalars/date.scalar';
 
 @Global()
 @Module({
@@ -37,9 +37,9 @@ import { DateScalar } from './scalars/date.scalar';
             path: path,
           };
         },
-        buildSchemaOptions: {
-          dateScalarMode: 'timestamp',
-        },
+        // buildSchemaOptions: {
+        //   dateScalarMode: 'timestamp',
+        // },
       }),
     }),
   ],
@@ -48,7 +48,7 @@ import { DateScalar } from './scalars/date.scalar';
       provide: PUB_SUB,
       useValue: new PubSub(),
     },
-    DateScalar,
+    // DateScalar,
   ],
   exports: [PUB_SUB],
 })
