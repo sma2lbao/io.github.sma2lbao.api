@@ -50,7 +50,6 @@ export class User extends BaseEntity {
   @Field()
   @CreateDateColumn({
     comment: 'create time',
-    type: 'timestamp',
     precision: 3,
     default: () => 'CURRENT_TIMESTAMP(3)',
   })

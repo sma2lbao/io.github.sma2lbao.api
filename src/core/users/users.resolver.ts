@@ -17,6 +17,7 @@ import {
   CreateUserWithCodeInput,
   UserPaginated,
 } from './dto/users.dto';
+import * as moment from 'moment';
 
 @Resolver('User')
 export class UsersResolver {
@@ -65,13 +66,13 @@ export class UsersResolver {
       number,
     ] = await this.usersService.findPagitionByDate(
       frist,
-      after ? new Date(+after) : undefined,
+      after ? moment(after, 'x').toDate() : undefined,
     );
     return {
       edges: users.map(user => {
         return {
           node: user,
-          cursor: user.create_at.getTime(),
+          cursor: moment(user.create_at).format('x'),
         };
       }),
       totalCount: total,

@@ -37,9 +37,9 @@ import { PubSub } from 'graphql-subscriptions';
             path: path,
           };
         },
-        // buildSchemaOptions: {
-        //   dateScalarMode: 'timestamp',
-        // },
+        buildSchemaOptions: {
+          dateScalarMode: 'timestamp',
+        },
       }),
     }),
   ],
