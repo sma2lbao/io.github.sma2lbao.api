@@ -24,7 +24,7 @@ export class AuthResolver {
 
   @Query(returns => User)
   @UseGuards(GqlJwtAuthGuard)
-  async me(@CurrUser() user: User): Promise<User | undefined> {
+  async me(@CurrUser() user: User): Promise<User> {
     return user;
   }
 }

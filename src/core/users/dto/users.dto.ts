@@ -1,29 +1,8 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
-import { InputType, Field, ObjectType } from '@nestjs/graphql';
+import { InputType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { ThirdPlatformEnum } from '../interfaces/users.interface';
 import { Paginated } from '@/global/types/paginated.type';
 import { User } from '../entities/user.entity';
-
-@InputType()
-export class UpdateUserInput {
-  @Field({ nullable: true })
-  readonly nickname?: string;
-
-  @Field({ nullable: true })
-  readonly avatar?: string;
-
-  @Field({ nullable: true })
-  readonly mobile?: string;
-
-  @Field({ nullable: true })
-  readonly address?: string;
-
-  @Field({ nullable: true })
-  readonly description?: string;
-
-  @Field({ nullable: true })
-  readonly password?: string;
-}
 
 @InputType()
 export class CreateUserInput {
@@ -61,6 +40,18 @@ export class CreateUserWithCodeInput extends CreateUserInput {
   @Field()
   @IsNotEmpty({ message: "verify code can't be null" })
   readonly code: string;
+}
+
+@InputType()
+export class UpdateUserInput extends PickType(CreateUserInput, [
+  'nickname',
+  'avatar',
+  'mobile',
+  'address',
+  'description',
+] as const) {
+  @Field({ nullable: true })
+  readonly password?: string;
 }
 
 @InputType()

@@ -8,7 +8,7 @@ import {
 } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { PUB_SUB } from '../graphql/constants/graphql.constant';
 import { PubSub } from 'graphql-subscriptions';
 import { USER_CREATED } from './constants/users.constant';
@@ -16,8 +16,11 @@ import {
   CreateUserInput,
   CreateUserWithCodeInput,
   UserPaginated,
+  UpdateUserInput,
 } from './dto/users.dto';
 import * as moment from 'moment';
+import { CurrUser } from '../auth/decorators/auth.decorator';
+import { GqlJwtAuthGuard } from '../auth/guards/gql-auth.guard';
 
 @Resolver('User')
 export class UsersResolver {
@@ -40,43 +43,24 @@ export class UsersResolver {
     const [users, total]: [
       User[],
       number,
-    ] = await this.usersService.findPagitionByUid(
-      frist,
-      after ? after : undefined,
-    );
-    return {
-      edges: users.map(user => {
-        console.log(user.uid);
-        return {
-          node: user,
-          cursor: user.uid,
-        };
-      }),
-      totalCount: total,
-    } as UserPaginated;
-  }
-
-  @Query(returns => UserPaginated, { description: 'all user with paginated.' })
-  async users_paginated_date(
-    @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
-    @Args('after', { nullable: true }) after: string,
-  ): Promise<UserPaginated> {
-    const [users, total]: [
-      User[],
-      number,
     ] = await this.usersService.findPagitionByDate(
       frist,
-      after ? moment(after, 'x').toDate() : undefined,
+      after
+        ? moment(Buffer.from(after, 'base64').toString('ascii'), 'x').toDate()
+        : undefined,
     );
-    return {
+    const result: UserPaginated = {
       edges: users.map(user => {
         return {
           node: user,
-          cursor: moment(user.create_at).format('x'),
+          cursor: Buffer.from(moment(user.create_at).format('x')).toString(
+            'base64',
+          ),
         };
       }),
-      totalCount: total,
-    } as UserPaginated;
+      hasNextPage: total > users.length,
+    };
+    return result;
   }
 
   @Mutation(returns => User, { description: 'create user.' })
@@ -93,9 +77,26 @@ export class UsersResolver {
     return user;
   }
 
-  @Mutation(returns => String)
+  @Mutation(returns => Boolean)
   async send_register_email(@Args('email') email: string): Promise<string> {
     return this.usersService.sendRegisterEmail(email);
+  }
+
+  @UseGuards(GqlJwtAuthGuard)
+  @Mutation(returns => String)
+  async update_user(
+    @CurrUser() curr_user: User,
+    @Args('user') updateUser: UpdateUserInput,
+  ) {
+    const result = await this.usersService.updateByUid(
+      curr_user.uid,
+      updateUser,
+    );
+    if (result.affected) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Subscription(returns => User)

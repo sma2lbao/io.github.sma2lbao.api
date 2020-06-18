@@ -1,8 +1,12 @@
 import { Injectable, Inject, CACHE_MANAGER, Logger } from '@nestjs/common';
 import { User } from './entities/user.entity';
-import { Repository, MoreThan, MoreThanOrEqual } from 'typeorm';
+import { Repository, MoreThan, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserInput, CreateUserWithCodeInput } from './dto/users.dto';
+import {
+  CreateUserInput,
+  CreateUserWithCodeInput,
+  UpdateUserInput,
+} from './dto/users.dto';
 import { Cache } from 'cache-manager';
 import { LOGIN_OTP_PREFIX } from './constants/users.constant';
 import { MailerService } from '../mailer/mailer.service';
@@ -17,50 +21,20 @@ export class UsersService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async findAll(take = 10, after: string): Promise<[User[], number]> {
-    console.log(take, after);
-    return await this.usersRepository.findAndCount({
-      take: take,
-    });
-  }
-
-  async findPagitionByUid(
-    limit = 10,
-    after: string,
-  ): Promise<[User[], number]> {
-    console.log(after);
-    return await this.usersRepository.findAndCount({
+  async findPagitionByDate(limit = 10, after: Date): Promise<[User[], number]> {
+    let condition = {};
+    if (after) {
+      condition = {
+        create_at: MoreThan(after),
+      };
+    }
+    return this.usersRepository.findAndCount({
       take: limit,
       order: {
-        uid: 'ASC',
+        create_at: 'ASC',
       },
-      where: after
-        ? {
-            uid: MoreThan(after),
-          }
-        : undefined,
+      where: condition,
     });
-  }
-
-  async findPagitionByDate(limit = 10, after: Date): Promise<[User[], number]> {
-    const query = this.usersRepository.createQueryBuilder('user');
-    if (after) {
-      const users = await query
-        .take(limit)
-        .orderBy('user.create_at', 'ASC')
-        // unix_timestamp(user.create_at)
-        .where('user.create_at > :after', {
-          after: after,
-        })
-        .getMany();
-      return [users, 20];
-    } else {
-      const users = await query
-        .take(limit)
-        .orderBy('user.create_at', 'ASC')
-        .getMany();
-      return [users, 20];
-    }
   }
 
   findUserByToken(token: string): any {
@@ -114,5 +88,25 @@ export class UsersService {
 
   async findByUid(uid: string): Promise<User> {
     return await this.usersRepository.findOne(uid);
+  }
+
+  async updateByUid(
+    uid: string,
+    updateUser: UpdateUserInput,
+  ): Promise<UpdateResult> {
+    const currUser = await this.findByUid(uid);
+    if (currUser) {
+      const saveUser = updateUser;
+      if (updateUser.password) {
+        const hash = bcrypt.hashSync(updateUser.password, 5);
+        Object.assign(saveUser, { password: hash });
+      }
+      const result: UpdateResult = await this.usersRepository.update(uid, {
+        ...saveUser,
+      });
+      return result;
+    } else {
+      throw new Error();
+    }
   }
 }

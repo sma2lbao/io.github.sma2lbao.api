@@ -5,9 +5,5 @@ export interface UserJwtPayload {
 
   readonly email: string;
 
-  readonly nickname: string;
-
-  readonly avatar: string;
-
   readonly mobile: string;
 }

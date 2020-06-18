@@ -40,6 +40,5 @@ export class MailerService {
       template: 'test.template',
     };
     const res: SentMessageInfo = await this.sendMail(mail);
-    console.log('发送结果', res);
   }
 }

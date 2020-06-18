@@ -15,24 +15,24 @@ export class Tag {
   id: number;
 
   @Field()
-  @Column({ comment: '标签名称', unique: true })
-  label: string;
+  @Column({ unique: true })
+  public label: string;
 
-  @Field()
-  @Column({ comment: '标签描述', nullable: true })
-  description: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public description: string;
 
   @Field()
   @CreateDateColumn({
-    type: 'timestamp',
-    comment: '创建时间',
+    precision: 3,
+    default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public created_at: Date;
 
   @Field()
   @UpdateDateColumn({
-    type: 'timestamp',
-    comment: '最后修改时间',
+    precision: 3,
+    default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public updated_at: Date;
 }

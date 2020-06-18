@@ -67,15 +67,15 @@ export class Medium extends BaseEntity {
 
   @Field()
   @CreateDateColumn({
-    type: 'timestamp',
-    comment: '创建时间',
+    precision: 3,
+    default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public created_at: Date;
 
   @Field()
   @UpdateDateColumn({
-    type: 'timestamp',
-    comment: '最后修改时间',
+    precision: 3,
+    default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public updated_at: Date;
 

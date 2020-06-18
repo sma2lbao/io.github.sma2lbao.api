@@ -23,13 +23,13 @@ export class Barrage extends BaseEntity {
   public content: string;
 
   @Field()
-  @Column({ nullable: true, comment: '当前媒体播放的时间点（单位：秒/s）' })
+  @Column({ nullable: true })
   public point: number;
 
   @Field()
   @CreateDateColumn({
-    type: 'timestamp',
-    comment: '创建时间',
+    precision: 3,
+    default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public create_at: Date;
 

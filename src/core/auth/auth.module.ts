@@ -5,11 +5,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthResolver } from './auth.resolver';
+import { JWT_SECRET } from './auth.constants';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    JwtModule.register({}),
+    JwtModule.register({
+      secret: JWT_SECRET,
+      signOptions: {},
+    }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, AuthResolver],
   exports: [AuthService],

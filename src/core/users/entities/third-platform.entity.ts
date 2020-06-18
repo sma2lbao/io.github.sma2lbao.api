@@ -35,8 +35,8 @@ export class ThirdPlatform extends BaseEntity {
 
   @Field()
   @CreateDateColumn({
-    type: 'timestamp',
-    comment: 'create time',
+    precision: 3,
+    default: () => 'CURRENT_TIMESTAMP(3)',
   })
   create_at: Date;
 
