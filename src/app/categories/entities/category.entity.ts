@@ -7,6 +7,7 @@ import {
   TreeParent,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
@@ -19,12 +20,16 @@ export class Category {
   id: number;
 
   @Field()
-  @Column({ comment: '类型名称' })
+  @Column()
   label: string;
 
-  @Field()
-  @Column({ comment: '类型描述' })
-  description: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  alias: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  description?: string;
 
   @Field()
   @CreateDateColumn({
@@ -40,9 +45,17 @@ export class Category {
   })
   public updated_at: Date;
 
-  @TreeChildren()
+  @Field()
+  @DeleteDateColumn({
+    precision: 3,
+  })
+  public delete_at: Date;
+
+  @Field(type => [Category], { nullable: true })
+  @TreeChildren({ cascade: true })
   children: Category[];
 
+  @Field(type => Category, { nullable: true })
   @TreeParent()
   parent: Category;
 }

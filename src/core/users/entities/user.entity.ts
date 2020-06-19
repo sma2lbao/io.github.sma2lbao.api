@@ -5,6 +5,7 @@ import {
   BaseEntity,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID, HideField, Int } from '@nestjs/graphql';
 
@@ -60,5 +61,11 @@ export class User extends BaseEntity {
     precision: 3,
     default: () => 'CURRENT_TIMESTAMP(3)',
   })
-  public updated_at: Date;
+  public update_at: Date;
+
+  @Field()
+  @DeleteDateColumn({
+    precision: 3,
+  })
+  public delete_at: Date;
 }

@@ -15,6 +15,18 @@ type Tag {
 """
 scalar Timestamp
 
+type Category {
+  id: ID!
+  label: String!
+  alias: String
+  description: String
+  created_at: Timestamp!
+  updated_at: Timestamp!
+  delete_at: Timestamp!
+  children: [Category!]
+  parent: Category
+}
+
 type User {
   uid: ID!
   username: String!
@@ -26,7 +38,8 @@ type User {
   address: String
   description: String
   create_at: Timestamp!
-  updated_at: Timestamp!
+  update_at: Timestamp!
+  delete_at: Timestamp!
 }
 
 type UserEdge {
@@ -53,6 +66,8 @@ type Query {
 
 type Mutation {
   create_tag(tag: CreateTagInput!): Tag!
+  create_category(category: CreateCategoryInput!): Category!
+  delete_category(id: ID!): Boolean!
   login(password: String!, username: String!): String!
 
   """create user."""
@@ -67,6 +82,14 @@ type Mutation {
 input CreateTagInput {
   label: String!
   description: String
+}
+
+input CreateCategoryInput {
+  label: String!
+  alias: String
+  description: String
+  parent_id: Float
+  children: [CreateCategoryInput!]
 }
 
 input CreateUserInput {

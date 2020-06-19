@@ -16,7 +16,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly usersRepository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
     @Inject(CACHE_MANAGER) private readonly cache: Cache,
     private readonly mailerService: MailerService,
   ) {}
@@ -28,7 +28,7 @@ export class UsersService {
         create_at: MoreThan(after),
       };
     }
-    return this.usersRepository.findAndCount({
+    return this.userRepository.findAndCount({
       take: limit,
       order: {
         create_at: 'ASC',
@@ -45,7 +45,7 @@ export class UsersService {
     username: string,
     password: string,
   ): Promise<User> {
-    const user: User = await this.usersRepository.findOne({ username });
+    const user: User = await this.userRepository.findOne({ username });
     if (!user) {
       throw new Error();
     }
@@ -58,10 +58,10 @@ export class UsersService {
   }
 
   async create(createUser: CreateUserInput): Promise<User> {
-    const user = await this.usersRepository.create(createUser);
+    const user = await this.userRepository.create(createUser);
     const hash = bcrypt.hashSync(user.password, 5);
     const userWithHash = Object.assign({}, user, { password: hash });
-    return await this.usersRepository.save(userWithHash);
+    return await this.userRepository.save(userWithHash);
   }
 
   async createWithCode(
@@ -87,11 +87,11 @@ export class UsersService {
   }
 
   async findByUid(uid: string): Promise<User> {
-    return await this.usersRepository.findOne(uid);
+    return await this.userRepository.findOne(uid);
   }
 
   async findByConditions(conditions: FindConditions<User>): Promise<User> {
-    return await this.usersRepository.findOne(conditions);
+    return await this.userRepository.findOne(conditions);
   }
 
   async updateByUid(
@@ -105,7 +105,7 @@ export class UsersService {
         const hash = bcrypt.hashSync(updateUser.password, 5);
         Object.assign(saveUser, { password: hash });
       }
-      const result: UpdateResult = await this.usersRepository.update(uid, {
+      const result: UpdateResult = await this.userRepository.update(uid, {
         ...saveUser,
       });
       return result;

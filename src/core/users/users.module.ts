@@ -22,6 +22,13 @@ export class UsersModule implements OnModuleInit {
         password: '000000',
         email: `sma2lbao${i.toString().padStart(3, '0')}`,
       };
+      const userDB = this.usersService.findByConditions({
+        username: user.username,
+        email: user.email,
+      });
+      if (userDB) {
+        break;
+      }
       await this.usersService.create(user);
     }
   }
