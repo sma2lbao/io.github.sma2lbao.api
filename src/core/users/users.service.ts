@@ -1,6 +1,6 @@
 import { Injectable, Inject, CACHE_MANAGER, Logger } from '@nestjs/common';
 import { User } from './entities/user.entity';
-import { Repository, MoreThan, UpdateResult } from 'typeorm';
+import { Repository, MoreThan, UpdateResult, FindConditions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   CreateUserInput,
@@ -88,6 +88,10 @@ export class UsersService {
 
   async findByUid(uid: string): Promise<User> {
     return await this.usersRepository.findOne(uid);
+  }
+
+  async findByConditions(conditions: FindConditions<User>): Promise<User> {
+    return await this.usersRepository.findOne(conditions);
   }
 
   async updateByUid(

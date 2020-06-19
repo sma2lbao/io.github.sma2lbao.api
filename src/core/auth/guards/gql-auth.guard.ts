@@ -1,4 +1,8 @@
-import { Injectable, ExecutionContext } from '@nestjs/common';
+import {
+  Injectable,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
 // import { AuthenticationError, ApolloError } from "apollo-server-core";
@@ -15,9 +19,9 @@ export class GqlJwtAuthGuard extends AuthGuard('jwt') {
     // if (info instanceof TokenExpiredError) {
     //     throw new ApolloError('token已过期', TOKEN_EXPIRED)
     // }
-    // if (err || !user) {
-    //     throw err || new AuthenticationError('认证失败');
-    // }
+    if (err || !user) {
+      throw new UnauthorizedException();
+    }
     return user;
   }
 }

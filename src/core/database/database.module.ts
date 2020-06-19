@@ -17,6 +17,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         synchronize: config.get('database.synchronize'),
         autoLoadEntities: true,
         logging: 'all',
+        dropSchema: true,
         // entities: [join(__dirname, './', '/**/*.entity{.ts,.js}')],
       }),
     }),

@@ -87,7 +87,7 @@ export class UsersResolver {
   async update_user(
     @CurrUser() curr_user: User,
     @Args('user') updateUser: UpdateUserInput,
-  ) {
+  ): Promise<boolean> {
     const result = await this.usersService.updateByUid(
       curr_user.uid,
       updateUser,

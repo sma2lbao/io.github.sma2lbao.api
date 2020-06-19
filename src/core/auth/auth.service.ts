@@ -18,8 +18,15 @@ export class AuthService {
     );
   }
 
-  async validateJwtUser(uid: string): Promise<any> {
-    return await this.usersService.findByUid(uid);
+  async validateJwtUser(userPayload: UserJwtPayload): Promise<any> {
+    const { uid, username, email, mobile, password } = userPayload;
+    return await this.usersService.findByConditions({
+      uid,
+      username,
+      email,
+      mobile,
+      password,
+    });
   }
 
   async validateHttpUser(token: string): Promise<any> {
@@ -32,6 +39,7 @@ export class AuthService {
       username: user.username,
       email: user.email,
       mobile: user.mobile,
+      password: user.password,
     };
     return {
       access_token: this.jwtService.sign(payload),

@@ -6,4 +6,6 @@ export interface UserJwtPayload {
   readonly email: string;
 
   readonly mobile: string;
+
+  readonly password: string;
 }
