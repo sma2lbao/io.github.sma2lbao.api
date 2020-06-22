@@ -27,6 +27,25 @@ type Category {
   parent: Category
 }
 
+type Medium {
+  id: ID!
+  name: String!
+  alias_name: String!
+  posters: [String!]
+  description: String
+  duration: Float
+  preview_url: String
+  url: String!
+  low_quality_url: String
+  medium_quality_url: String
+  high_quality_url: String
+  super_quality_url: String
+  created_at: Timestamp!
+  updated_at: Timestamp!
+  delete_at: Timestamp!
+  version: Float!
+}
+
 type User {
   uid: ID!
   username: String!
@@ -40,6 +59,15 @@ type User {
   create_at: Timestamp!
   update_at: Timestamp!
   delete_at: Timestamp!
+}
+
+type Bullet {
+  id: ID!
+  content: String!
+  point: Float
+  create_at: Timestamp!
+  author: User!
+  media: Medium!
 }
 
 type UserEdge {
@@ -68,6 +96,7 @@ type Mutation {
   create_tag(tag: CreateTagInput!): Tag!
   create_category(category: CreateCategoryInput!): Category!
   delete_category(id: ID!): Boolean!
+  create_bullet(bullet: CreateBulletInput!): Bullet!
   login(password: String!, username: String!): String!
 
   """create user."""
@@ -90,6 +119,12 @@ input CreateCategoryInput {
   description: String
   parent_id: Float
   children: [CreateCategoryInput!]
+}
+
+input CreateBulletInput {
+  content: String!
+  point: Float
+  medium_id: Int!
 }
 
 input CreateUserInput {

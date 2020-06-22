@@ -5,11 +5,9 @@ import {
   UpdateDateColumn,
   VersionColumn,
   Column,
-  ManyToOne,
   TableInheritance,
-  ChildEntity,
-  JoinColumn,
   BaseEntity,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 
@@ -22,47 +20,47 @@ export class Medium extends BaseEntity {
   public id: number;
 
   @Field()
-  @Column({ comment: '媒体名称' })
+  @Column()
   public name: string;
 
   @Field()
-  @Column({ nullable: true, comment: '别名' })
+  @Column({ nullable: true })
   public alias_name: string;
 
-  @Field(type => [String])
-  @Column('simple-array', { comment: '海报列表', nullable: true })
+  @Field(type => [String], { nullable: true })
+  @Column('simple-array', { nullable: true })
   public posters: string[];
 
-  @Field()
-  @Column({ nullable: true, comment: '简介' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public description: string;
 
-  @Field()
-  @Column({ nullable: true, comment: '时长' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public duration: number;
 
-  @Field()
-  @Column({ nullable: true, comment: '预览地址' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public preview_url: string;
 
   @Field()
-  @Column({ nullable: false, comment: '默认地址' })
+  @Column({ nullable: false })
   public url: string;
 
-  @Field()
-  @Column({ nullable: true, comment: '低质量地址' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public low_quality_url: string;
 
-  @Field()
-  @Column({ nullable: true, comment: '中等质量地址' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public medium_quality_url: string;
 
-  @Field()
-  @Column({ nullable: true, comment: '高质量地址' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public high_quality_url: string;
 
-  @Field()
-  @Column({ nullable: true, comment: '超高质量地址' })
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public super_quality_url: string;
 
   @Field()
@@ -78,6 +76,12 @@ export class Medium extends BaseEntity {
     default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public updated_at: Date;
+
+  @Field()
+  @DeleteDateColumn({
+    precision: 3,
+  })
+  public delete_at: Date;
 
   @Field()
   @VersionColumn({ name: 'version' })

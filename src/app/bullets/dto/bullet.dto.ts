@@ -8,7 +8,7 @@ export class CreateBulletInput {
   readonly content: string;
 
   @Field({ nullable: true })
-  readonly point: number;
+  readonly point?: number;
 
   @Field(type => Int)
   @IsNotEmpty()
