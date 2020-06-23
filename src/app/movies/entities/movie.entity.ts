@@ -11,8 +11,9 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
-import { Region, Character } from '../interfaces/movies.interface';
+import { Region } from '../interfaces/movies.interface';
 import { MovieMedium } from '@/app/mediums/entities/movie_medium.entity';
+import { Character } from './character.entity';
 
 @ObjectType()
 @Entity()
@@ -54,9 +55,13 @@ export class Movie extends BaseEntity {
   })
   public region: Region;
 
-  //   @Field(type => GraphQLJSONObject, { nullable: true })
-  //   @Column({ type: 'json', nullable: true })
-  //   public actors: Character[];
+  @Field(type => [Character], { nullable: true })
+  @Column({ type: 'json', nullable: true })
+  public actors: Character[];
+
+  @Field(type => [Character], { nullable: true })
+  @Column('json', { nullable: true })
+  public directors: Character[];
 
   @Field(type => [MovieMedium])
   @OneToMany(

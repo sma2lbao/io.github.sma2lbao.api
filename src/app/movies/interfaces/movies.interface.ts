@@ -11,9 +11,3 @@ export enum Region {
 registerEnumType(Region, {
   name: 'Region',
 });
-
-export interface Character {
-  name: string;
-  avatar?: string;
-  description?: string;
-}

@@ -3,9 +3,10 @@ import { MediumsService } from './mediums.service';
 import { MediumsResolver } from './mediums.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Medium } from './entities/medium.entity';
+import { MovieMedium } from './entities/movie_medium.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Medium])],
+  imports: [TypeOrmModule.forFeature([Medium, MovieMedium])],
   providers: [MediumsService, MediumsResolver],
   exports: [MediumsService],
 })

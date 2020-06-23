@@ -43,6 +43,7 @@
     "graphql": "^15.0.0",
     "graphql-subscriptions": "^1.1.0",
     "graphql-tools": "^6.0.7",
+    "graphql-type-json": "^0.3.2",
     "hbs": "^4.1.1",
     "helmet": "^3.22.0",
     "moment": "^2.26.0",

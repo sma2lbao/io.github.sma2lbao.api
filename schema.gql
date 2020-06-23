@@ -6,23 +6,21 @@ type Tag {
   id: ID!
   label: String!
   description: String
-  created_at: Timestamp!
-  updated_at: Timestamp!
+  created_at: Date!
+  updated_at: Date!
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
+"""Date custom scalar type"""
+scalar Date
 
 type Category {
   id: ID!
   label: String!
   alias: String
   description: String
-  created_at: Timestamp!
-  updated_at: Timestamp!
-  delete_at: Timestamp!
+  created_at: Date!
+  updated_at: Date!
+  delete_at: Date!
   children: [Category!]
   parent: Category
 }
@@ -40,9 +38,9 @@ type Medium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
-  created_at: Timestamp!
-  updated_at: Timestamp!
-  delete_at: Timestamp!
+  created_at: Date!
+  updated_at: Date!
+  delete_at: Date!
   version: Float!
 }
 
@@ -56,16 +54,68 @@ type User {
   mobile: String
   address: String
   description: String
-  create_at: Timestamp!
-  update_at: Timestamp!
-  delete_at: Timestamp!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
+type Character {
+  name: String!
+  avatar: String
+  description: String
+}
+
+type Movie {
+  id: ID!
+  title: String!
+  sub_title: String
+  alias_title: String
+  cover: String!
+  posters: [String!]!
+  description: String
+  region: Region!
+  actors: [Character!]
+  directors: [Character!]
+  sources: [MovieMedium!]!
+  author: User!
+  created_at: Date!
+  updated_at: Date!
+  delete_at: Date!
+}
+
+enum Region {
+  Mainland
+  America
+  Hongkong
+  Taiwan
+  Britain
+  India
+}
+
+type MovieMedium {
+  id: ID!
+  name: String!
+  alias_name: String!
+  posters: [String!]
+  description: String
+  duration: Float
+  preview_url: String
+  url: String!
+  low_quality_url: String
+  medium_quality_url: String
+  high_quality_url: String
+  super_quality_url: String
+  created_at: Date!
+  updated_at: Date!
+  delete_at: Date!
+  version: Float!
 }
 
 type Bullet {
   id: ID!
   content: String!
   point: Float
-  create_at: Timestamp!
+  create_at: Date!
   author: User!
   media: Medium!
 }
@@ -106,6 +156,7 @@ type Mutation {
   create_user_with_code(user: CreateUserWithCodeInput!): User!
   send_register_email(email: String!): Boolean!
   update_user(user: UpdateUserInput!): String!
+  create_movie(movie: CreateMovieInput!): Movie!
 }
 
 input CreateTagInput {
@@ -157,6 +208,10 @@ input UpdateUserInput {
   address: String
   description: String
   password: String
+}
+
+input CreateMovieInput {
+  title: String!
 }
 
 type Subscription {

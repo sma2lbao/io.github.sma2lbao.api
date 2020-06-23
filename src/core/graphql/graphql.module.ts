@@ -5,7 +5,8 @@ import { GraphQLError } from 'graphql';
 import { join } from 'path';
 import { PUB_SUB } from './constants/graphql.constant';
 import { PubSub } from 'graphql-subscriptions';
-// import { DateScalar } from './scalars/date.scalar';
+// import { JsonScalar } from './scalars/json.scalar';
+import { DateScalar } from './scalars/date.scalar';
 
 @Global()
 @Module({
@@ -16,6 +17,8 @@ import { PubSub } from 'graphql-subscriptions';
       useFactory: (config: ConfigService) => ({
         typePaths: [join(__dirname, '../', '/**/*.graphql')],
         autoSchemaFile: 'schema.gql',
+        debug: true,
+        // resolvers: { JSON: GraphQLJSON },
         installSubscriptionHandlers: true, // subscription
         subscriptions: {
           keepAlive: 5000,
@@ -48,7 +51,7 @@ import { PubSub } from 'graphql-subscriptions';
       provide: PUB_SUB,
       useValue: new PubSub(),
     },
-    // DateScalar,
+    DateScalar,
   ],
   exports: [PUB_SUB],
 })
