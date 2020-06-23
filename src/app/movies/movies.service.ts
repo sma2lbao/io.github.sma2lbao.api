@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './entities/movie.entity';
-import { Repository, FindConditions, MoreThan } from 'typeorm';
+import { Repository, FindConditions, MoreThan, FindManyOptions } from 'typeorm';
 import { CreateMovieInput } from './dto/movies.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { MediumsService } from '../mediums/mediums.service';
@@ -38,6 +38,14 @@ export class MoviesService {
 
   async findOneByConditions(condtions: FindConditions<Movie>): Promise<Movie> {
     return await this.movieRepository.findOne(condtions);
+  }
+
+  async findByConditions(condtions: FindConditions<Movie>): Promise<Movie[]> {
+    return await this.movieRepository.find(condtions);
+  }
+
+  async find(query: FindManyOptions<Movie>): Promise<Movie[]> {
+    return await this.movieRepository.find(query);
   }
 
   async findPagitionByDate(

@@ -9,5 +9,6 @@ import { MovieMedium } from './entities/movie_medium.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Movie, MovieMedium]), MediumsModule],
   providers: [MoviesResolver, MoviesService],
+  exports: [MoviesService],
 })
 export class MoviesModule {}

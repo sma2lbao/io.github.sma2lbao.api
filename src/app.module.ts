@@ -10,6 +10,7 @@ import { BulletsModule } from './app/bullets/bullets.module';
 import { CoreModule } from './core/core.module';
 import { MoviesModule } from './app/movies/movies.module';
 import { TopicsModule } from './app/topics/topics.module';
+import { UrgesModule } from './app/urges/urges.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TopicsModule } from './app/topics/topics.module';
     CoreModule,
     MoviesModule,
     TopicsModule,
+    UrgesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
