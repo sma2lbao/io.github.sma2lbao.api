@@ -144,6 +144,17 @@ type MoviePaginated {
   hasNextPage: Boolean!
 }
 
+type Topic {
+  id: ID!
+  title: String!
+  description: String
+  top_movie: Movie
+  top_movies: [Movie!]
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
 type Query {
   me: User!
 
@@ -171,6 +182,7 @@ type Mutation {
   send_register_email(email: String!): Boolean!
   update_user(user: UpdateUserInput!): String!
   create_movie(movie: CreateMovieInput!): Movie!
+  create_topic(topic: CreateTopicInput!): Topic!
 }
 
 input CreateTagInput {
@@ -251,6 +263,13 @@ input CreateMovieMediumInput {
   posters: [String!]
   description: String
   movie_id: ID
+}
+
+input CreateTopicInput {
+  title: String!
+  description: String
+  top_movie_id: ID
+  top_movies_ids: [ID!]
 }
 
 type Subscription {

@@ -9,6 +9,7 @@ import { MediumsModule } from './app/mediums/mediums.module';
 import { BulletsModule } from './app/bullets/bullets.module';
 import { CoreModule } from './core/core.module';
 import { MoviesModule } from './app/movies/movies.module';
+import { TopicsModule } from './app/topics/topics.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { MoviesModule } from './app/movies/movies.module';
     BulletsModule,
     CoreModule,
     MoviesModule,
+    TopicsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
