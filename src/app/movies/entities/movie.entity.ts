@@ -82,14 +82,14 @@ export class Movie extends BaseEntity {
     precision: 3,
     default: () => 'CURRENT_TIMESTAMP(3)',
   })
-  public created_at: Date;
+  public create_at: Date;
 
   @Field()
   @UpdateDateColumn({
     precision: 3,
     default: () => 'CURRENT_TIMESTAMP(3)',
   })
-  public updated_at: Date;
+  public update_at: Date;
 
   @Field()
   @DeleteDateColumn({

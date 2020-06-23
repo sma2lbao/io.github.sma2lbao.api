@@ -6,8 +6,8 @@ type Tag {
   id: ID!
   label: String!
   description: String
-  created_at: Date!
-  updated_at: Date!
+  create_at: Date!
+  update_at: Date!
 }
 
 """Date custom scalar type"""
@@ -18,8 +18,8 @@ type Category {
   label: String!
   alias: String
   description: String
-  created_at: Date!
-  updated_at: Date!
+  create_at: Date!
+  update_at: Date!
   delete_at: Date!
   children: [Category!]
   parent: Category
@@ -38,8 +38,8 @@ type Medium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
-  created_at: Date!
-  updated_at: Date!
+  create_at: Date!
+  update_at: Date!
   delete_at: Date!
   version: Float!
 }
@@ -99,8 +99,8 @@ type MovieMedium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
-  created_at: Date!
-  updated_at: Date!
+  create_at: Date!
+  update_at: Date!
   delete_at: Date!
   version: Float!
 }
@@ -118,8 +118,8 @@ type Movie {
   directors: [Character!]
   sources: [MovieMedium!]!
   author: User!
-  created_at: Date!
-  updated_at: Date!
+  create_at: Date!
+  update_at: Date!
   delete_at: Date!
 }
 
@@ -132,6 +132,18 @@ enum Region {
   India
 }
 
+type MovieEdge {
+  cursor: String!
+  node: Movie!
+}
+
+type MoviePaginated {
+  edges: [MovieEdge!]
+  nodes: [Movie!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Query {
   me: User!
 
@@ -140,6 +152,8 @@ type Query {
 
   """all user with paginated."""
   users_paginated(after: String, first: Int): UserPaginated!
+  movie(id: ID!): Movie!
+  movies_paginated(after: String, first: Int): MoviePaginated!
 }
 
 type Mutation {

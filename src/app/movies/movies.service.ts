@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './entities/movie.entity';
-import { Repository } from 'typeorm';
+import { Repository, FindConditions, MoreThan } from 'typeorm';
 import { CreateMovieInput } from './dto/movies.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { MediumsService } from '../mediums/mediums.service';
@@ -34,5 +34,28 @@ export class MoviesService {
     }
     movie.author = author;
     return await this.movieRepository.save(movie);
+  }
+
+  async findOneByConditions(condtions: FindConditions<Movie>): Promise<Movie> {
+    return await this.movieRepository.findOne(condtions);
+  }
+
+  async findPagitionByDate(
+    limit = 10,
+    after: Date,
+  ): Promise<[Movie[], number]> {
+    let condition = {};
+    if (after) {
+      condition = {
+        create_at: MoreThan(after),
+      };
+    }
+    return await this.movieRepository.findAndCount({
+      take: limit,
+      order: {
+        create_at: 'ASC',
+      },
+      where: condition,
+    });
   }
 }
