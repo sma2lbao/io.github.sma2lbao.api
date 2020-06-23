@@ -16,6 +16,11 @@ export class MediumsService {
     return await this.mediumRepository.save(medium);
   }
 
+  async createMediums(createMediums: CreateMediumInput[]): Promise<Medium[]> {
+    const mediums = this.mediumRepository.create(createMediums);
+    return await this.mediumRepository.save(mediums);
+  }
+
   async findByConditions(conditions: FindConditions<Medium>): Promise<Medium> {
     return await this.mediumRepository.findOne(conditions);
   }

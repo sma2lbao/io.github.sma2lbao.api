@@ -3,16 +3,36 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './entities/movie.entity';
 import { Repository } from 'typeorm';
 import { CreateMovieInput } from './dto/movies.dto';
+import { User } from '@/core/users/entities/user.entity';
+import { MediumsService } from '../mediums/mediums.service';
+import { CreateMediumInput } from '../mediums/dto/mediums.dto';
+import { MovieMedium } from './entities/movie_medium.entity';
 
 @Injectable()
 export class MoviesService {
   constructor(
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>,
+    @InjectRepository(MovieMedium)
+    private readonly movieMediumRepository: Repository<MovieMedium>,
+    private readonly mediumsService: MediumsService,
   ) {}
 
-  async create(createMovie: CreateMovieInput): Promise<Movie> {
-    const movie = this.movieRepository.create(createMovie);
+  async create(createMovie: CreateMovieInput, author?: User): Promise<Movie> {
+    const { source_ids, sources, ...rest } = createMovie;
+    const movie = this.movieRepository.create(rest);
+    if (!author) {
+      throw new Error();
+    }
+    // TODO
+    // if (source_ids && source_ids.length > 0) {
+    // }
+    if (sources && sources.length > 0) {
+      const createMovieMediums = this.movieMediumRepository.create(sources);
+      const movieMediums = await this.movieRepository.save(createMovieMediums);
+      movie.sources = movieMediums;
+    }
+    movie.author = author;
     return await this.movieRepository.save(movie);
   }
 }

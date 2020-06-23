@@ -12,8 +12,8 @@ import {
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
 import { Region } from '../interfaces/movies.interface';
-import { MovieMedium } from '@/app/mediums/entities/movie_medium.entity';
 import { Character } from './character.entity';
+import { MovieMedium } from './movie_medium.entity';
 
 @ObjectType()
 @Entity()

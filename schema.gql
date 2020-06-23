@@ -59,10 +59,50 @@ type User {
   delete_at: Date!
 }
 
+type Bullet {
+  id: ID!
+  content: String!
+  point: Float
+  create_at: Date!
+  author: User!
+  media: Medium!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+type UserPaginated {
+  edges: [UserEdge!]
+  nodes: [User!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Character {
   name: String!
   avatar: String
   description: String
+}
+
+type MovieMedium {
+  id: ID!
+  name: String!
+  alias_name: String!
+  posters: [String!]
+  description: String
+  duration: Float
+  preview_url: String
+  url: String!
+  low_quality_url: String
+  medium_quality_url: String
+  high_quality_url: String
+  super_quality_url: String
+  created_at: Date!
+  updated_at: Date!
+  delete_at: Date!
+  version: Float!
 }
 
 type Movie {
@@ -90,46 +130,6 @@ enum Region {
   Taiwan
   Britain
   India
-}
-
-type MovieMedium {
-  id: ID!
-  name: String!
-  alias_name: String!
-  posters: [String!]
-  description: String
-  duration: Float
-  preview_url: String
-  url: String!
-  low_quality_url: String
-  medium_quality_url: String
-  high_quality_url: String
-  super_quality_url: String
-  created_at: Date!
-  updated_at: Date!
-  delete_at: Date!
-  version: Float!
-}
-
-type Bullet {
-  id: ID!
-  content: String!
-  point: Float
-  create_at: Date!
-  author: User!
-  media: Medium!
-}
-
-type UserEdge {
-  cursor: String!
-  node: User!
-}
-
-type UserPaginated {
-  edges: [UserEdge!]
-  nodes: [User!]
-  totalCount: Int!
-  hasNextPage: Boolean!
 }
 
 type Query {
@@ -212,6 +212,31 @@ input UpdateUserInput {
 
 input CreateMovieInput {
   title: String!
+  sub_title: String
+  alias_title: String
+  cover: String!
+  posters: [String!]!
+  description: String
+  region: String
+  actors: [CreateCharacterInput!]
+  directors: [CreateCharacterInput!]
+  source_ids: [ID!]!
+  sources: [CreateMovieMediumInput!]!
+}
+
+input CreateCharacterInput {
+  name: String!
+  avatar: String
+  description: String
+}
+
+input CreateMovieMediumInput {
+  name: String!
+  url: String!
+  alias_name: String
+  posters: [String!]
+  description: String
+  movie_id: ID
 }
 
 type Subscription {
