@@ -26,6 +26,7 @@ async function bootstrap() {
   //   }),
   // );
   app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.useStaticAssets(join(__dirname, '..', 'static'));
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('hbs');
   await app.listen(configService.get<number>('global.port'));
