@@ -28,8 +28,8 @@ export class UploadService {
   async aliyunUpload(filename: string, file: ReadStream) {
     const client = new OSS({
       region: 'oss-cn-shenzhen',
-      accessKeyId: '',
-      accessKeySecret: '',
+      accessKeyId: 'LTAI4GHbBQaAuG8odUV34171',
+      accessKeySecret: 'iH9on2ffnfKeHAWZHQX4N27o0asWyd',
       bucket: '',
     });
   }
