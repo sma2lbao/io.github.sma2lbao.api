@@ -30,7 +30,7 @@ export class UploadService {
       region: 'oss-cn-shenzhen',
       accessKeyId: 'LTAI4GHbBQaAuG8odUV34171',
       accessKeySecret: 'iH9on2ffnfKeHAWZHQX4N27o0asWyd',
-      bucket: '',
+      bucket: 'miss-files',
     });
   }
 }

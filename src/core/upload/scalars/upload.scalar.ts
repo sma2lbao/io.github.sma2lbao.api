@@ -3,7 +3,7 @@ import { ValueNode } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
 
 @Scalar('Upload')
-export class JsonScalar implements CustomScalar<unknown, unknown> {
+export class UploadScalar implements CustomScalar<unknown, unknown> {
   description: 'upload custom scalar type';
 
   parseValue(value: unknown): unknown {

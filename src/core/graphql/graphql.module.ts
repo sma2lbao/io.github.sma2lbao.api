@@ -43,6 +43,9 @@ import { DateScalar } from './scalars/date.scalar';
         buildSchemaOptions: {
           dateScalarMode: 'timestamp',
         },
+        uploads: {
+          maxFieldSize: 30000,
+        },
       }),
     }),
   ],

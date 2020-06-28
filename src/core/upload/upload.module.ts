@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UploadService } from './upload.service';
 import { UploadResolver } from './upload.resolver';
+import { UploadScalar } from './scalars/upload.scalar';
 
 @Module({
-  providers: [UploadService, UploadResolver]
+  providers: [UploadService, UploadScalar, UploadResolver],
 })
 export class UploadModule {}

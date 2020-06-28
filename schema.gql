@@ -182,6 +182,7 @@ type Mutation {
   create_user_with_code(user: CreateUserWithCodeInput!): User!
   send_register_email(email: String!): Boolean!
   update_user(user: UpdateUserInput!): String!
+  upload_aliyun(file: Upload!): String!
   create_movie(movie: CreateMovieInput!): Movie!
   create_topic(topic: CreateTopicInput!): Topic!
 }
@@ -236,6 +237,8 @@ input UpdateUserInput {
   description: String
   password: String
 }
+
+scalar Upload
 
 input CreateMovieInput {
   title: String!
