@@ -1,20 +1,21 @@
 import { CustomScalar, Scalar } from '@nestjs/graphql';
 import { ValueNode } from 'graphql';
-import { GraphQLUpload } from 'graphql-upload';
+import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 @Scalar('Upload')
-export class UploadScalar implements CustomScalar<unknown, unknown> {
+export class UploadScalar implements CustomScalar<object, string> {
   description: 'upload custom scalar type';
 
-  parseValue(value: unknown): unknown {
+  parseValue(value: Promise<FileUpload>): any {
+    console.log('parseValue: ', value);
     return GraphQLUpload.parseValue(value);
   }
 
-  serialize(value: unknown): unknown {
+  serialize(value: any): any {
     return GraphQLUpload.serialize(value);
   }
 
-  parseLiteral(ast: ValueNode): unknown {
-    return GraphQLUpload.parseLiteral(ast, null);
+  parseLiteral(ast) {
+    return GraphQLUpload.parseLiteral(ast, ast.value);
   }
 }

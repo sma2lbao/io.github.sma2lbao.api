@@ -3,6 +3,7 @@ import { UploadService } from './upload.service';
 import { FileUpload } from 'graphql-upload';
 import { CreateUploadFile } from './dto/upload.dto';
 import { UploadScalar } from './scalars/upload.scalar';
+import { GraphQLUpload } from 'apollo-server-express';
 
 @Resolver('Upload')
 export class UploadResolver {
@@ -10,11 +11,9 @@ export class UploadResolver {
 
   @Mutation(returns => String)
   upload_aliyun(
-    @Args({ name: 'file', type: () => UploadScalar }) file: any,
+    @Args('file', { type: () => GraphQLUpload }) file: FileUpload,
   ): string {
     console.log(file);
-    // const { filename } = file;
-    // const stream = file.createReadStream();
     // const result = await this.uploadService.aliyunUpload(filename, stream);
     // console.log('success');
     return 'success';

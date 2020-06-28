@@ -104,5 +104,10 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "// @resolutions comment": "https://github.com/jaydenseric/graphql-upload/issues/170#issuecomment-562759227",
+  "resolutions": {
+    "**/**/fs-capacitor": "^5.0.0",
+    "**/graphql-upload": "^9.0.0"
   }
 }

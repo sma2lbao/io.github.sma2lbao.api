@@ -238,6 +238,7 @@ input UpdateUserInput {
   password: String
 }
 
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 input CreateMovieInput {

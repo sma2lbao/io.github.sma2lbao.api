@@ -18,7 +18,10 @@ import { DateScalar } from './scalars/date.scalar';
         typePaths: [join(__dirname, '../', '/**/*.graphql')],
         autoSchemaFile: 'schema.gql',
         debug: true,
-        // resolvers: { JSON: GraphQLJSON },
+        introspection: true,
+        resolverValidationOptions: {
+          requireResolversForResolveType: false,
+        },
         installSubscriptionHandlers: true, // subscription
         subscriptions: {
           keepAlive: 5000,
@@ -34,6 +37,7 @@ import { DateScalar } from './scalars/date.scalar';
             path,
             extensions: { code },
           } = error;
+          console.log('error:', error.extensions);
           return {
             message: message,
             code: code,
