@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { MoviesModule } from './app/movies/movies.module';
 import { TopicsModule } from './app/topics/topics.module';
 import { UrgesModule } from './app/urges/urges.module';
+import { ReviewsModule } from './app/reviews/reviews.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UrgesModule } from './app/urges/urges.module';
     MoviesModule,
     TopicsModule,
     UrgesModule,
+    ReviewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -165,6 +165,7 @@ type Query {
   users_paginated(after: String, first: Int): UserPaginated!
   movie(id: ID!): Movie!
   movies_paginated(after: String, first: Int): MoviePaginated!
+  current_topic: Topic!
   movie_urges: [Movie!]!
 }
 
