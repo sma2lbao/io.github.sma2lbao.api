@@ -1,14 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { ReadStream } from 'fs-capacitor';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as OSS from 'ali-oss';
+import * as moment from 'moment';
+import { FileUpload } from 'graphql-upload';
+import { OSS_INTERCEPTOR } from './upload.constant';
 
 @Injectable()
 export class UploadService {
   private localDir = 'static';
 
-  async localUpload(filename: string, file: ReadStream) {
+  constructor(@Inject(OSS_INTERCEPTOR) private readonly oss: OSS) {}
+
+  async aliyunUpload(file: FileUpload): Promise<string> {
+    const prefix = 'test';
+    const now = Date.now();
+    const year = moment(now).get('year');
+    const month = moment(now).get('month') + 1;
+    const day = moment(now).get('date');
+    const filename = `${prefix}/${year}/${month}/${day}/${now}`;
+    const stream = file.createReadStream();
+    const { mimetype } = file;
+    const result = await this.oss.put(filename, stream, { mime: mimetype });
+    return result.url;
+  }
+
+  // TODO
+  async localUpload(filename: string, file: ReadStream): Promise<void> {
     if (!fs.existsSync(this.localDir)) {
       fs.mkdirSync(this.localDir);
     }
@@ -23,14 +42,5 @@ export class UploadService {
         .on('error', error => reject(error))
         .on('finish', () => resolve(filename)),
     );
-  }
-
-  async aliyunUpload(filename: string, file: ReadStream) {
-    const client = new OSS({
-      region: 'oss-cn-shenzhen',
-      accessKeyId: 'LTAI4GHbBQaAuG8odUV34171',
-      accessKeySecret: 'iH9on2ffnfKeHAWZHQX4N27o0asWyd',
-      bucket: 'miss-files',
-    });
   }
 }

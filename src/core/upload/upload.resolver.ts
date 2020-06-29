@@ -10,12 +10,10 @@ export class UploadResolver {
   constructor(private readonly uploadService: UploadService) {}
 
   @Mutation(returns => String)
-  upload_aliyun(
+  async upload_file_oss(
     @Args('file', { type: () => GraphQLUpload }) file: FileUpload,
-  ): string {
-    console.log(file);
-    // const result = await this.uploadService.aliyunUpload(filename, stream);
-    // console.log('success');
-    return 'success';
+  ): Promise<string> {
+    const url = await this.uploadService.aliyunUpload(file);
+    return url;
   }
 }

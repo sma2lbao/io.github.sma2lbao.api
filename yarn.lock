@@ -5009,15 +5009,10 @@ from2@^2.1.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
 
-fs-capacitor@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.npm.taobao.org/fs-capacitor/download/fs-capacitor-2.0.4.tgz#5a22e72d40ae5078b4fe64fe4d08c0d3fc88ad3c"
-  integrity sha1-WiLnLUCuUHi0/mT+TQjA0/yIrTw=
-
-fs-capacitor@^6.1.0:
-  version "6.2.0"
-  resolved "https://registry.npm.taobao.org/fs-capacitor/download/fs-capacitor-6.2.0.tgz#fa79ac6576629163cb84561995602d8999afb7f5"
-  integrity sha1-+nmsZXZikWPLhFYZlWAtiZmvt/U=
+fs-capacitor@^4.0.1, fs-capacitor@^5.0.0, fs-capacitor@^6.1.0:
+  version "5.0.1"
+  resolved "https://registry.npm.taobao.org/fs-capacitor/download/fs-capacitor-5.0.1.tgz#41fee9b77c697ea921c61988b112687964d8421b"
+  integrity sha1-Qf7pt3xpfqkhxhmIsRJoeWTYQhs=
 
 fs-extra@9.0.0:
   version "9.0.0"
@@ -5322,13 +5317,13 @@ graphql-upload@^11.0.0:
     isobject "^4.0.0"
     object-path "^0.11.4"
 
-graphql-upload@^8.0.2:
-  version "8.1.0"
-  resolved "https://registry.npm.taobao.org/graphql-upload/download/graphql-upload-8.1.0.tgz#6d0ab662db5677a68bfb1f2c870ab2544c14939a"
-  integrity sha1-bQq2YttWd6aL+x8shwqyVEwUk5o=
+graphql-upload@^8.0.2, graphql-upload@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/graphql-upload/download/graphql-upload-9.0.0.tgz#14c5250895f5d04ea83dcfcb3a16bd0e1c4cee95"
+  integrity sha1-FMUlCJX10E6oPc/LOha9DhxM7pU=
   dependencies:
     busboy "^0.3.1"
-    fs-capacitor "^2.0.4"
+    fs-capacitor "^4.0.1"
     http-errors "^1.7.3"
     object-path "^0.11.4"
 

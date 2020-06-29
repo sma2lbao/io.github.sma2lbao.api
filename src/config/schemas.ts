@@ -37,6 +37,11 @@ const schemas = Joi.object({
   APOLLO_KEY: Joi.string(),
   APOLLO_API_KEY: Joi.string(),
   APOLLO_GRAPH_VARIANT: Joi.string(),
+  // OSS setting
+  OSS_REGION: Joi.string(),
+  OSS_ACCESS_KEY_ID: Joi.string(),
+  OSS_ACCESS_KEY_SECRET: Joi.string(),
+  OSS_BUCKET: Joi.string(),
 });
 
 export default schemas;

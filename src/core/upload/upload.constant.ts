@@ -1,0 +1,1 @@
+export const OSS_INTERCEPTOR = 'OSS_INTERCEPTOR';
