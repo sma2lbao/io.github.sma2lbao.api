@@ -37,7 +37,6 @@ import { DateScalar } from './scalars/date.scalar';
             path,
             extensions: { code },
           } = error;
-          console.log('error:', error.extensions);
           return {
             message: message,
             code: code,
