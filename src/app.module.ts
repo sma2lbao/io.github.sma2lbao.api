@@ -12,6 +12,7 @@ import { MoviesModule } from './app/movies/movies.module';
 import { TopicsModule } from './app/topics/topics.module';
 import { UrgesModule } from './app/urges/urges.module';
 import { ReviewsModule } from './app/reviews/reviews.module';
+import { PlaylistsModule } from './app/playlists/playlists.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ReviewsModule } from './app/reviews/reviews.module';
     TopicsModule,
     UrgesModule,
     ReviewsModule,
+    PlaylistsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

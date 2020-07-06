@@ -18,7 +18,7 @@ import { MovieMedium } from './movie_medium.entity';
 @ObjectType()
 @Entity()
 export class Movie extends BaseEntity {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -38,7 +38,7 @@ export class Movie extends BaseEntity {
   @Column()
   public cover: string;
 
-  @Field(type => [String])
+  @Field(() => [String])
   @Column('simple-array')
   public posters: string[];
 
@@ -46,7 +46,7 @@ export class Movie extends BaseEntity {
   @Column({ nullable: true })
   public description: string;
 
-  @Field(type => Region)
+  @Field(() => Region)
   @Column({
     nullable: true,
     type: 'enum',
@@ -55,24 +55,24 @@ export class Movie extends BaseEntity {
   })
   public region: Region;
 
-  @Field(type => [Character], { nullable: true })
+  @Field(() => [Character], { nullable: true })
   @Column({ type: 'json', nullable: true })
   public actors: Character[];
 
-  @Field(type => [Character], { nullable: true })
+  @Field(() => [Character], { nullable: true })
   @Column('json', { nullable: true })
   public directors: Character[];
 
-  @Field(type => [MovieMedium])
+  @Field(() => [MovieMedium])
   @OneToMany(
-    type => MovieMedium,
+    () => MovieMedium,
     movieMedium => movieMedium.movie,
     { cascade: true, eager: true },
   )
   public sources: MovieMedium[];
 
-  @Field(type => User)
-  @ManyToOne(type => User, {
+  @Field(() => User)
+  @ManyToOne(() => User, {
     eager: true,
   })
   public author: User;
