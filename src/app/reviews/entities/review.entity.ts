@@ -6,36 +6,19 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToMany,
-  JoinTable,
-  ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Movie } from '@/app/movies/entities/movie.entity';
 
-@Entity()
 @ObjectType()
-export class Topic extends BaseEntity {
+@Entity()
+export class Review extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
   @Field()
   @Column()
-  title: string;
-
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  description: string;
-
-  @Field(() => Movie, { nullable: true })
-  @ManyToOne(() => Movie)
-  top_movie: Movie;
-
-  @Field(() => [Movie], { nullable: true })
-  @ManyToMany(() => Movie)
-  // @JoinTable()
-  top_movies: Movie[];
+  content: string;
 
   @Field()
   @CreateDateColumn({
