@@ -163,6 +163,18 @@ type Follow {
   delete_at: Date!
 }
 
+type FollowEdge {
+  cursor: String!
+  node: Follow!
+}
+
+type FollowPaginated {
+  edges: [FollowEdge!]
+  nodes: [Follow!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Query {
   me: User!
 
@@ -177,6 +189,7 @@ type Query {
   movie_urges: [Movie!]!
   follows: [Follow!]!
   fans: [Follow!]!
+  fans_paginated(after: String, first: Int): FollowPaginated!
 }
 
 type Mutation {

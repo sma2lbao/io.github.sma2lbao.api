@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Resolver('Movies')
 export class MoviesResolver {

@@ -16,11 +16,11 @@ export class Follow {
   id: number;
 
   @Field(() => User)
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   follower: User;
 
   @Field(() => User)
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   owner: User;
 
   @Field()
