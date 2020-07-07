@@ -15,14 +15,14 @@ import { CreateUserInput } from './dto/users.dto';
 export class UsersModule implements OnModuleInit {
   constructor(private readonly usersService: UsersService) {}
 
-  async onModuleInit() {
+  async onModuleInit(): Promise<void> {
     for (let i = 1; i <= 99; i++) {
       const user: CreateUserInput = {
         username: `sma2lbao${i.toString().padStart(3, '0')}`,
         password: '000000',
         email: `sma2lbao${i.toString().padStart(3, '0')}`,
       };
-      const userDB = this.usersService.findByConditions({
+      const userDB = await this.usersService.findByConditions({
         username: user.username,
         email: user.email,
       });

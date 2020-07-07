@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, TreeRepository, DeleteResult } from 'typeorm';
+import { Repository, TreeRepository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCategoryInput } from './dto/category.dto';

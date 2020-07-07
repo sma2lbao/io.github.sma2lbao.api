@@ -12,7 +12,7 @@ import moment from 'moment';
 export class MoviesResolver {
   constructor(private readonly moviesService: MoviesService) {}
 
-  @Mutation(returns => Movie)
+  @Mutation(() => Movie)
   @UseGuards(GqlJwtAuthGuard)
   async create_movie(
     @Args('movie') createMovie: CreateMovieInput,

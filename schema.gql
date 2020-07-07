@@ -155,6 +155,14 @@ type Topic {
   delete_at: Date!
 }
 
+type Follow {
+  follower: User!
+  owner: User!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
 type Query {
   me: User!
 
@@ -167,6 +175,8 @@ type Query {
   movies_paginated(after: String, first: Int): MoviePaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
+  follows: [Follow!]!
+  fans: [Follow!]!
 }
 
 type Mutation {
@@ -186,6 +196,8 @@ type Mutation {
   upload_file_oss(file: Upload!): String!
   create_movie(movie: CreateMovieInput!): Movie!
   create_topic(topic: CreateTopicInput!): Topic!
+  create_follow(follow: CreateFollowInput!): Follow!
+  remove_follow(follow: DeleteFollowInput!): Follow!
 }
 
 input CreateTagInput {
@@ -276,6 +288,16 @@ input CreateTopicInput {
   description: String
   top_movie_id: ID
   top_movies_ids: [ID!]
+}
+
+input CreateFollowInput {
+  follower_uid: ID
+  owner_uid: ID!
+}
+
+input DeleteFollowInput {
+  follower_uid: ID
+  owner_uid: ID!
 }
 
 type Subscription {
