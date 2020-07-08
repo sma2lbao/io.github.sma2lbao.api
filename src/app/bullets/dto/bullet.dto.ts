@@ -10,7 +10,7 @@ export class CreateBulletInput {
   @Field({ nullable: true })
   readonly point?: number;
 
-  @Field(type => Int)
+  @Field(() => Int)
   @IsNotEmpty()
   readonly medium_id: number;
 }

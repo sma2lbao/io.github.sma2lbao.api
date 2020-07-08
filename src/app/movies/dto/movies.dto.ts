@@ -6,7 +6,7 @@ import { Movie } from '../entities/movie.entity';
 
 @InputType()
 export class CreateMovieMediumInput extends CreateMediumInput {
-  @Field(type => ID, { nullable: true })
+  @Field(() => ID, { nullable: true })
   movie_id?: number;
 }
 
@@ -36,7 +36,7 @@ export class CreateMovieInput {
   @Field()
   cover: string;
 
-  @Field(type => [String])
+  @Field(() => [String])
   posters: string[];
 
   @Field({ nullable: true })
@@ -45,16 +45,16 @@ export class CreateMovieInput {
   @Field({ nullable: true })
   region?: Region;
 
-  @Field(type => [CreateCharacterInput], { nullable: true })
+  @Field(() => [CreateCharacterInput], { nullable: true })
   actors?: CreateCharacterInput[];
 
-  @Field(type => [CreateCharacterInput], { nullable: true })
+  @Field(() => [CreateCharacterInput], { nullable: true })
   directors?: CreateCharacterInput[];
 
-  @Field(type => [ID])
+  @Field(() => [ID])
   source_ids?: number[];
 
-  @Field(type => [CreateMovieMediumInput])
+  @Field(() => [CreateMovieMediumInput])
   sources?: CreateMovieMediumInput[];
 }
 

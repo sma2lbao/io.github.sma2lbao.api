@@ -12,7 +12,7 @@ import { ObjectType, Field, ID, HideField, Int } from '@nestjs/graphql';
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   uid: string;
 

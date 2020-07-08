@@ -7,7 +7,7 @@ import { Movie } from './movie.entity';
 @ChildEntity()
 export class MovieMedium extends Medium {
   @ManyToOne(
-    type => Movie,
+    () => Movie,
     movie => movie.sources,
   )
   movie: Movie;

@@ -15,7 +15,7 @@ import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 @ObjectType()
 @TableInheritance({ column: { name: 'type', type: 'varchar' } })
 export class Medium extends BaseEntity {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -27,7 +27,7 @@ export class Medium extends BaseEntity {
   @Column({ nullable: true })
   public alias_name: string;
 
-  @Field(type => [String], { nullable: true })
+  @Field(() => [String], { nullable: true })
   @Column('simple-array', { nullable: true })
   public posters: string[];
 

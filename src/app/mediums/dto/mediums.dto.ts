@@ -11,7 +11,7 @@ export class CreateMediumInput {
   @Field({ nullable: true })
   alias_name?: string;
 
-  @Field(type => [String], { nullable: true })
+  @Field(() => [String], { nullable: true })
   posters?: string[];
 
   @Field({ nullable: true })

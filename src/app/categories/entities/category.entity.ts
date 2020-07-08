@@ -15,7 +15,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 @Entity()
 @Tree('closure-table')
 export class Category {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -51,11 +51,11 @@ export class Category {
   })
   public delete_at: Date;
 
-  @Field(type => [Category], { nullable: true })
+  @Field(() => [Category], { nullable: true })
   @TreeChildren({ cascade: true })
   children: Category[];
 
-  @Field(type => Category, { nullable: true })
+  @Field(() => Category, { nullable: true })
   @TreeParent()
   parent: Category;
 }

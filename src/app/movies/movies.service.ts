@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './entities/movie.entity';
-import { Repository, FindConditions, MoreThan, FindManyOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateMovieInput } from './dto/movies.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { MediumsService } from '../mediums/mediums.service';
-import { CreateMediumInput } from '../mediums/dto/mediums.dto';
 import { MovieMedium } from './entities/movie_medium.entity';
 import { BaseService } from '@/global/services/base.service';
 

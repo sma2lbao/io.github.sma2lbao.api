@@ -13,7 +13,7 @@ import { User } from '@core/users/entities/user.entity';
 @ObjectType()
 @Entity()
 export class Bullet extends BaseEntity {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -32,11 +32,11 @@ export class Bullet extends BaseEntity {
   })
   public create_at: Date;
 
-  @Field(type => User)
-  @ManyToOne(type => User)
+  @Field(() => User)
+  @ManyToOne(() => User)
   public author: User;
 
-  @Field(type => Medium)
-  @ManyToOne(type => Medium)
+  @Field(() => Medium)
+  @ManyToOne(() => Medium)
   public media: Medium;
 }

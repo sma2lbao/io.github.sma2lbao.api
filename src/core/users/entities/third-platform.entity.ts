@@ -13,7 +13,7 @@ import { User } from './user.entity';
 @ObjectType()
 @Entity()
 export class ThirdPlatform extends BaseEntity {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,7 +29,7 @@ export class ThirdPlatform extends BaseEntity {
   @Column({ nullable: true, comment: 'description' })
   description: string;
 
-  @Field(type => ThirdPlatformEnum)
+  @Field(() => ThirdPlatformEnum)
   @Column('enum', { comment: 'platform', enum: ThirdPlatformEnum })
   platform: ThirdPlatformEnum;
 
@@ -40,7 +40,7 @@ export class ThirdPlatform extends BaseEntity {
   })
   create_at: Date;
 
-  @Field(type => User)
-  @ManyToOne(type => User)
+  @Field(() => User)
+  @ManyToOne(() => User)
   user: User;
 }

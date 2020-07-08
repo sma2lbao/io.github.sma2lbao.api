@@ -9,9 +9,9 @@ export class CreateTopicInput {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(type => ID, { nullable: true })
+  @Field(() => ID, { nullable: true })
   top_movie_id?: number;
 
-  @Field(type => [ID], { nullable: true })
+  @Field(() => [ID], { nullable: true })
   top_movies_ids?: number[];
 }

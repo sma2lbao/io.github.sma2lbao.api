@@ -68,7 +68,7 @@ export class CreateThirdUserInput {
   @Field()
   readonly platform: ThirdPlatformEnum;
 
-  @Field(type => CreateUserInput)
+  @Field(() => CreateUserInput)
   readonly user: CreateUserInput;
 }
 

@@ -15,6 +15,6 @@ export class CreateCategoryInput {
   @Field({ nullable: true })
   parent_id?: number;
 
-  @Field(type => [CreateCategoryInput], { nullable: true })
+  @Field(() => [CreateCategoryInput], { nullable: true })
   children?: CreateCategoryInput[];
 }

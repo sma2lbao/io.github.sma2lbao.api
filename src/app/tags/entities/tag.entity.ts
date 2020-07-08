@@ -10,7 +10,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 @ObjectType()
 @Entity()
 export class Tag {
-  @Field(type => ID)
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
 
