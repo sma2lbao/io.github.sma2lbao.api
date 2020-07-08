@@ -9,7 +9,7 @@ import { GraphQLUpload } from 'apollo-server-express';
 export class UploadResolver {
   constructor(private readonly uploadService: UploadService) {}
 
-  @Mutation(returns => String)
+  @Mutation(() => String)
   async upload_file_oss(
     @Args('file', { type: () => GraphQLUpload }) file: FileUpload,
   ): Promise<string> {

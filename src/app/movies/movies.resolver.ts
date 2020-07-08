@@ -21,12 +21,12 @@ export class MoviesResolver {
     return await this.moviesService.create(createMovie, user);
   }
 
-  @Query(returns => Movie)
+  @Query(() => Movie)
   async movie(@Args('id', { type: () => ID }) id: number): Promise<Movie> {
     return await this.moviesService.findOneByConditions({ id: id });
   }
 
-  @Query(returns => MoviePaginated)
+  @Query(() => MoviePaginated)
   async movies_paginated(
     @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
     @Args('after', { nullable: true }) after: string,

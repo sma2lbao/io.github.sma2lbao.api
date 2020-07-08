@@ -10,7 +10,7 @@ import {
   DeleteFollowInput,
   FollowPaginated,
 } from './dto/follows.dto';
-import * as moment from 'moment';
+import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Resolver('Follows')
 export class FollowsResolver {
@@ -22,6 +22,24 @@ export class FollowsResolver {
     return await this.followsService.findByConditions({
       follower: user,
     });
+  }
+
+  @Query(() => FollowPaginated)
+  @UseGuards(GqlJwtAuthGuard)
+  async follows_paginated(
+    @CurrUser() user: User,
+    @Args('query', { nullable: true }) query?: PaginatedQuery,
+  ): Promise<FollowPaginated> {
+    const result: FollowPaginated = await this.followsService.findCursorPagition(
+      {
+        query: query,
+        key: 'create_at',
+        where: {
+          follower: user,
+        },
+      },
+    );
+    return result;
   }
 
   @Query(() => [Follow])
@@ -37,36 +55,17 @@ export class FollowsResolver {
   @UseGuards(GqlJwtAuthGuard)
   async fans_paginated(
     @CurrUser() user: User,
-    @Args('first', { type: () => Int, nullable: true }) first?: number,
-    @Args('after', { nullable: true }) after?: string,
+    @Args('query', { nullable: true }) query?: PaginatedQuery,
   ): Promise<FollowPaginated> {
-    const [follows, total]: [
-      Follow[],
-      number,
-    ] = await this.followsService.findPagition({
-      limit: first,
-      cursorField: 'create_at',
-      before: after
-        ? moment(Buffer.from(after, 'base64').toString('ascii'), 'x').toDate()
-        : undefined,
-      order: {
-        create_at: -1,
+    const result: FollowPaginated = await this.followsService.findCursorPagition(
+      {
+        query: query,
+        key: 'create_at',
+        where: {
+          owner: user,
+        },
       },
-      where: {
-        owner: user,
-      },
-    });
-    const result: FollowPaginated = {
-      edges: follows.map(follow => {
-        return {
-          node: follow,
-          cursor: Buffer.from(moment(follow.create_at).format('x')).toString(
-            'base64',
-          ),
-        };
-      }),
-      hasNextPage: total > follows.length,
-    };
+    );
     return result;
   }
 

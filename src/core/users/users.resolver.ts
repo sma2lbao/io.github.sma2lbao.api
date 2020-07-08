@@ -29,13 +29,13 @@ export class UsersResolver {
     @Inject(PUB_SUB) private readonly pubsub: PubSub,
   ) {}
 
-  @Query(returns => User, { description: 'find user by uid.' })
+  @Query(() => User, { description: 'find user by uid.' })
   async user(@Args('uid') uid: string): Promise<User> {
     const user = await this.usersService.findByUid(uid);
     return user;
   }
 
-  @Query(returns => UserPaginated, { description: 'all user with paginated.' })
+  @Query(() => UserPaginated, { description: 'all user with paginated.' })
   async users_paginated(
     @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
     @Args('after', { nullable: true }) after: string,
@@ -63,13 +63,13 @@ export class UsersResolver {
     return result;
   }
 
-  @Mutation(returns => User, { description: 'create user.' })
+  @Mutation(() => User, { description: 'create user.' })
   async create_user(@Args('user') createUser: CreateUserInput): Promise<User> {
     const user = await this.usersService.create(createUser);
     return user;
   }
 
-  @Mutation(returns => User, { description: 'create user with verif code.' })
+  @Mutation(() => User, { description: 'create user with verif code.' })
   async create_user_with_code(
     @Args('user') createUserWithCode: CreateUserWithCodeInput,
   ): Promise<User> {
@@ -77,13 +77,13 @@ export class UsersResolver {
     return user;
   }
 
-  @Mutation(returns => Boolean)
+  @Mutation(() => Boolean)
   async send_register_email(@Args('email') email: string): Promise<string> {
     return this.usersService.sendRegisterEmail(email);
   }
 
   @UseGuards(GqlJwtAuthGuard)
-  @Mutation(returns => String)
+  @Mutation(() => String)
   async update_user(
     @CurrUser() curr_user: User,
     @Args('user') updateUser: UpdateUserInput,
@@ -99,7 +99,7 @@ export class UsersResolver {
     }
   }
 
-  @Subscription(returns => User)
+  @Subscription(() => User)
   user_created() {
     return this.pubsub.asyncIterator(USER_CREATED);
   }

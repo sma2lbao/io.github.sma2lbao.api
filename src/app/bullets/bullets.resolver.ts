@@ -7,7 +7,7 @@ import { CreateBulletInput } from './dto/bullet.dto';
 export class BulletsResolver {
   constructor(private readonly bulletsService: BulletsService) {}
 
-  @Mutation(returns => Bullet)
+  @Mutation(() => Bullet)
   async create_bullet(
     @Args('bullet') createBullet: CreateBulletInput,
   ): Promise<Bullet> {

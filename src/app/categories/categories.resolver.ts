@@ -8,14 +8,14 @@ import { ParseIntPipe } from '@nestjs/common';
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
-  @Mutation(returns => Category)
+  @Mutation(() => Category)
   async create_category(
     @Args('category') createCategory: CreateCategoryInput,
   ): Promise<Category> {
     return await this.categoriesService.create(createCategory);
   }
 
-  @Mutation(returns => Boolean)
+  @Mutation(() => Boolean)
   async delete_category(
     @Args('id', { type: () => ID }, ParseIntPipe) id: number,
   ): Promise<boolean> {

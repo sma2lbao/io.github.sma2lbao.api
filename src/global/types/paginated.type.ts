@@ -19,7 +19,7 @@ export function Paginated<T>(classRef: Type<T>): any {
     @Field(type => [classRef], { nullable: true })
     nodes: T[];
 
-    @Field(type => Int)
+    @Field(type => Int, { nullable: true })
     totalCount: number;
 
     @Field()

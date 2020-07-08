@@ -9,7 +9,7 @@ import { CurrUser } from './decorators/auth.decorator';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(returns => String)
+  @Mutation(() => String)
   async login(
     @Args('username') username: string,
     @Args('password') password: string,
@@ -22,7 +22,7 @@ export class AuthResolver {
     return access_token;
   }
 
-  @Query(returns => User)
+  @Query(() => User)
   @UseGuards(GqlJwtAuthGuard)
   async me(@CurrUser() user: User): Promise<User> {
     return user;

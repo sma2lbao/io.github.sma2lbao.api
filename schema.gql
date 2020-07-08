@@ -76,7 +76,7 @@ type UserEdge {
 type UserPaginated {
   edges: [UserEdge!]
   nodes: [User!]
-  totalCount: Int!
+  totalCount: Int
   hasNextPage: Boolean!
 }
 
@@ -140,7 +140,7 @@ type MovieEdge {
 type MoviePaginated {
   edges: [MovieEdge!]
   nodes: [Movie!]
-  totalCount: Int!
+  totalCount: Int
   hasNextPage: Boolean!
 }
 
@@ -171,7 +171,7 @@ type FollowEdge {
 type FollowPaginated {
   edges: [FollowEdge!]
   nodes: [Follow!]
-  totalCount: Int!
+  totalCount: Int
   hasNextPage: Boolean!
 }
 
@@ -188,8 +188,16 @@ type Query {
   current_topic: Topic!
   movie_urges: [Movie!]!
   follows: [Follow!]!
+  follows_paginated(query: PaginatedQuery): FollowPaginated!
   fans: [Follow!]!
-  fans_paginated(after: String, first: Int): FollowPaginated!
+  fans_paginated(query: PaginatedQuery): FollowPaginated!
+}
+
+input PaginatedQuery {
+  first: Int
+  after: String
+  last: Int
+  before: String
 }
 
 type Mutation {

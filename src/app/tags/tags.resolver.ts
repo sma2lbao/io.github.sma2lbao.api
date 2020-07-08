@@ -8,7 +8,7 @@ import { CreateTagInput } from './dto/tags.dto';
 export class TagsResolver {
   constructor(private readonly tagsService: TagsService) {}
 
-  @Mutation(returns => Tag)
+  @Mutation(() => Tag)
   async create_tag(@Args('tag') createTag: CreateTagInput): Promise<Tag> {
     return await this.tagsService.created(createTag);
   }

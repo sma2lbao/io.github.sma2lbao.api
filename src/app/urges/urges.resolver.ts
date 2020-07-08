@@ -10,7 +10,7 @@ import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
 export class UrgesResolver {
   constructor(private readonly urgesService: UrgesService) {}
 
-  @Query(returns => [Movie])
+  @Query(() => [Movie])
   @UseGuards(GqlJwtAuthGuard)
   async movie_urges(@CurrUser() user?: User): Promise<Movie[]> {
     return await this.urgesService.findMovieUrges(user);
