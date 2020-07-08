@@ -7,6 +7,8 @@ import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
 import * as moment from 'moment';
+import { query } from 'express';
+import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Resolver('Movies')
 export class MoviesResolver {
@@ -28,29 +30,12 @@ export class MoviesResolver {
 
   @Query(() => MoviePaginated)
   async movies_paginated(
-    @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
-    @Args('after', { nullable: true }) after: string,
+    @Args('query', { nullable: true }) query: PaginatedQuery,
   ): Promise<MoviePaginated> {
-    const [movies, total]: [
-      Movie[],
-      number,
-    ] = await this.moviesService.findPagitionByDate(
-      frist,
-      after
-        ? moment(Buffer.from(after, 'base64').toString('ascii'), 'x').toDate()
-        : undefined,
-    );
-    const result: MoviePaginated = {
-      edges: movies.map(movie => {
-        return {
-          node: movie,
-          cursor: Buffer.from(moment(movie.create_at).format('x')).toString(
-            'base64',
-          ),
-        };
-      }),
-      hasNextPage: total > movies.length,
-    };
+    const result = await this.moviesService.findCursorPagition({
+      query: query,
+      key: 'create_at',
+    });
     return result;
   }
 }

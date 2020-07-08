@@ -182,9 +182,9 @@ type Query {
   user(uid: String!): User!
 
   """all user with paginated."""
-  users_paginated(after: String, first: Int): UserPaginated!
+  users_paginated(query: PaginatedQuery): UserPaginated!
   movie(id: ID!): Movie!
-  movies_paginated(after: String, first: Int): MoviePaginated!
+  movies_paginated(query: PaginatedQuery): MoviePaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
   follows: [Follow!]!

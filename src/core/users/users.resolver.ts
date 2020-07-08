@@ -21,6 +21,7 @@ import {
 import * as moment from 'moment';
 import { CurrUser } from '../auth/decorators/auth.decorator';
 import { GqlJwtAuthGuard } from '../auth/guards/gql-auth.guard';
+import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Resolver('User')
 export class UsersResolver {
@@ -37,29 +38,12 @@ export class UsersResolver {
 
   @Query(() => UserPaginated, { description: 'all user with paginated.' })
   async users_paginated(
-    @Args({ name: 'first', type: () => Int, nullable: true }) frist: number,
-    @Args('after', { nullable: true }) after: string,
+    @Args('query', { nullable: true }) query?: PaginatedQuery,
   ): Promise<UserPaginated> {
-    const [users, total]: [
-      User[],
-      number,
-    ] = await this.usersService.findPagitionByDate(
-      frist,
-      after
-        ? moment(Buffer.from(after, 'base64').toString('ascii'), 'x').toDate()
-        : undefined,
-    );
-    const result: UserPaginated = {
-      edges: users.map(user => {
-        return {
-          node: user,
-          cursor: Buffer.from(moment(user.create_at).format('x')).toString(
-            'base64',
-          ),
-        };
-      }),
-      hasNextPage: total > users.length,
-    };
+    const result = await this.usersService.findCursorPagition({
+      query: query,
+      key: 'create_at',
+    });
     return result;
   }
 

@@ -12,29 +12,16 @@ import { LOGIN_OTP_PREFIX } from './constants/users.constant';
 import { MailerService } from '../mailer/mailer.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from 'bcrypt';
+import { BaseService } from '@/global/services/base.service';
 
 @Injectable()
-export class UsersService {
+export class UsersService extends BaseService<User> {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @Inject(CACHE_MANAGER) private readonly cache: Cache,
     private readonly mailerService: MailerService,
-  ) {}
-
-  async findPagitionByDate(limit = 10, after: Date): Promise<[User[], number]> {
-    let condition = {};
-    if (after) {
-      condition = {
-        create_at: MoreThan(after),
-      };
-    }
-    return this.userRepository.findAndCount({
-      take: limit,
-      order: {
-        create_at: 'ASC',
-      },
-      where: condition,
-    });
+  ) {
+    super(userRepository);
   }
 
   findUserByToken(token: string): any {
@@ -88,10 +75,6 @@ export class UsersService {
 
   async findByUid(uid: string): Promise<User> {
     return await this.userRepository.findOne(uid);
-  }
-
-  async findByConditions(conditions: FindConditions<User>): Promise<User> {
-    return await this.userRepository.findOne(conditions);
   }
 
   async updateByUid(

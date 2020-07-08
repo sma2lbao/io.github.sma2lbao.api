@@ -7,16 +7,19 @@ import { User } from '@/core/users/entities/user.entity';
 import { MediumsService } from '../mediums/mediums.service';
 import { CreateMediumInput } from '../mediums/dto/mediums.dto';
 import { MovieMedium } from './entities/movie_medium.entity';
+import { BaseService } from '@/global/services/base.service';
 
 @Injectable()
-export class MoviesService {
+export class MoviesService extends BaseService<Movie> {
   constructor(
     @InjectRepository(Movie)
     private readonly movieRepository: Repository<Movie>,
     @InjectRepository(MovieMedium)
     private readonly movieMediumRepository: Repository<MovieMedium>,
     private readonly mediumsService: MediumsService,
-  ) {}
+  ) {
+    super(movieRepository);
+  }
 
   async create(createMovie: CreateMovieInput, author?: User): Promise<Movie> {
     const { source_ids, sources, ...rest } = createMovie;
@@ -34,36 +37,5 @@ export class MoviesService {
     }
     movie.author = author;
     return await this.movieRepository.save(movie);
-  }
-
-  async findOneByConditions(condtions: FindConditions<Movie>): Promise<Movie> {
-    return await this.movieRepository.findOne(condtions);
-  }
-
-  async findByConditions(condtions: FindConditions<Movie>): Promise<Movie[]> {
-    return await this.movieRepository.find(condtions);
-  }
-
-  async find(query: FindManyOptions<Movie>): Promise<Movie[]> {
-    return await this.movieRepository.find(query);
-  }
-
-  async findPagitionByDate(
-    limit = 10,
-    after: Date,
-  ): Promise<[Movie[], number]> {
-    let condition = {};
-    if (after) {
-      condition = {
-        create_at: MoreThan(after),
-      };
-    }
-    return await this.movieRepository.findAndCount({
-      take: limit,
-      order: {
-        create_at: 'ASC',
-      },
-      where: condition,
-    });
   }
 }
