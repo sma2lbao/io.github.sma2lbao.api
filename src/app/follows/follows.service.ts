@@ -10,10 +10,11 @@ import { UsersService } from '@/core/users/users.service';
 @Injectable()
 export class FollowsService extends BaseService<Follow> {
   constructor(
-    @InjectRepository(Follow) private readonly followRepo: Repository<Follow>,
+    @InjectRepository(Follow)
+    private readonly followRepository: Repository<Follow>,
     private readonly usersService: UsersService,
   ) {
-    super(followRepo);
+    super(followRepository);
   }
 
   async create(
@@ -31,10 +32,10 @@ export class FollowsService extends BaseService<Follow> {
     if (follower.uid === owner.uid) {
       throw new Error();
     }
-    const follow = this.followRepo.create();
+    const follow = this.followRepository.create();
     follow.follower = follower;
     follow.owner = owner;
-    return await this.followRepo.save(follow);
+    return await this.followRepository.save(follow);
   }
 
   async remove(
@@ -49,13 +50,13 @@ export class FollowsService extends BaseService<Follow> {
     if (!follower) {
       throw new Error();
     }
-    const follow = await this.findOneByConditions({
+    const follow = await this.findOne({
       owner: owner,
       follower: follower,
     });
     if (!follow) {
       throw new Error();
     }
-    return await this.followRepo.remove(follow);
+    return await this.followRepository.remove(follow);
   }
 }

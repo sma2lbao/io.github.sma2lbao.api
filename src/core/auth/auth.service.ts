@@ -20,7 +20,7 @@ export class AuthService {
 
   async validateJwtUser(userPayload: UserJwtPayload): Promise<any> {
     const { uid, username, email, mobile, password } = userPayload;
-    return await this.usersService.findByConditions({
+    return await this.usersService.find({
       uid,
       username,
       email,

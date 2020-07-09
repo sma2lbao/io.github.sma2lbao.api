@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, ID, Query, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, ID, Query } from '@nestjs/graphql';
 import { Movie } from './entities/movie.entity';
 import { CreateMovieInput, MoviePaginated } from './dto/movies.dto';
 import { MoviesService } from './movies.service';
@@ -6,8 +6,6 @@ import { UseGuards } from '@nestjs/common';
 import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
-import * as moment from 'moment';
-import { query } from 'express';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Resolver('Movies')
@@ -25,7 +23,7 @@ export class MoviesResolver {
 
   @Query(() => Movie)
   async movie(@Args('id', { type: () => ID }) id: number): Promise<Movie> {
-    return await this.moviesService.findOneByConditions({ id: id });
+    return await this.moviesService.findOne({ id: id });
   }
 
   @Query(() => MoviePaginated)

@@ -11,15 +11,19 @@ import {
   FollowPaginated,
 } from './dto/follows.dto';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
+import { UsersService } from '@/core/users/users.service';
 
 @Resolver('Follows')
 export class FollowsResolver {
-  constructor(private readonly followsService: FollowsService) {}
+  constructor(
+    private readonly followsService: FollowsService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Query(() => [Follow])
   @UseGuards(GqlJwtAuthGuard)
   async follows(@CurrUser() user: User): Promise<Follow[]> {
-    return await this.followsService.findByConditions({
+    return await this.followsService.find({
       follower: user,
     });
   }
@@ -42,10 +46,24 @@ export class FollowsResolver {
     return result;
   }
 
+  @Query(() => Int)
+  @UseGuards(GqlJwtAuthGuard)
+  async follows_total(
+    @CurrUser() user: User,
+    @Args('follower_uid', { nullable: true }) follower_uid?: string,
+  ): Promise<number> {
+    const follower = follower_uid
+      ? await this.usersService.findByUid(follower_uid)
+      : user;
+    return await this.followsService.count({
+      follower: follower,
+    });
+  }
+
   @Query(() => [Follow])
   @UseGuards(GqlJwtAuthGuard)
   async fans(@CurrUser() user: User): Promise<Follow[]> {
-    const result = await this.followsService.findByConditions({
+    const result = await this.followsService.find({
       owner: user,
     });
     return result;
@@ -69,6 +87,41 @@ export class FollowsResolver {
     return result;
   }
 
+  @Query(() => Int)
+  @UseGuards(GqlJwtAuthGuard)
+  async fans_total(
+    @CurrUser() user: User,
+    @Args('owner_uid', { nullable: true }) owner_uid?: string,
+  ): Promise<number> {
+    const owner = owner_uid
+      ? await this.usersService.findByUid(owner_uid)
+      : user;
+    return await this.followsService.count({
+      owner: owner,
+    });
+  }
+
+  @Query(() => Boolean)
+  @UseGuards(GqlJwtAuthGuard)
+  async is_following(
+    @CurrUser() user: User,
+    @Args('owner_uid') owner_uid: string,
+    @Args('follower_uid', { nullable: true }) follower_uid?: string,
+  ): Promise<boolean> {
+    const owner = await this.usersService.findByUid(owner_uid);
+    const follower = follower_uid
+      ? await this.usersService.findByUid(follower_uid)
+      : user;
+    if (!owner || !follower) {
+      throw new Error();
+    }
+    const follow = await this.followsService.findOne({
+      owner: owner,
+      follower: follower,
+    });
+    return follow ? true : false;
+  }
+
   @Mutation(() => Follow)
   @UseGuards(GqlJwtAuthGuard)
   async create_follow(
@@ -82,8 +135,8 @@ export class FollowsResolver {
   @UseGuards(GqlJwtAuthGuard)
   async remove_follow(
     @Args('follow') follow: DeleteFollowInput,
-    @CurrUser() user: User,
+    @CurrUser() owner: User,
   ): Promise<Follow> {
-    return await this.followsService.remove(follow, user);
+    return await this.followsService.remove(follow, owner);
   }
 }

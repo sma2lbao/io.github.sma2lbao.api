@@ -189,8 +189,11 @@ type Query {
   movie_urges: [Movie!]!
   follows: [Follow!]!
   follows_paginated(query: PaginatedQuery): FollowPaginated!
+  follows_total(follower_uid: String): Int!
   fans: [Follow!]!
   fans_paginated(query: PaginatedQuery): FollowPaginated!
+  fans_total(owner_uid: String): Int!
+  is_following(follower_uid: String, owner_uid: String!): Boolean!
 }
 
 input PaginatedQuery {

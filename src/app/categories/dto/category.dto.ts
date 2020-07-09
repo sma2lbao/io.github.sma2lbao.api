@@ -1,5 +1,4 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { type } from 'os';
 
 @InputType()
 export class CreateCategoryInput {
