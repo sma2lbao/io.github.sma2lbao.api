@@ -95,6 +95,11 @@ export class BaseService<T> {
     const [nodes, total]: [T[], number] = await this.findPagition(
       pagitionQuery,
     );
+    const totalCount = await this.count({
+      where: {
+        ...where,
+      },
+    });
     const result = {
       edges: nodes.map(node => {
         return {
@@ -103,6 +108,7 @@ export class BaseService<T> {
         };
       }),
       hasNextPage: total > nodes.length,
+      totalCount: totalCount,
     };
     return result;
   }

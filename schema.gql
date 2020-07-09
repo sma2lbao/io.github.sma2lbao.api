@@ -155,6 +155,18 @@ type Topic {
   delete_at: Date!
 }
 
+type Playlist {
+  id: ID!
+  title: String!
+  description: String
+  cover: String
+  movies: [Movie!]
+  author: User!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
 type Follow {
   follower: User!
   owner: User!
@@ -220,6 +232,7 @@ type Mutation {
   upload_file_oss(file: Upload!): String!
   create_movie(movie: CreateMovieInput!): Movie!
   create_topic(topic: CreateTopicInput!): Topic!
+  create_playlist(playlist: CreatePlaylistInput!): Playlist!
   create_follow(follow: CreateFollowInput!): Follow!
   remove_follow(follow: DeleteFollowInput!): Follow!
 }
@@ -312,6 +325,12 @@ input CreateTopicInput {
   description: String
   top_movie_id: ID
   top_movies_ids: [ID!]
+}
+
+input CreatePlaylistInput {
+  title: String!
+  description: String
+  cover: String
 }
 
 input CreateFollowInput {
