@@ -36,8 +36,8 @@ export class CreateMovieInput {
   @Field()
   cover: string;
 
-  @Field(() => [String])
-  posters: string[];
+  @Field(() => [String], { nullable: true })
+  posters?: string[];
 
   @Field({ nullable: true })
   description?: string;

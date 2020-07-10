@@ -8,6 +8,7 @@ import {
   DeleteDateColumn,
   Column,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
@@ -34,7 +35,7 @@ export class Playlist extends BaseEntity {
 
   @Field(() => [Movie], { nullable: true })
   @ManyToMany(() => Movie)
-  // @JoinTable()
+  @JoinTable()
   movies: Movie[];
 
   @Field(() => User)

@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { PlaylistsService } from './playlists.service';
 import { Playlist } from './entities/playlist.entity';
 import { UseGuards } from '@nestjs/common';
@@ -11,6 +11,18 @@ import { User } from '@/core/users/entities/user.entity';
 export class PlaylistsResolver {
   constructor(private readonly playlistsService: PlaylistsService) {}
 
+  @Query(() => Playlist)
+  @UseGuards(GqlJwtAuthGuard)
+  async playlist(
+    @Args('playlist_id') playlist_id: number,
+    @CurrUser() user: User,
+  ): Promise<Playlist> {
+    return await this.playlistsService.findOneWithMoviesPagition({
+      id: playlist_id,
+      author: user,
+    });
+  }
+
   @Mutation(() => Playlist)
   @UseGuards(GqlJwtAuthGuard)
   async create_playlist(
@@ -20,13 +32,17 @@ export class PlaylistsResolver {
     return await this.playlistsService.create(playlist, user);
   }
 
-  @Mutation()
+  @Mutation(() => Boolean)
   @UseGuards(GqlJwtAuthGuard)
   async add_movie_to_playlist(
     @Args('movie_id') movie_id: number,
     @Args('playlist_id') playlist_id: number,
     @CurrUser() user: User,
-  ): Promise<any> {
-    this.playlistsService.addMovieToPlaylist(movie_id, playlist_id, user.uid);
+  ): Promise<boolean> {
+    return await this.playlistsService.addMovieToPlaylist(
+      movie_id,
+      playlist_id,
+      user.uid,
+    );
   }
 }

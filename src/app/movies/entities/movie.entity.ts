@@ -38,8 +38,8 @@ export class Movie extends BaseEntity {
   @Column()
   public cover: string;
 
-  @Field(() => [String])
-  @Column('simple-array')
+  @Field(() => [String], { nullable: true })
+  @Column('simple-array', { nullable: true })
   public posters: string[];
 
   @Field({ nullable: true })

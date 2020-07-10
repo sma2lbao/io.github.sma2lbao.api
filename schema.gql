@@ -111,7 +111,7 @@ type Movie {
   sub_title: String
   alias_title: String
   cover: String!
-  posters: [String!]!
+  posters: [String!]
   description: String
   region: Region!
   actors: [Character!]
@@ -199,6 +199,7 @@ type Query {
   movies_paginated(query: PaginatedQuery): MoviePaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
+  playlist(playlist_id: Float!): Playlist!
   follows: [Follow!]!
   follows_paginated(query: PaginatedQuery): FollowPaginated!
   follows_total(follower_uid: String): Int!
@@ -233,6 +234,7 @@ type Mutation {
   create_movie(movie: CreateMovieInput!): Movie!
   create_topic(topic: CreateTopicInput!): Topic!
   create_playlist(playlist: CreatePlaylistInput!): Playlist!
+  add_movie_to_playlist(playlist_id: Float!, movie_id: Float!): Boolean!
   create_follow(follow: CreateFollowInput!): Follow!
   remove_follow(follow: DeleteFollowInput!): Follow!
 }
@@ -296,7 +298,7 @@ input CreateMovieInput {
   sub_title: String
   alias_title: String
   cover: String!
-  posters: [String!]!
+  posters: [String!]
   description: String
   region: String
   actors: [CreateCharacterInput!]

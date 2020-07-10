@@ -6,6 +6,8 @@ import {
   LessThan,
   FindOneOptions,
   ObjectID,
+  SelectQueryBuilder,
+  QueryRunner,
   // DeepPartial,
 } from 'typeorm';
 import {
@@ -15,6 +17,13 @@ import {
 
 export class BaseService<T> {
   constructor(private repository: Repository<T>) {}
+
+  createQueryBuilder(
+    alias?: string,
+    queryRunner?: QueryRunner,
+  ): SelectQueryBuilder<T> {
+    return this.repository.createQueryBuilder(alias, queryRunner);
+  }
 
   // hasId(entityLike: DeepPartial<T>): boolean {
   //   const entity = this.repository.create(entityLike);
