@@ -7,7 +7,6 @@ import { CreatePlaylistInput } from './dto/playlists.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { MoviesService } from '../movies/movies.service';
 import { UsersService } from '@/core/users/users.service';
-import { Movie } from '../movies/entities/movie.entity';
 
 @Injectable()
 export class PlaylistsService extends BaseService<Playlist> {
@@ -70,7 +69,7 @@ export class PlaylistsService extends BaseService<Playlist> {
         'playlist.movies',
         'playlist_movies_movie',
         'pm',
-        'pm.movieId = movie.id',
+        'pm.movie_id = movie.id',
       )
       // .take(10)
       .getMany();
