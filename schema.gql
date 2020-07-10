@@ -2,27 +2,28 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Tag {
-  id: ID!
-  label: String!
+type User {
+  uid: ID!
+  username: String!
+  password: String!
+  email: String!
+  nickname: String
+  avatar: String
+  mobile: String
+  address: String
   description: String
   create_at: Date!
   update_at: Date!
+  delete_at: Date!
 }
 
 """Date custom scalar type"""
 scalar Date
 
-type Category {
-  id: ID!
-  label: String!
-  alias: String
+type Character {
+  name: String!
+  avatar: String
   description: String
-  create_at: Date!
-  update_at: Date!
-  delete_at: Date!
-  children: [Category!]
-  parent: Category
 }
 
 type Medium {
@@ -42,48 +43,6 @@ type Medium {
   update_at: Date!
   delete_at: Date!
   version: Float!
-}
-
-type User {
-  uid: ID!
-  username: String!
-  password: String!
-  email: String!
-  nickname: String
-  avatar: String
-  mobile: String
-  address: String
-  description: String
-  create_at: Date!
-  update_at: Date!
-  delete_at: Date!
-}
-
-type Bullet {
-  id: ID!
-  content: String!
-  point: Float
-  create_at: Date!
-  author: User!
-  media: Medium!
-}
-
-type UserEdge {
-  cursor: String!
-  node: User!
-}
-
-type UserPaginated {
-  edges: [UserEdge!]
-  nodes: [User!]
-  totalCount: Int
-  hasNextPage: Boolean!
-}
-
-type Character {
-  name: String!
-  avatar: String
-  description: String
 }
 
 type MovieMedium {
@@ -132,6 +91,15 @@ enum Region {
   India
 }
 
+type Tag {
+  id: ID!
+  label: String!
+  description: String
+  movies: [Movie!]
+  create_at: Date!
+  update_at: Date!
+}
+
 type MovieEdge {
   cursor: String!
   node: Movie!
@@ -140,6 +108,39 @@ type MovieEdge {
 type MoviePaginated {
   edges: [MovieEdge!]
   nodes: [Movie!]
+  totalCount: Int
+  hasNextPage: Boolean!
+}
+
+type Category {
+  id: ID!
+  label: String!
+  alias: String
+  description: String
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+  children: [Category!]
+  parent: Category
+}
+
+type Bullet {
+  id: ID!
+  content: String!
+  point: Float
+  create_at: Date!
+  author: User!
+  media: Medium!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+type UserPaginated {
+  edges: [UserEdge!]
+  nodes: [User!]
   totalCount: Int
   hasNextPage: Boolean!
 }
@@ -188,6 +189,8 @@ type FollowPaginated {
 }
 
 type Query {
+  movie(id: ID!): Movie!
+  movies_paginated(query: PaginatedQuery): MoviePaginated!
   me: User!
 
   """find user by uid."""
@@ -195,8 +198,6 @@ type Query {
 
   """all user with paginated."""
   users_paginated(query: PaginatedQuery): UserPaginated!
-  movie(id: ID!): Movie!
-  movies_paginated(query: PaginatedQuery): MoviePaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
   playlist(playlist_id: Float!): Playlist!
@@ -218,6 +219,8 @@ input PaginatedQuery {
 
 type Mutation {
   create_tag(tag: CreateTagInput!): Tag!
+  add_movie_to_tag(tag_id: Float!, movie_id: Float!): Boolean!
+  create_movie(movie: CreateMovieInput!): Movie!
   create_category(category: CreateCategoryInput!): Category!
   delete_category(id: ID!): Boolean!
   create_bullet(bullet: CreateBulletInput!): Bullet!
@@ -231,7 +234,6 @@ type Mutation {
   send_register_email(email: String!): Boolean!
   update_user(user: UpdateUserInput!): String!
   upload_file_oss(file: Upload!): String!
-  create_movie(movie: CreateMovieInput!): Movie!
   create_topic(topic: CreateTopicInput!): Topic!
   create_playlist(playlist: CreatePlaylistInput!): Playlist!
   add_movie_to_playlist(playlist_id: Float!, movie_id: Float!): Boolean!
@@ -242,6 +244,35 @@ type Mutation {
 input CreateTagInput {
   label: String!
   description: String
+}
+
+input CreateMovieInput {
+  title: String!
+  sub_title: String
+  alias_title: String
+  cover: String!
+  posters: [String!]
+  description: String
+  region: String
+  actors: [CreateCharacterInput!]
+  directors: [CreateCharacterInput!]
+  source_ids: [ID!]!
+  sources: [CreateMovieMediumInput!]!
+}
+
+input CreateCharacterInput {
+  name: String!
+  avatar: String
+  description: String
+}
+
+input CreateMovieMediumInput {
+  name: String!
+  url: String!
+  alias_name: String
+  posters: [String!]
+  description: String
+  movie_id: ID
 }
 
 input CreateCategoryInput {
@@ -292,35 +323,6 @@ input UpdateUserInput {
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
-
-input CreateMovieInput {
-  title: String!
-  sub_title: String
-  alias_title: String
-  cover: String!
-  posters: [String!]
-  description: String
-  region: String
-  actors: [CreateCharacterInput!]
-  directors: [CreateCharacterInput!]
-  source_ids: [ID!]!
-  sources: [CreateMovieMediumInput!]!
-}
-
-input CreateCharacterInput {
-  name: String!
-  avatar: String
-  description: String
-}
-
-input CreateMovieMediumInput {
-  name: String!
-  url: String!
-  alias_name: String
-  posters: [String!]
-  description: String
-  movie_id: ID
-}
 
 input CreateTopicInput {
   title: String!

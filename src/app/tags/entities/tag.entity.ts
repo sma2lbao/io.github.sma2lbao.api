@@ -4,8 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Movie } from '@/app/movies/entities/movie.entity';
 
 @ObjectType()
 @Entity()
@@ -21,6 +23,10 @@ export class Tag {
   @Field({ nullable: true })
   @Column({ nullable: true })
   public description: string;
+
+  @Field(() => [Movie], { nullable: true })
+  @ManyToMany(() => Movie, { nullable: true })
+  public movies: Movie[];
 
   @Field()
   @CreateDateColumn({
