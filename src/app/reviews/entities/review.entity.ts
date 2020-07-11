@@ -6,8 +6,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { User } from '@/core/users/entities/user.entity';
 
 @ObjectType()
 @Entity()
@@ -19,6 +21,10 @@ export class Review extends BaseEntity {
   @Field()
   @Column()
   content: string;
+
+  @Field(() => User)
+  @ManyToOne(() => User)
+  author: User;
 
   @Field()
   @CreateDateColumn({
