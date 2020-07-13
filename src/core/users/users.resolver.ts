@@ -20,7 +20,7 @@ import {
 } from './dto/users.dto';
 import * as moment from 'moment';
 import { CurrUser } from '../auth/decorators/auth.decorator';
-import { GqlJwtAuthGuard } from '../auth/guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from '../auth/guards/auth.guard';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Resolver('User')

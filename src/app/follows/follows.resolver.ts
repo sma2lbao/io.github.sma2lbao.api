@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
 import { FollowsService } from './follows.service';
 import { UseGuards } from '@nestjs/common';
 import { Follow } from './entities/follow.entity';
-import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
 import { User } from '@/core/users/entities/user.entity';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import {

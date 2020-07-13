@@ -156,6 +156,15 @@ type Topic {
   delete_at: Date!
 }
 
+type Review {
+  id: ID!
+  content: String!
+  author: User!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
 type Playlist {
   id: ID!
   title: String!
@@ -200,6 +209,7 @@ type Query {
   users_paginated(query: PaginatedQuery): UserPaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
+  user_urges: [User!]!
   playlist(playlist_id: Float!): Playlist!
   follows: [Follow!]!
   follows_paginated(query: PaginatedQuery): FollowPaginated!
@@ -235,6 +245,7 @@ type Mutation {
   update_user(user: UpdateUserInput!): String!
   upload_file_oss(file: Upload!): String!
   create_topic(topic: CreateTopicInput!): Topic!
+  create_review(review: CreateReviewInput!): Review!
   create_playlist(playlist: CreatePlaylistInput!): Playlist!
   add_movie_to_playlist(playlist_id: Float!, movie_id: Float!): Boolean!
   create_follow(follow: CreateFollowInput!): Follow!
@@ -329,6 +340,11 @@ input CreateTopicInput {
   description: String
   top_movie_id: ID
   top_movies_ids: [ID!]
+}
+
+input CreateReviewInput {
+  content: String!
+  author_uid: ID!
 }
 
 input CreatePlaylistInput {

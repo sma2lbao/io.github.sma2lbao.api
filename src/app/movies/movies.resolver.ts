@@ -3,7 +3,7 @@ import { Movie } from './entities/movie.entity';
 import { CreateMovieInput, MoviePaginated } from './dto/movies.dto';
 import { MoviesService } from './movies.service';
 import { UseGuards } from '@nestjs/common';
-import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';

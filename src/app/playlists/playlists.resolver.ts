@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { PlaylistsService } from './playlists.service';
 import { Playlist } from './entities/playlist.entity';
 import { UseGuards } from '@nestjs/common';
-import { GqlJwtAuthGuard } from '@/core/auth/guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
 import { CreatePlaylistInput } from './dto/playlists.dto';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';

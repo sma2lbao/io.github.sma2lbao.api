@@ -2,7 +2,7 @@ import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UnauthorizedException, UseGuards, Inject } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
-import { GqlJwtAuthGuard } from './guards/gql-auth.guard';
+import { GqlJwtAuthGuard } from './guards/auth.guard';
 import { CurrUser } from './decorators/auth.decorator';
 
 @Resolver('Auth')
