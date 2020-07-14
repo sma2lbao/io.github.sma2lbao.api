@@ -109,14 +109,21 @@ export class BaseService<T> {
         ...where,
       },
     });
+    const edges = nodes.map(node => {
+      return {
+        node: node,
+        cursor: this.encodeCursor(node[key]),
+      };
+    });
+    const pageInfo = {
+      hasPreviousPage: totalCount - total > 0 ? true : false,
+      hasNextPage: total > nodes.length ? true : false,
+      startCursor: edges.length > 0 ? edges[0].cursor : '',
+      endCursor: edges.length > 0 ? edges[edges.length - 1].cursor : '',
+    };
     const result = {
-      edges: nodes.map(node => {
-        return {
-          node: node,
-          cursor: this.encodeCursor(node[key]),
-        };
-      }),
-      hasNextPage: total > nodes.length,
+      edges: edges,
+      pageInfo: pageInfo,
       totalCount: totalCount,
     };
     return result;

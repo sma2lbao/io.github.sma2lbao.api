@@ -105,11 +105,18 @@ type MovieEdge {
   node: Movie!
 }
 
+type MoviePageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
 type MoviePaginated {
   edges: [MovieEdge!]
   nodes: [Movie!]
-  totalCount: Int
-  hasNextPage: Boolean!
+  pageInfo: MoviePageInfo!
+  totalCount: Int!
 }
 
 type Category {
@@ -138,11 +145,18 @@ type UserEdge {
   node: User!
 }
 
+type UserPageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
 type UserPaginated {
   edges: [UserEdge!]
   nodes: [User!]
-  totalCount: Int
-  hasNextPage: Boolean!
+  pageInfo: UserPageInfo!
+  totalCount: Int!
 }
 
 type Topic {
@@ -190,11 +204,18 @@ type FollowEdge {
   node: Follow!
 }
 
+type FollowPageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
 type FollowPaginated {
   edges: [FollowEdge!]
   nodes: [Follow!]
-  totalCount: Int
-  hasNextPage: Boolean!
+  pageInfo: FollowPageInfo!
+  totalCount: Int!
 }
 
 type Query {
