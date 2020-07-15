@@ -10,10 +10,13 @@ import {
   DeleteDateColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ChildMedium } from '../interfaces/mediums.interface';
 
 @Entity()
 @ObjectType()
-@TableInheritance({ column: { name: 'type', type: 'varchar' } })
+@TableInheritance({
+  column: { name: 'type', type: 'simple-enum', enum: ChildMedium },
+})
 export class Medium extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()

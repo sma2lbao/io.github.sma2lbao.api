@@ -12,7 +12,9 @@ import { JWT_SECRET } from './auth.constants';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: JWT_SECRET,
-      signOptions: {},
+      signOptions: {
+        expiresIn: '7d',
+      },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, AuthResolver],

@@ -366,7 +366,13 @@ input CreateTopicInput {
 
 input CreateReviewInput {
   content: String!
-  author_uid: ID!
+  author_uid: ID
+  type: ReviewMedium!
+  medium_id: ID!
+}
+
+enum ReviewMedium {
+  MOVIE
 }
 
 input CreatePlaylistInput {
