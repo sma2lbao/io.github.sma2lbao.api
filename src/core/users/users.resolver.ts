@@ -18,7 +18,6 @@ import {
   UserPaginated,
   UpdateUserInput,
 } from './dto/users.dto';
-import * as moment from 'moment';
 import { CurrUser } from '../auth/decorators/auth.decorator';
 import { GqlJwtAuthGuard } from '../auth/guards/auth.guard';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
@@ -67,20 +66,12 @@ export class UsersResolver {
   }
 
   @UseGuards(GqlJwtAuthGuard)
-  @Mutation(() => String)
+  @Mutation(() => User)
   async update_user(
     @CurrUser() curr_user: User,
     @Args('user') updateUser: UpdateUserInput,
-  ): Promise<boolean> {
-    const result = await this.usersService.updateByUid(
-      curr_user.uid,
-      updateUser,
-    );
-    if (result.affected) {
-      return true;
-    } else {
-      return false;
-    }
+  ): Promise<User> {
+    return await this.usersService.updateByUid(curr_user.uid, updateUser);
   }
 
   @Subscription(() => User)

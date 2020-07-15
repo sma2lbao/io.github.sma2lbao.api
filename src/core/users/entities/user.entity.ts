@@ -20,7 +20,7 @@ export class User extends BaseEntity {
   @Column({ unique: true, length: 30, comment: 'username' })
   username: string;
 
-  @Field()
+  // @Field()
   @HideField()
   @Column({ comment: 'password' })
   password: string;

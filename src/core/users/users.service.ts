@@ -77,23 +77,17 @@ export class UsersService extends BaseService<User> {
     return await this.userRepository.findOne(uid);
   }
 
-  async updateByUid(
-    uid: string,
-    updateUser: UpdateUserInput,
-  ): Promise<UpdateResult> {
+  async updateByUid(uid: string, updateUser: UpdateUserInput): Promise<User> {
     const currUser = await this.findByUid(uid);
-    if (currUser) {
-      const saveUser = updateUser;
-      if (updateUser.password) {
-        const hash = bcrypt.hashSync(updateUser.password, 5);
-        Object.assign(saveUser, { password: hash });
-      }
-      const result: UpdateResult = await this.userRepository.update(uid, {
-        ...saveUser,
-      });
-      return result;
-    } else {
+    if (!currUser) {
       throw new Error();
     }
+    const saveUser = updateUser;
+    if (updateUser.password) {
+      const hash = bcrypt.hashSync(updateUser.password, 5);
+      Object.assign(saveUser, { password: hash });
+    }
+    const toSaveUser = this.userRepository.merge(currUser, saveUser);
+    return await this.userRepository.save(toSaveUser);
   }
 }
