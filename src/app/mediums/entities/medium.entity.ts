@@ -9,7 +9,7 @@ import {
   BaseEntity,
   DeleteDateColumn,
 } from 'typeorm';
-import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 
 @Entity()
 @ObjectType()
@@ -19,13 +19,17 @@ export class Medium extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public name: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   public alias_name: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public cover: string;
 
   @Field(() => [String], { nullable: true })
   @Column('simple-array', { nullable: true })

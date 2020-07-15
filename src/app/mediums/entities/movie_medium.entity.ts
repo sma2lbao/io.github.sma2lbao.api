@@ -1,7 +1,7 @@
 import { ObjectType } from '@nestjs/graphql';
 import { ChildEntity, ManyToOne } from 'typeorm';
 import { Medium } from '@/app/mediums/entities/medium.entity';
-import { Movie } from './movie.entity';
+import { Movie } from '../../movies/entities/movie.entity';
 
 @ObjectType()
 @ChildEntity()

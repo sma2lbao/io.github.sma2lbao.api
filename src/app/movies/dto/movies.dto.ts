@@ -1,14 +1,8 @@
 import { InputType, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Region } from '../interfaces/movies.interface';
-import { CreateMediumInput } from '@/app/mediums/dto/mediums.dto';
 import { Paginated } from '@/global/types/paginated.type';
 import { Movie } from '../entities/movie.entity';
-
-@InputType()
-export class CreateMovieMediumInput extends CreateMediumInput {
-  @Field(() => ID, { nullable: true })
-  movie_id?: number;
-}
+import { CreateMovieMediumInput } from '@/app/mediums/dto/mediums.dto';
 
 @InputType()
 export class CreateCharacterInput {
@@ -51,8 +45,8 @@ export class CreateMovieInput {
   @Field(() => [CreateCharacterInput], { nullable: true })
   directors?: CreateCharacterInput[];
 
-  @Field(() => [ID])
-  source_ids?: number[];
+  // @Field(() => [ID])
+  // source_ids?: number[];
 
   @Field(() => [CreateMovieMediumInput])
   sources?: CreateMovieMediumInput[];

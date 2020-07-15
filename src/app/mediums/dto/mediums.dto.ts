@@ -1,4 +1,4 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql';
 
 @InputType()
 export class CreateMediumInput {
@@ -16,4 +16,10 @@ export class CreateMediumInput {
 
   @Field({ nullable: true })
   description?: string;
+}
+
+@InputType()
+export class CreateMovieMediumInput extends CreateMediumInput {
+  @Field(() => ID, { nullable: true })
+  movie_id?: number;
 }

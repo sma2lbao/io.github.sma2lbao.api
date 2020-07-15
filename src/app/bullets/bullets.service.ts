@@ -16,7 +16,7 @@ export class BulletsService {
   async create(createBullet: CreateBulletInput): Promise<Bullet> {
     const { medium_id, ...rest } = createBullet;
     const bullet = this.bulletRepository.create(rest);
-    const mdeium = await this.mediumsService.findByConditions({
+    const mdeium = await this.mediumsService.findOne({
       id: medium_id,
     });
     if (!mdeium) {

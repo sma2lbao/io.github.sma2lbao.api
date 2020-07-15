@@ -4,13 +4,11 @@ import { MoviesService } from './movies.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Movie } from './entities/movie.entity';
 import { MediumsModule } from '../mediums/mediums.module';
-import { MovieMedium } from './entities/movie_medium.entity';
 import { CreateMovieInput } from './dto/movies.dto';
 import { UsersService } from '@/core/users/users.service';
-import { Like } from 'typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Movie, MovieMedium]), MediumsModule],
+  imports: [TypeOrmModule.forFeature([Movie]), MediumsModule],
   providers: [MoviesResolver, MoviesService],
   exports: [MoviesService],
 })

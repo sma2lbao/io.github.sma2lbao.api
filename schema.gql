@@ -27,8 +27,9 @@ type Character {
 
 type Medium {
   id: ID!
-  name: String!
-  alias_name: String!
+  name: String
+  alias_name: String
+  cover: String
   posters: [String!]
   description: String
   duration: Float
@@ -46,8 +47,9 @@ type Medium {
 
 type MovieMedium {
   id: ID!
-  name: String!
-  alias_name: String!
+  name: String
+  alias_name: String
+  cover: String
   posters: [String!]
   description: String
   duration: Float
@@ -251,6 +253,7 @@ type Mutation {
   create_tag(tag: CreateTagInput!): Tag!
   add_movie_to_tag(tag_id: Float!, movie_id: Float!): Boolean!
   create_movie(movie: CreateMovieInput!): Movie!
+  add_mediums_to_movie(movie_medium: CreateMovieMediumInput!, movie_id: ID!): Movie!
   create_category(category: CreateCategoryInput!): Category!
   delete_category(id: ID!): Boolean!
   create_bullet(bullet: CreateBulletInput!): Bullet!
@@ -287,7 +290,6 @@ input CreateMovieInput {
   region: String
   actors: [CreateCharacterInput!]
   directors: [CreateCharacterInput!]
-  source_ids: [ID!]!
   sources: [CreateMovieMediumInput!]!
 }
 

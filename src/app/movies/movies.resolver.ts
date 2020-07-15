@@ -7,6 +7,7 @@ import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
+import { CreateMovieMediumInput } from '../mediums/dto/mediums.dto';
 
 @Resolver('Movies')
 export class MoviesResolver {
@@ -19,6 +20,14 @@ export class MoviesResolver {
     @CurrUser() user: User,
   ): Promise<Movie> {
     return await this.moviesService.create(createMovie, user);
+  }
+
+  @Mutation(() => Movie)
+  async add_mediums_to_movie(
+    @Args('movie_id', { type: () => ID }) movie_id: number,
+    @Args('movie_medium') movie_medium: CreateMovieMediumInput,
+  ): Promise<Movie> {
+    return await this.moviesService.addMediumsToMovie(movie_id, movie_medium);
   }
 
   @Query(() => Movie)
