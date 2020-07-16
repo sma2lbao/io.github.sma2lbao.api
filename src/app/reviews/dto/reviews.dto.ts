@@ -1,5 +1,7 @@
-import { InputType, Field, ID } from '@nestjs/graphql';
+import { InputType, Field, ID, ObjectType } from '@nestjs/graphql';
 import { ReviewMedium } from '../interfaces/reviews.interface';
+import { Paginated } from '@/global/types/paginated.type';
+import { Review } from '../entities/review.entity';
 
 @InputType()
 export class CreateReviewInput {
@@ -15,3 +17,6 @@ export class CreateReviewInput {
   @Field(() => ID)
   medium_id: number;
 }
+
+@ObjectType()
+export class ReviewPaginated extends Paginated(Review) {}
