@@ -1,4 +1,11 @@
-import { InputType, Field, ID, ObjectType } from '@nestjs/graphql';
+import {
+  InputType,
+  Field,
+  ID,
+  ObjectType,
+  PickType,
+  OmitType,
+} from '@nestjs/graphql';
 import { Region } from '../interfaces/movies.interface';
 import { Paginated } from '@/global/types/paginated.type';
 import { Movie } from '../entities/movie.entity';
@@ -48,8 +55,20 @@ export class CreateMovieInput {
   // @Field(() => [ID])
   // source_ids?: number[];
 
-  @Field(() => [CreateMovieMediumInput])
+  @Field(() => [CreateMovieMediumInput], { nullable: true })
   sources?: CreateMovieMediumInput[];
+}
+
+@InputType()
+export class UpdateMovieInput extends OmitType(CreateMovieInput, [
+  'title' as const,
+  'cover' as const,
+]) {
+  @Field({ nullable: true })
+  title?: string;
+
+  @Field({ nullable: true })
+  cover?: string;
 }
 
 @ObjectType()

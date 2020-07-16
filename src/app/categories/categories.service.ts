@@ -3,15 +3,18 @@ import { Repository, TreeRepository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCategoryInput } from './dto/category.dto';
+import { BaseService } from '@/global/services/base.service';
 
 @Injectable()
-export class CategoriesService {
+export class CategoriesService extends BaseService<Category> {
   constructor(
     @InjectRepository(Category)
     private readonly categoryReposity: Repository<Category>,
     @InjectRepository(Category)
     private readonly categoryTreeReposity: TreeRepository<Category>,
-  ) {}
+  ) {
+    super(categoryReposity);
+  }
 
   async create(createCategory: CreateCategoryInput): Promise<Category> {
     const { parent_id, children, ...rest } = createCategory;

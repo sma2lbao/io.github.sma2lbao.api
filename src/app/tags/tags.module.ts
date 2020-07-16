@@ -4,9 +4,10 @@ import { TagsResolver } from './tags.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Tag } from './entities/tag.entity';
 import { MoviesModule } from '../movies/movies.module';
+import { CategoriesModule } from '../categories/categories.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Tag]), MoviesModule],
+  imports: [TypeOrmModule.forFeature([Tag]), MoviesModule, CategoriesModule],
   providers: [TagsService, TagsResolver],
 })
 export class TagsModule {}

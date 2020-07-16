@@ -17,6 +17,14 @@ export class TagsResolver {
     @Args('movie_id') movie_id: number,
     @Args('tag_id') tag_id: number,
   ): Promise<boolean> {
-    return await this.tagsService.addMovieToPlaylist(movie_id, tag_id);
+    return await this.tagsService.addMovieToTag(movie_id, tag_id);
+  }
+
+  @Mutation(() => Boolean)
+  async add_category_to_tag(
+    @Args('category_id') category_id: number,
+    @Args('tag_id') tag_id: number,
+  ): Promise<boolean> {
+    return await this.tagsService.addCategoryToTag(category_id, tag_id);
   }
 }

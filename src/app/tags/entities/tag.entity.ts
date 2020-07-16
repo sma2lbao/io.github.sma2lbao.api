@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Movie } from '@/app/movies/entities/movie.entity';
+import { Category } from '@/app/categories/entities/category.entity';
 
 @ObjectType()
 @Entity()
@@ -26,7 +28,13 @@ export class Tag {
 
   @Field(() => [Movie], { nullable: true })
   @ManyToMany(() => Movie, { nullable: true })
+  @JoinTable()
   public movies: Movie[];
+
+  @Field(() => [Category], { nullable: true })
+  @ManyToMany(() => Category, { nullable: true })
+  @JoinTable()
+  public categories: Category[];
 
   @Field()
   @CreateDateColumn({

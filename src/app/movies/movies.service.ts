@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './entities/movie.entity';
 import { Repository, In } from 'typeorm';
-import { CreateMovieInput } from './dto/movies.dto';
+import { CreateMovieInput, UpdateMovieInput } from './dto/movies.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { BaseService } from '@/global/services/base.service';
 import { MovieMediumsService } from '../mediums/movie_mediums.service';
@@ -42,6 +42,16 @@ export class MoviesService extends BaseService<Movie> {
     }
     movie.author = author;
     return await this.movieRepository.save(movie);
+  }
+
+  async updateById(
+    movie_id: number,
+    updateMovie: UpdateMovieInput,
+    author?: User,
+  ): Promise<Movie> {
+    const movie = await this.movieRepository.findOne(movie_id);
+    const saveMovie = this.movieRepository.merge(movie, updateMovie);
+    return await this.create(saveMovie, author);
   }
 
   async addMediumsToMovie(
