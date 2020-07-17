@@ -1,11 +1,4 @@
-import {
-  Resolver,
-  Query,
-  Args,
-  Subscription,
-  Mutation,
-  Int,
-} from '@nestjs/graphql';
+import { Resolver, Query, Args, Subscription, Mutation } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { Inject, UseGuards } from '@nestjs/common';

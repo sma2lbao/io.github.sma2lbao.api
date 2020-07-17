@@ -92,11 +92,24 @@ enum Region {
   India
 }
 
+type Category {
+  id: ID!
+  label: String!
+  alias: String
+  description: String
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+  children: [Category!]
+  parent: Category
+}
+
 type Tag {
   id: ID!
   label: String!
   description: String
   movies: [Movie!]
+  categories: [Category!]
   create_at: Date!
   update_at: Date!
 }
@@ -118,18 +131,6 @@ type MoviePaginated {
   nodes: [Movie!]
   pageInfo: MoviePageInfo!
   totalCount: Int!
-}
-
-type Category {
-  id: ID!
-  label: String!
-  alias: String
-  description: String
-  create_at: Date!
-  update_at: Date!
-  delete_at: Date!
-  children: [Category!]
-  parent: Category
 }
 
 type Bullet {
@@ -178,6 +179,25 @@ type Review {
   create_at: Date!
   update_at: Date!
   delete_at: Date!
+}
+
+type ReviewEdge {
+  cursor: String!
+  node: Review!
+}
+
+type ReviewPageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+type ReviewPaginated {
+  edges: [ReviewEdge!]
+  nodes: [Review!]
+  pageInfo: ReviewPageInfo!
+  totalCount: Int!
 }
 
 type Playlist {
@@ -232,6 +252,7 @@ type Query {
   current_topic: Topic!
   movie_urges: [Movie!]!
   user_urges: [User!]!
+  reviews_paginated(query: PaginatedQuery, medium_id: Float!, type: ReviewMedium!): ReviewPaginated!
   playlist(playlist_id: Float!): Playlist!
   follows: [Follow!]!
   follows_paginated(query: PaginatedQuery): FollowPaginated!
@@ -249,9 +270,14 @@ input PaginatedQuery {
   before: String
 }
 
+enum ReviewMedium {
+  MOVIE
+}
+
 type Mutation {
   create_tag(tag: CreateTagInput!): Tag!
   add_movie_to_tag(tag_id: Float!, movie_id: Float!): Boolean!
+  add_category_to_tag(tag_id: Float!, category_id: Float!): Boolean!
   create_movie(movie: CreateMovieInput!): Movie!
   add_mediums_to_movie(movie_medium: CreateMovieMediumInput!, movie_id: ID!): Movie!
   create_category(category: CreateCategoryInput!): Category!
@@ -290,7 +316,7 @@ input CreateMovieInput {
   region: String
   actors: [CreateCharacterInput!]
   directors: [CreateCharacterInput!]
-  sources: [CreateMovieMediumInput!]!
+  sources: [CreateMovieMediumInput!]
 }
 
 input CreateCharacterInput {
@@ -371,10 +397,6 @@ input CreateReviewInput {
   medium_id: ID!
 }
 
-enum ReviewMedium {
-  MOVIE
-}
-
 input CreatePlaylistInput {
   title: String!
   description: String
@@ -393,4 +415,5 @@ input DeleteFollowInput {
 
 type Subscription {
   user_created: User!
+  review_created(medium_id: ID!, type: ReviewMedium!): Review!
 }
