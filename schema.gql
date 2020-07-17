@@ -252,7 +252,7 @@ type Query {
   current_topic: Topic!
   movie_urges: [Movie!]!
   user_urges: [User!]!
-  reviews_paginated(query: PaginatedQuery, medium_id: Float!, type: ReviewMedium!): ReviewPaginated!
+  reviews_paginated(query: PaginatedQuery, medium_id: ID, type: ReviewMedium): ReviewPaginated!
   playlist(playlist_id: Float!): Playlist!
   follows: [Follow!]!
   follows_paginated(query: PaginatedQuery): FollowPaginated!

@@ -46,8 +46,9 @@ export class ReviewsResolver {
 
   @Query(() => ReviewPaginated)
   async reviews_paginated(
-    @Args('type', { type: () => ReviewMedium }) type: ReviewMedium,
-    @Args('medium_id') medium_id: number,
+    @Args('type', { type: () => ReviewMedium, nullable: true })
+    type: ReviewMedium,
+    @Args('medium_id', { type: () => ID, nullable: true }) medium_id: number,
     @Args('query', { nullable: true }) query: PaginatedQuery,
   ): Promise<ReviewPaginated> {
     if (type === ReviewMedium.MOVIE) {
