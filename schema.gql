@@ -139,7 +139,7 @@ type Bullet {
   point: Float
   create_at: Date!
   author: User!
-  media: Medium!
+  medium: Medium!
 }
 
 type UserEdge {

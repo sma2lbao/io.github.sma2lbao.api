@@ -38,5 +38,5 @@ export class Bullet extends BaseEntity {
 
   @Field(() => Medium)
   @ManyToOne(() => Medium)
-  public media: Medium;
+  public medium: Medium;
 }
