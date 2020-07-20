@@ -4,6 +4,7 @@ import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCategoryInput } from './dto/category.dto';
 import { BaseService } from '@/global/services/base.service';
+import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
 
 @Injectable()
 export class CategoriesService extends BaseService<Category> {
@@ -22,7 +23,7 @@ export class CategoriesService extends BaseService<Category> {
     if (parent_id) {
       const parent = await this.findById(parent_id);
       if (!parent) {
-        throw new Error();
+        throw new EntityNotFoundException();
       }
       category.parent = parent;
     }

@@ -7,6 +7,7 @@ import { CreatePlaylistInput } from './dto/playlists.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { MoviesService } from '../movies/movies.service';
 import { UsersService } from '@/core/users/users.service';
+import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
 
 @Injectable()
 export class PlaylistsService extends BaseService<Playlist> {
@@ -42,7 +43,7 @@ export class PlaylistsService extends BaseService<Playlist> {
       author: author,
     });
     if (!movie || !playlist) {
-      throw new Error();
+      throw new EntityNotFoundException();
     }
     await this.playlistsRepository
       .createQueryBuilder()

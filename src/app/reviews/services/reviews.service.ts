@@ -10,6 +10,8 @@ import { User } from '@/core/users/entities/user.entity';
 import { MovieReview } from '../entities/movie_review.entity';
 import { ReviewMedium } from '../interfaces/reviews.interface';
 import { MoviesService } from '../../movies/movies.service';
+import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
 
 @Injectable()
 export class ReviewsService extends BaseService<Review> {
@@ -32,13 +34,13 @@ export class ReviewsService extends BaseService<Review> {
       ? await this.usersService.findByUid(author_uid)
       : user;
     if (!author) {
-      throw new Error();
+      throw new UserNotFoundException();
     }
     let review = null;
     if (type === ReviewMedium.MOVIE) {
       const movie = await this.moviesService.findOne({ id: medium_id });
       if (!movie) {
-        throw new Error();
+        throw new EntityNotFoundException();
       }
       review = this.movieReviewRepository.create(rest);
       review.movie = movie;

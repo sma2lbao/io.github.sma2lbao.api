@@ -7,6 +7,8 @@ import { User } from '@/core/users/entities/user.entity';
 import { BaseService } from '@/global/services/base.service';
 import { MovieMediumsService } from '../mediums/services/movie_mediums.service';
 import { CreateMovieMediumInput } from '../mediums/dto/mediums.dto';
+import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
 
 @Injectable()
 export class MoviesService extends BaseService<Movie> {
@@ -22,7 +24,7 @@ export class MoviesService extends BaseService<Movie> {
     const { sources, ...rest } = createMovie;
     const movie = this.movieRepository.create(rest);
     if (!author) {
-      throw new Error();
+      throw new UserNotFoundException();
     }
     // TODO
     // if (source_ids && source_ids.length > 0) {
@@ -63,7 +65,7 @@ export class MoviesService extends BaseService<Movie> {
       createMovieMedium,
     );
     if (!movie || !movieMedium) {
-      throw new Error();
+      throw new EntityNotFoundException();
     }
     await this.movieRepository
       .createQueryBuilder()

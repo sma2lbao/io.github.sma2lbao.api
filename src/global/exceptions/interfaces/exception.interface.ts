@@ -1,5 +1,6 @@
 export enum BaseExceptionStatus {
   DEFAULT = 100000,
+  ENTITY_NOT_FOUND = 100404,
 }
 
 export enum MediumExceptionStatus {
@@ -7,4 +8,12 @@ export enum MediumExceptionStatus {
   MEDIUM_NOT_FOUND = 200404,
 }
 
-export type ExceptionStatus = BaseExceptionStatus | MediumExceptionStatus;
+export enum UserExceptionStatus {
+  USER_DEFAULT = 300000,
+  USER_NOT_FOUND = 300404,
+}
+
+export type ExceptionStatus =
+  | BaseExceptionStatus
+  | MediumExceptionStatus
+  | UserExceptionStatus;

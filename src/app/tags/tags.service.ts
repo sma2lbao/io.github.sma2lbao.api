@@ -6,6 +6,7 @@ import { CreateTagInput } from './dto/tags.dto';
 import { MoviesService } from '../movies/movies.service';
 import { BaseService } from '@/global/services/base.service';
 import { CategoriesService } from '../categories/categories.service';
+import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
 
 @Injectable()
 export class TagsService extends BaseService<Tag> {
@@ -30,7 +31,7 @@ export class TagsService extends BaseService<Tag> {
       id: tag_id,
     });
     if (!movie || !tag) {
-      throw new Error();
+      throw new EntityNotFoundException();
     }
     await this.tagsReposity
       .createQueryBuilder()
@@ -51,7 +52,7 @@ export class TagsService extends BaseService<Tag> {
       id: tag_id,
     });
     if (!category || !tag) {
-      throw new Error();
+      throw new EntityNotFoundException();
     }
     await this.tagsReposity
       .createQueryBuilder()

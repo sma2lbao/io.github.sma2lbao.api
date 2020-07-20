@@ -13,6 +13,7 @@ import { MailerService } from '../mailer/mailer.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from 'bcrypt';
 import { BaseService } from '@/global/services/base.service';
+import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
 
 @Injectable()
 export class UsersService extends BaseService<User> {
@@ -34,14 +35,13 @@ export class UsersService extends BaseService<User> {
   ): Promise<User> {
     const user: User = await this.userRepository.findOne({ username });
     if (!user) {
-      throw new Error();
+      throw new UserNotFoundException();
     }
     const match = bcrypt.compareSync(password, user.password);
-    if (match) {
-      return user;
-    } else {
-      throw new Error();
+    if (!match) {
+      throw new UserNotFoundException();
     }
+    return user;
   }
 
   async create(createUser: CreateUserInput): Promise<User> {
@@ -80,7 +80,7 @@ export class UsersService extends BaseService<User> {
   async updateByUid(uid: string, updateUser: UpdateUserInput): Promise<User> {
     const currUser = await this.findByUid(uid);
     if (!currUser) {
-      throw new Error();
+      throw new UserNotFoundException();
     }
     const saveUser = updateUser;
     if (updateUser.password) {
