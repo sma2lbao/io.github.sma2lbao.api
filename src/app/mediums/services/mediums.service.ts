@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Medium } from './entities/medium.entity';
+import { Medium } from '../entities/medium.entity';
 import { Repository } from 'typeorm';
-import { CreateMediumInput } from './dto/mediums.dto';
+import { CreateMediumInput } from '../dto/mediums.dto';
 import { BaseService } from '@/global/services/base.service';
 
 @Injectable()

@@ -6,7 +6,7 @@ import {
   Subscription,
   ID,
 } from '@nestjs/graphql';
-import { ReviewsService } from './reviews.service';
+import { ReviewsService } from './services/reviews.service';
 import { Review } from './entities/review.entity';
 import { UseGuards, Inject } from '@nestjs/common';
 import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
@@ -15,7 +15,7 @@ import { User } from '@/core/users/entities/user.entity';
 import { CreateReviewInput, ReviewPaginated } from './dto/reviews.dto';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
 import { ReviewMedium } from './interfaces/reviews.interface';
-import { MovieReviewsService } from './movie_reviews.service';
+import { MovieReviewsService } from './services/movie_reviews.service';
 import { REVIEW_CREATED } from './reivews.constants';
 import { PubSub } from 'graphql-subscriptions';
 import { PUB_SUB } from '@/core/graphql/constants/graphql.constant';

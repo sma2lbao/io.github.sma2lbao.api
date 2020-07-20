@@ -5,7 +5,7 @@ import { Repository, In } from 'typeorm';
 import { CreateMovieInput, UpdateMovieInput } from './dto/movies.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { BaseService } from '@/global/services/base.service';
-import { MovieMediumsService } from '../mediums/movie_mediums.service';
+import { MovieMediumsService } from '../mediums/services/movie_mediums.service';
 import { CreateMovieMediumInput } from '../mediums/dto/mediums.dto';
 
 @Injectable()

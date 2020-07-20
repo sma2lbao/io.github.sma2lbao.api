@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { MediumsService } from './mediums.service';
-import { MovieMediumsService } from './movie_mediums.service';
+import { MediumsService } from './services/mediums.service';
+import { MovieMediumsService } from './services/movie_mediums.service';
 import { MediumsResolver } from './mediums.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Medium } from './entities/medium.entity';

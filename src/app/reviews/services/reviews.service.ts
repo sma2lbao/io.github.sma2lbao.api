@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Review } from './entities/review.entity';
-import { Reply } from './entities/reply.entity';
+import { Review } from '../entities/review.entity';
+import { Reply } from '../entities/reply.entity';
 import { BaseService } from '@/global/services/base.service';
-import { CreateReviewInput } from './dto/reviews.dto';
+import { CreateReviewInput } from '../dto/reviews.dto';
 import { UsersService } from '@/core/users/users.service';
 import { User } from '@/core/users/entities/user.entity';
-import { MovieReview } from './entities/movie_review.entity';
-import { ReviewMedium } from './interfaces/reviews.interface';
-import { MoviesService } from '../movies/movies.service';
+import { MovieReview } from '../entities/movie_review.entity';
+import { ReviewMedium } from '../interfaces/reviews.interface';
+import { MoviesService } from '../../movies/movies.service';
 
 @Injectable()
 export class ReviewsService extends BaseService<Review> {
