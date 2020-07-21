@@ -7,8 +7,8 @@ import { User } from '@/core/users/entities/user.entity';
 import { BaseService } from '@/global/services/base.service';
 import { MovieMediumsService } from '../mediums/services/movie_mediums.service';
 import { CreateMovieMediumInput } from '../mediums/dto/mediums.dto';
-import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
-import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
+import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
 @Injectable()
 export class MoviesService extends BaseService<Movie> {

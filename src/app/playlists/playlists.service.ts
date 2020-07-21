@@ -7,7 +7,7 @@ import { CreatePlaylistInput } from './dto/playlists.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { MoviesService } from '../movies/movies.service';
 import { UsersService } from '@/core/users/users.service';
-import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
+import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
 @Injectable()
 export class PlaylistsService extends BaseService<Playlist> {

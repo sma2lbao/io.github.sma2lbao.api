@@ -1,16 +1,12 @@
-import { BaseException } from '../base.exception';
 import { UserExceptionStatus } from '../interfaces/exception.interface';
+import { ExceptionWrap } from '../exception.wrap';
 
-export class UserException extends BaseException {
-  constructor(
-    objectOrError?: string | unknown | any,
-    description?: string,
-    status?: UserExceptionStatus,
-  ) {
-    super(
-      objectOrError,
-      description || 'User Error',
-      status || UserExceptionStatus.USER_DEFAULT,
-    );
-  }
-}
+export const UserException = ExceptionWrap(
+  'User Exception',
+  UserExceptionStatus.ERROR,
+);
+
+export const UserNotFoundException = ExceptionWrap(
+  'User Not Found Exception',
+  UserExceptionStatus.USER_NOT_FOUND,
+);

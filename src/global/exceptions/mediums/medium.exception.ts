@@ -1,16 +1,12 @@
-import { BaseException } from '../base.exception';
 import { MediumExceptionStatus } from '../interfaces/exception.interface';
+import { ExceptionWrap } from '../exception.wrap';
 
-export class MediumException extends BaseException {
-  constructor(
-    objectOrError?: string | unknown | any,
-    description?: string,
-    status?: MediumExceptionStatus,
-  ) {
-    super(
-      objectOrError,
-      description || 'Medium Error',
-      status || MediumExceptionStatus.MEDIUM_DEFAULT,
-    );
-  }
-}
+export const MediumException = ExceptionWrap(
+  'Medium Exception',
+  MediumExceptionStatus.ERROR,
+);
+
+export const MediumNotFoundException = ExceptionWrap(
+  'Medium Not Found Exception',
+  MediumExceptionStatus.MEDIUM_NOT_FOUND,
+);

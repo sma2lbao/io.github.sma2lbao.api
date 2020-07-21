@@ -4,7 +4,7 @@ import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCategoryInput } from './dto/category.dto';
 import { BaseService } from '@/global/services/base.service';
-import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
+import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
 @Injectable()
 export class CategoriesService extends BaseService<Category> {

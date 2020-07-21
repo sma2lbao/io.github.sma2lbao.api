@@ -6,8 +6,8 @@ import { BaseService } from '@/global/services/base.service';
 import { CreateFollowInput, DeleteFollowInput } from './dto/follows.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { UsersService } from '@/core/users/users.service';
-import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
-import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
+import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
 @Injectable()
 export class FollowsService extends BaseService<Follow> {

@@ -13,7 +13,7 @@ import { MailerService } from '../mailer/mailer.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from 'bcrypt';
 import { BaseService } from '@/global/services/base.service';
-import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
 
 @Injectable()
 export class UsersService extends BaseService<User> {

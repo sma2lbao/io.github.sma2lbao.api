@@ -1,22 +1,7 @@
-import { HttpException } from '@nestjs/common';
-import {
-  ExceptionStatus,
-  BaseExceptionStatus,
-} from './interfaces/exception.interface';
+import { ExceptionWrap } from './exception.wrap';
+import { BaseExceptionStatus } from './interfaces/exception.interface';
 
-export abstract class BaseException extends HttpException {
-  constructor(
-    objectOrError?: string | unknown | any,
-    description?: string,
-    status?: ExceptionStatus,
-  ) {
-    super(
-      HttpException.createBody(
-        objectOrError,
-        description,
-        status || BaseExceptionStatus.DEFAULT,
-      ),
-      status || BaseExceptionStatus.DEFAULT,
-    );
-  }
-}
+export const EntityNotFoundException = ExceptionWrap(
+  'Entity Not Found Exception',
+  BaseExceptionStatus.ENTITY_NOT_FOUND,
+);

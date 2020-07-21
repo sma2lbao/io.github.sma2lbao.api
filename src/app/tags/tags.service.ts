@@ -6,7 +6,7 @@ import { CreateTagInput } from './dto/tags.dto';
 import { MoviesService } from '../movies/movies.service';
 import { BaseService } from '@/global/services/base.service';
 import { CategoriesService } from '../categories/categories.service';
-import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
+import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
 @Injectable()
 export class TagsService extends BaseService<Tag> {

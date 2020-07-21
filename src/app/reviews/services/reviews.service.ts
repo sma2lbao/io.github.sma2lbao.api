@@ -10,8 +10,8 @@ import { User } from '@/core/users/entities/user.entity';
 import { MovieReview } from '../entities/movie_review.entity';
 import { ReviewMedium } from '../interfaces/reviews.interface';
 import { MoviesService } from '../../movies/movies.service';
-import { EntityNotFoundException } from '@/global/exceptions/entity-not-found.exception';
-import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
+import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
 @Injectable()
 export class ReviewsService extends BaseService<Review> {

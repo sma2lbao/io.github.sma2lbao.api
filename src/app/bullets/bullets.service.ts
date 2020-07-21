@@ -4,7 +4,7 @@ import { Bullet } from './entities/bullet.entity';
 import { Repository } from 'typeorm';
 import { CreateBulletInput } from './dto/bullet.dto';
 import { MediumsService } from '../mediums/services/mediums.service';
-import { MediumNotFoundException } from '@/global/exceptions/mediums/medium-not-found.exception';
+import { MediumNotFoundException } from '@/global/exceptions/mediums/medium.exception';
 
 @Injectable()
 export class BulletsService {

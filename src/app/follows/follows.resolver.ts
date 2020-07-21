@@ -12,7 +12,7 @@ import {
 } from './dto/follows.dto';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
 import { UsersService } from '@/core/users/users.service';
-import { UserNotFoundException } from '@/global/exceptions/users/user-not-found.exception';
+import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
 
 @Resolver('Follows')
 export class FollowsResolver {
