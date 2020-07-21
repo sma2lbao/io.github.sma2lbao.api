@@ -1,4 +1,6 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
+import { Paginated } from '@/global/types/paginated.type';
+import { Playlist } from '../entities/playlist.entity';
 
 @InputType()
 export class CreatePlaylistInput {
@@ -11,3 +13,6 @@ export class CreatePlaylistInput {
   @Field({ nullable: true })
   cover: string;
 }
+
+@ObjectType()
+export class PlaylistPaginated extends Paginated(Playlist) {}

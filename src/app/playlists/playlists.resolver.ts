@@ -2,14 +2,34 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { PlaylistsService } from './playlists.service';
 import { Playlist } from './entities/playlist.entity';
 import { UseGuards } from '@nestjs/common';
-import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
-import { CreatePlaylistInput } from './dto/playlists.dto';
+import { GqlJwtAuthGuard, JwtAuthGuard } from '@/core/auth/guards/auth.guard';
+import { CreatePlaylistInput, PlaylistPaginated } from './dto/playlists.dto';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
+import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Resolver('Playlists')
 export class PlaylistsResolver {
   constructor(private readonly playlistsService: PlaylistsService) {}
+
+  @Query(() => PlaylistPaginated)
+  @UseGuards(JwtAuthGuard({ required: false }))
+  async playlists_paginated(
+    @Args('query', { nullable: true }) query: PaginatedQuery,
+    @Args('author_uid', { nullable: true }) author_uid: string,
+    @CurrUser() user: User,
+  ): Promise<PlaylistPaginated> {
+    const result = await this.playlistsService.findCursorPagition({
+      query: query,
+      key: 'create_at',
+      where: {
+        author: {
+          uid: author_uid ? author_uid : user.uid,
+        },
+      },
+    });
+    return result;
+  }
 
   @Query(() => Playlist)
   @UseGuards(GqlJwtAuthGuard)

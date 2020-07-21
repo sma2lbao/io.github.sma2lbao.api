@@ -212,6 +212,25 @@ type Playlist {
   delete_at: Date!
 }
 
+type PlaylistEdge {
+  cursor: String!
+  node: Playlist!
+}
+
+type PlaylistPageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+type PlaylistPaginated {
+  edges: [PlaylistEdge!]
+  nodes: [Playlist!]
+  pageInfo: PlaylistPageInfo!
+  totalCount: Int!
+}
+
 type Follow {
   follower: User!
   owner: User!
@@ -253,6 +272,7 @@ type Query {
   movie_urges: [Movie!]!
   user_urges: [User!]!
   reviews_paginated(query: PaginatedQuery, medium_id: ID, type: ReviewMedium): ReviewPaginated!
+  playlists_paginated(author_uid: String, query: PaginatedQuery): PlaylistPaginated!
   playlist(playlist_id: Float!): Playlist!
   follows: [Follow!]!
   follows_paginated(query: PaginatedQuery): FollowPaginated!

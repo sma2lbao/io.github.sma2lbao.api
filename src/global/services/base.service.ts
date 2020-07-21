@@ -135,7 +135,6 @@ export class BaseService<T> {
 
   protected decodeCursor(cursor: string): any {
     const dateReviver = (key: any, value: string | number | Date) => {
-      console.log(value);
       const datePattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/;
       if (typeof value === 'string' && datePattern.test(value)) {
         return new Date(value);
