@@ -206,6 +206,7 @@ type Playlist {
   description: String
   cover: String
   movies: [Movie!]
+  movies_count: Float
   author: User!
   create_at: Date!
   update_at: Date!

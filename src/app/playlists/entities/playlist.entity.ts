@@ -9,6 +9,7 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  RelationCount,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
@@ -37,6 +38,10 @@ export class Playlist extends BaseEntity {
   @ManyToMany(() => Movie)
   @JoinTable()
   movies: Movie[];
+
+  @Field({ nullable: true })
+  @RelationCount((playlist: Playlist) => playlist.movies)
+  movies_count: number;
 
   @Field(() => User)
   @ManyToOne(() => User, {
