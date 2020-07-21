@@ -6,8 +6,11 @@ import { BaseService } from '@/global/services/base.service';
 import { CreateFollowInput, DeleteFollowInput } from './dto/follows.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { UsersService } from '@/core/users/users.service';
-import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
-import { EntityNotFoundException } from '@/global/exceptions/base.exception';
+import { UserNotFound } from '@/global/exceptions/users/user.exception';
+import {
+  FollowerOwnerRepeat,
+  FollowNotFound,
+} from '@/global/exceptions/follows/follow.exception';
 
 @Injectable()
 export class FollowsService extends BaseService<Follow> {
@@ -29,10 +32,10 @@ export class FollowsService extends BaseService<Follow> {
       ? await this.usersService.findByUid(follower_uid)
       : follower;
     if (!follower) {
-      throw new UserNotFoundException();
+      throw new UserNotFound();
     }
     if (follower.uid === owner.uid) {
-      throw new Error();
+      throw new FollowerOwnerRepeat();
     }
     const follow = this.followRepository.create();
     follow.follower = follower;
@@ -50,14 +53,14 @@ export class FollowsService extends BaseService<Follow> {
       ? await this.usersService.findByUid(follower_uid)
       : follower;
     if (!follower) {
-      throw new UserNotFoundException();
+      throw new UserNotFound();
     }
     const follow = await this.findOne({
       owner: owner,
       follower: follower,
     });
     if (!follow) {
-      throw new EntityNotFoundException();
+      throw new FollowNotFound();
     }
     return await this.followRepository.remove(follow);
   }

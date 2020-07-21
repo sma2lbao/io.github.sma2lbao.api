@@ -10,12 +10,15 @@ export enum MediumExceptionStatus {
 
 export enum UserExceptionStatus {
   ERROR = 300000,
+  REGISTER_OTP_DIFFERENT = 300001,
+  REGISTER_OTP_NOT_EXPIRED = 300002,
   USER_NOT_FOUND = 300404,
 }
 
 export enum FollowExceptionStutus {
   ERROR = 400000,
   FOLLOWER_OWNER_REPEAT = 400001,
+  FOLLOW_NOT_FOUND = 400404,
 }
 
 export type ExceptionStatus =

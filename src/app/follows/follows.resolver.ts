@@ -12,7 +12,7 @@ import {
 } from './dto/follows.dto';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
 import { UsersService } from '@/core/users/users.service';
-import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
+import { UserNotFound } from '@/global/exceptions/users/user.exception';
 
 @Resolver('Follows')
 export class FollowsResolver {
@@ -114,7 +114,7 @@ export class FollowsResolver {
       ? await this.usersService.findByUid(follower_uid)
       : user;
     if (!owner || !follower) {
-      throw new UserNotFoundException();
+      throw new UserNotFound();
     }
     const follow = await this.followsService.findOne({
       owner: owner,

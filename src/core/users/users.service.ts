@@ -8,12 +8,16 @@ import {
   UpdateUserInput,
 } from './dto/users.dto';
 import { Cache } from 'cache-manager';
-import { LOGIN_OTP_PREFIX } from './constants/users.constant';
+import { REGISTER_OTP_PREFIX } from './constants/users.constant';
 import { MailerService } from '../mailer/mailer.service';
 import * as randomize from 'randomatic';
 import * as bcrypt from 'bcrypt';
 import { BaseService } from '@/global/services/base.service';
-import { UserNotFoundException } from '@/global/exceptions/users/user.exception';
+import {
+  UserNotFound,
+  RegisterOtpDifferent,
+  RegisterOtpNotExpired,
+} from '@/global/exceptions/users/user.exception';
 
 @Injectable()
 export class UsersService extends BaseService<User> {
@@ -35,11 +39,11 @@ export class UsersService extends BaseService<User> {
   ): Promise<User> {
     const user: User = await this.userRepository.findOne({ username });
     if (!user) {
-      throw new UserNotFoundException();
+      throw new UserNotFound();
     }
     const match = bcrypt.compareSync(password, user.password);
     if (!match) {
-      throw new UserNotFoundException();
+      throw new UserNotFound();
     }
     return user;
   }
@@ -55,20 +59,22 @@ export class UsersService extends BaseService<User> {
     createUserWithCode: CreateUserWithCodeInput,
   ): Promise<User> {
     const { email, code } = createUserWithCode;
-    const codeRedis = await this.cache.get(LOGIN_OTP_PREFIX + email);
+    const codeRedis = await this.cache.get(REGISTER_OTP_PREFIX + email);
     if (codeRedis !== code) {
-      throw new Error();
+      throw new RegisterOtpDifferent();
     }
     return await this.create(createUserWithCode);
   }
 
   async sendRegisterEmail(email: string): Promise<string> {
     const otp = randomize('0', 6);
-    const codeOfStore = await this.cache.get(LOGIN_OTP_PREFIX + email);
+    const codeOfStore = await this.cache.get(REGISTER_OTP_PREFIX + email);
     if (codeOfStore) {
-      throw new Error();
+      throw new RegisterOtpNotExpired();
     }
-    await this.cache.set(LOGIN_OTP_PREFIX + email, otp, { ttl: 24 * 60 * 60 });
+    await this.cache.set(REGISTER_OTP_PREFIX + email, otp, {
+      ttl: 24 * 60 * 60,
+    });
     const result = await this.mailerService.sendRegisterEmailTemplate(email);
     return result.response;
   }
@@ -80,7 +86,7 @@ export class UsersService extends BaseService<User> {
   async updateByUid(uid: string, updateUser: UpdateUserInput): Promise<User> {
     const currUser = await this.findByUid(uid);
     if (!currUser) {
-      throw new UserNotFoundException();
+      throw new UserNotFound();
     }
     const saveUser = updateUser;
     if (updateUser.password) {
