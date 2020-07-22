@@ -20,7 +20,7 @@ import { FollowsModule } from './app/follows/follows.module';
     ConfigModule.forRoot({
       isGlobal: true,
       load: configs,
-      envFilePath: ['.env.development'],
+      envFilePath: [`.env.${process.env.NODE_ENV || 'local'}`],
       validationSchema: schemas,
     }),
     TagsModule,
