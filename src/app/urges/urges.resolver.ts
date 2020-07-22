@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { Movie } from '../movies/entities/movie.entity';
 import { UseGuards } from '@nestjs/common';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
@@ -13,6 +13,15 @@ export class UrgesResolver {
   @Query(() => [Movie])
   @UseGuards(JwtAuthGuard({ required: false }))
   async movie_urges(@CurrUser() user?: User): Promise<Movie[]> {
+    return await this.urgesService.findMovieUrges(user);
+  }
+
+  @Query(() => [Movie])
+  @UseGuards(JwtAuthGuard({ required: false }))
+  async movie_urges_by_movie(
+    @Args('movie_id') movie_id: number,
+    @CurrUser() user?: User,
+  ): Promise<Movie[]> {
     return await this.urgesService.findMovieUrges(user);
   }
 

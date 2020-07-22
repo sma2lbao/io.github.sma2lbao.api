@@ -15,7 +15,7 @@ import { DateScalar } from './scalars/date.scalar';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        typePaths: [join(__dirname, '../', '/**/*.graphql')],
+        // typePaths: [join(__dirname, '../', '/**/*.graphql')],
         autoSchemaFile: 'schema.gql',
         debug: true,
         introspection: true,

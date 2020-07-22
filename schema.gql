@@ -271,6 +271,7 @@ type Query {
   users_paginated(query: PaginatedQuery): UserPaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
+  movie_urges_by_movie(movie_id: Float!): [Movie!]!
   user_urges: [User!]!
   reviews_paginated(query: PaginatedQuery, medium_id: ID, type: ReviewMedium): ReviewPaginated!
   playlists_paginated(author_uid: String, query: PaginatedQuery): PlaylistPaginated!
