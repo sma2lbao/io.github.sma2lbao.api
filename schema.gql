@@ -133,6 +133,26 @@ type MoviePaginated {
   totalCount: Int!
 }
 
+type VideoMedium {
+  id: ID!
+  name: String
+  alias_name: String
+  cover: String
+  posters: [String!]
+  description: String
+  duration: Float
+  preview_url: String
+  url: String!
+  low_quality_url: String
+  medium_quality_url: String
+  high_quality_url: String
+  super_quality_url: String
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+  version: Float!
+}
+
 type Bullet {
   id: ID!
   content: String!

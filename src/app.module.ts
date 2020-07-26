@@ -14,6 +14,7 @@ import { UrgesModule } from './app/urges/urges.module';
 import { ReviewsModule } from './app/reviews/reviews.module';
 import { PlaylistsModule } from './app/playlists/playlists.module';
 import { FollowsModule } from './app/follows/follows.module';
+import { VideosModule } from './app/videos/videos.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { FollowsModule } from './app/follows/follows.module';
     ReviewsModule,
     PlaylistsModule,
     FollowsModule,
+    VideosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
