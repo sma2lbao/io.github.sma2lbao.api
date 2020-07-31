@@ -133,6 +133,21 @@ type MoviePaginated {
   totalCount: Int!
 }
 
+type Video {
+  id: ID!
+  title: String!
+  sub_title: String
+  alias_title: String
+  cover: String!
+  posters: [String!]
+  description: String
+  sources: [VideoMedium!]!
+  author: User!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
 type VideoMedium {
   id: ID!
   name: String
@@ -279,6 +294,25 @@ type FollowPaginated {
   totalCount: Int!
 }
 
+type VideoEdge {
+  cursor: String!
+  node: Video!
+}
+
+type VideoPageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+  endCursor: String!
+}
+
+type VideoPaginated {
+  edges: [VideoEdge!]
+  nodes: [Video!]
+  pageInfo: VideoPageInfo!
+  totalCount: Int!
+}
+
 type Query {
   movie(id: ID!): Movie!
   movies_paginated(query: PaginatedQuery): MoviePaginated!
@@ -303,6 +337,8 @@ type Query {
   fans_paginated(query: PaginatedQuery): FollowPaginated!
   fans_total(owner_uid: String): Int!
   is_following(follower_uid: String, owner_uid: String!): Boolean!
+  video(id: ID!): Video!
+  videos_paginated(query: PaginatedQuery): VideoPaginated!
 }
 
 input PaginatedQuery {
@@ -341,6 +377,8 @@ type Mutation {
   add_movie_to_playlist(playlist_id: Float!, movie_id: Float!): Boolean!
   create_follow(follow: CreateFollowInput!): Follow!
   remove_follow(follow: DeleteFollowInput!): Follow!
+  create_video(video: CreateVideoInput!): Video!
+  add_mediums_to_video(video_medium: CreateVideoMediumInput!, video_id: ID!): Video!
 }
 
 input CreateTagInput {
@@ -453,6 +491,25 @@ input CreateFollowInput {
 input DeleteFollowInput {
   follower_uid: ID
   owner_uid: ID!
+}
+
+input CreateVideoInput {
+  title: String!
+  sub_title: String
+  alias_title: String
+  cover: String!
+  posters: [String!]
+  description: String
+  sources: [CreateVideoMediumInput!]
+}
+
+input CreateVideoMediumInput {
+  name: String!
+  url: String!
+  alias_name: String
+  posters: [String!]
+  description: String
+  video_id: ID
 }
 
 type Subscription {

@@ -23,3 +23,9 @@ export class CreateMovieMediumInput extends CreateMediumInput {
   @Field(() => ID, { nullable: true })
   movie_id?: number;
 }
+
+@InputType()
+export class CreateVideoMediumInput extends CreateMediumInput {
+  @Field(() => ID, { nullable: true })
+  video_id?: number;
+}

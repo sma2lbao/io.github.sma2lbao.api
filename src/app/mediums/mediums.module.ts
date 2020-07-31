@@ -6,10 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Medium } from './entities/medium.entity';
 import { MovieMedium } from './entities/movie_medium.entity';
 import { VideoMedium } from './entities/video_medium.entity';
+import { VideoMediumsService } from './services/video_mediums.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Medium, MovieMedium, VideoMedium])],
-  providers: [MediumsService, MovieMediumsService, MediumsResolver],
-  exports: [MediumsService, MovieMediumsService],
+  providers: [
+    MediumsService,
+    MovieMediumsService,
+    MediumsResolver,
+    VideoMediumsService,
+  ],
+  exports: [MediumsService, MovieMediumsService, VideoMediumsService],
 })
 export class MediumsModule {}
