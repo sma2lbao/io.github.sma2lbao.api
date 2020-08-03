@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, UseGuards, Req, Render } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 
@@ -32,8 +32,13 @@ export class AuthController {
 
   @UseGuards(AuthGuard('github'))
   @Get('/github/callback')
-  async githubCallback(@Req() req): Promise<any> {
-    // console.log('req:', req);
-    return await this.authService.login(req.user);
+  @Render('oauth-callback')
+  async githubCallback(@Req() req: any): Promise<any> {
+    try {
+      const { access_token } = await this.authService.login(req.user);
+      return { access_token, error: '' };
+    } catch (error) {
+      return { access_token: '', error: 'oauth fail.' };
+    }
   }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>第三方oauth认证</title>
+</head>
+<script>
+    function loadHandler() {
+        window.addEventListener('message', function (event) {
+            const data = event.data
+            if (data && data.type === 'access_token') {
+                const source = event.source
+                source.postMessage({
+                    data: {
+                        access_token: '{{ access_token }}',
+                        error: '{{ error }}'
+                    },
+                    type: 'access_token_callback'
+                }, event.origin)
+            }
+        })
+    }
+</script>
+
+<body onload="loadHandler()">
+    {{#if access_token}}
+    <div>login success.</div>
+    {{else}}
+    <div>{{ error }}</div>
+    {{/if}}
+</body>
+
+</html>
