@@ -56,11 +56,39 @@ export class UpdateUserInput extends PickType(CreateUserInput, [
 
 @InputType()
 export class CreateThirdUserInput {
-  @Field()
-  readonly openid?: string;
+  @Field({ nullable: true })
+  readonly username?: string;
 
   @Field({ nullable: true })
-  readonly uid?: string;
+  readonly password?: string;
+
+  @Field({ nullable: true })
+  @IsEmail({}, { message: 'email format error' })
+  readonly email?: string;
+
+  @Field({ nullable: true })
+  readonly nickname?: string;
+
+  @Field({ nullable: true })
+  readonly avatar?: string;
+
+  @Field({ nullable: true })
+  readonly mobile?: string;
+
+  @Field({ nullable: true })
+  readonly address?: string;
+
+  @Field({ nullable: true })
+  readonly description?: string;
+}
+
+@InputType()
+export class CreateThirdPlatformInput {
+  @Field()
+  readonly openid: string;
+
+  @Field({ nullable: true })
+  readonly tuid?: string;
 
   @Field({ nullable: true })
   readonly description?: string;
@@ -68,8 +96,11 @@ export class CreateThirdUserInput {
   @Field()
   readonly platform: ThirdPlatformEnum;
 
-  @Field(() => CreateUserInput)
-  readonly user: CreateUserInput;
+  @Field(() => CreateUserInput, { nullable: true })
+  readonly user?: CreateThirdUserInput;
+
+  @Field({ nullable: true })
+  readonly user_uid?: string;
 }
 
 @ObjectType()

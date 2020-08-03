@@ -1,11 +1,12 @@
-import { Injectable, Inject, CACHE_MANAGER, Logger } from '@nestjs/common';
+import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
 import { User } from './entities/user.entity';
-import { Repository, MoreThan, UpdateResult, FindConditions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   CreateUserInput,
   CreateUserWithCodeInput,
   UpdateUserInput,
+  CreateThirdUserInput,
 } from './dto/users.dto';
 import { Cache } from 'cache-manager';
 import { REGISTER_OTP_PREFIX } from './constants/users.constant';
@@ -53,6 +54,17 @@ export class UsersService extends BaseService<User> {
     const hash = bcrypt.hashSync(user.password, 5);
     const userWithHash = Object.assign({}, user, { password: hash });
     return await this.userRepository.save(userWithHash);
+  }
+
+  async createThirdUser(createThirdUser: CreateThirdUserInput): Promise<User> {
+    const thirdUser = await this.userRepository.create(createThirdUser);
+    if (createThirdUser.password) {
+      const hash = bcrypt.hashSync(thirdUser.password, 5);
+      const userWithHash = Object.assign({}, thirdUser, { password: hash });
+      return await this.userRepository.save(userWithHash);
+    } else {
+      return await this.userRepository.save(thirdUser);
+    }
   }
 
   async createWithCode(

@@ -1,5 +1,6 @@
 import { Module, OnModuleInit, Global } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { ThirdPlatformService } from './third-platform.service';
 import { UsersResolver } from './users.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -9,8 +10,8 @@ import { CreateUserInput } from './dto/users.dto';
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([User, ThirdPlatform])],
-  providers: [UsersService, UsersResolver],
-  exports: [UsersService],
+  providers: [UsersService, UsersResolver, ThirdPlatformService],
+  exports: [UsersService, ThirdPlatformService],
 })
 export class UsersModule implements OnModuleInit {
   constructor(private readonly usersService: UsersService) {}

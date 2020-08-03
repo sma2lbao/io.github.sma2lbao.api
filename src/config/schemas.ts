@@ -26,13 +26,9 @@ const schemas = Joi.object({
   MAIL_PASS: Joi.string().required(),
   MAIL_FROM: Joi.string().default('No Reply <664413073@qq.com>'),
   // github设置
-  GITHUB_AUTH_URL: Joi.string().required(),
-  GITHUB_TOKEN_URL: Joi.string().required(),
   GITHUB_CLIENT_ID: Joi.string().required(),
   GITHUB_CLIENT_SECRET: Joi.string().required(),
   GITHUB_CALLBACK_URL: Joi.string().required(),
-  GITHUB_FAILURE_URL: Joi.string().required(),
-  GITHUB_SCOPE: Joi.string().required(),
   // apollo setting
   APOLLO_KEY: Joi.string(),
   APOLLO_API_KEY: Joi.string(),

@@ -4,8 +4,8 @@
 
 type User {
   uid: ID!
-  username: String!
-  email: String!
+  username: String
+  email: String
   nickname: String
   avatar: String
   mobile: String

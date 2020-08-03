@@ -16,17 +16,17 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   uid: string;
 
-  @Field()
-  @Column({ unique: true, length: 30, comment: 'username' })
+  @Field({ nullable: true })
+  @Column({ nullable: true, unique: true, length: 30, comment: 'username' })
   username: string;
 
   // @Field()
   @HideField()
-  @Column({ comment: 'password' })
+  @Column({ nullable: true, comment: 'password' })
   password: string;
 
-  @Field()
-  @Column({ unique: true, length: 200, comment: 'email' })
+  @Field({ nullable: true })
+  @Column({ nullable: true, unique: true, length: 200, comment: 'email' })
   email: string;
 
   @Field({ nullable: true })
