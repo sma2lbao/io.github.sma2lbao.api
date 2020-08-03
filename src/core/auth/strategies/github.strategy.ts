@@ -9,18 +9,19 @@ import {
   CreateThirdPlatformInput,
   CreateThirdUserInput,
 } from '@/core/users/dto/users.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
   constructor(
-    private readonly authService: AuthService,
     private readonly thirdPlatformService: ThirdPlatformService,
+    private readonly config: ConfigService,
   ) {
     super({
-      clientID: '8d3cc2e9f1558ae6aaab',
-      clientSecret: '790358110f41b8b054d60de10ba3f6b943c1b8b8',
+      clientID: config.get<string>('github.clientId'),
+      clientSecret: config.get<string>('github.clientSecret'),
       scope: ['user:email'],
-      callbackURL: 'http://127.0.0.1:3001/auth/github/callback',
+      callbackURL: config.get<string>('github.callbackUrl'),
     });
   }
 
