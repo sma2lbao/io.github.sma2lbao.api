@@ -10,4 +10,7 @@ export class Character {
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field(() => [String], { nullable: true })
+  tags?: string[];
 }

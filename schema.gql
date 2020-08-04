@@ -23,6 +23,7 @@ type Character {
   name: String!
   avatar: String
   description: String
+  tags: [String!]
 }
 
 type Medium {
@@ -74,8 +75,7 @@ type Movie {
   posters: [String!]
   description: String
   region: Region!
-  actors: [Character!]
-  directors: [Character!]
+  credits: [Character!]
   sources: [MovieMedium!]!
   author: User!
   create_at: Date!
@@ -394,8 +394,7 @@ input CreateMovieInput {
   posters: [String!]
   description: String
   region: String
-  actors: [CreateCharacterInput!]
-  directors: [CreateCharacterInput!]
+  credits: [CreateCharacterInput!]
   sources: [CreateMovieMediumInput!]
 }
 
@@ -403,6 +402,7 @@ input CreateCharacterInput {
   name: String!
   avatar: String
   description: String
+  tags: [String!]
 }
 
 input CreateMovieMediumInput {

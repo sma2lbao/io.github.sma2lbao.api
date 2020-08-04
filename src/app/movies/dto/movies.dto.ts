@@ -21,6 +21,9 @@ export class CreateCharacterInput {
 
   @Field({ nullable: true })
   description?: string;
+
+  @Field(() => [String], { nullable: true })
+  tags?: string[];
 }
 
 @InputType()
@@ -47,10 +50,7 @@ export class CreateMovieInput {
   region?: Region;
 
   @Field(() => [CreateCharacterInput], { nullable: true })
-  actors?: CreateCharacterInput[];
-
-  @Field(() => [CreateCharacterInput], { nullable: true })
-  directors?: CreateCharacterInput[];
+  credits?: CreateCharacterInput[];
 
   // @Field(() => [ID])
   // source_ids?: number[];

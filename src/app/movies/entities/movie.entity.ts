@@ -57,11 +57,7 @@ export class Movie extends BaseEntity {
 
   @Field(() => [Character], { nullable: true })
   @Column({ type: 'json', nullable: true })
-  public actors: Character[];
-
-  @Field(() => [Character], { nullable: true })
-  @Column('json', { nullable: true })
-  public directors: Character[];
+  public credits: Character[];
 
   @Field(() => [MovieMedium])
   @OneToMany(
