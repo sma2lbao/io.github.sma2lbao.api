@@ -1,9 +1,11 @@
-import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Query, Context } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UnauthorizedException, UseGuards, Inject } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { GqlJwtAuthGuard } from './guards/auth.guard';
 import { CurrUser } from './decorators/auth.decorator';
+import { PlatformAuthWay } from './dto/auth.dto';
+import { ThirdPlatformEnum } from '../users/interfaces/users.interface';
 
 @Resolver('Auth')
 export class AuthResolver {
@@ -26,5 +28,16 @@ export class AuthResolver {
   @UseGuards(GqlJwtAuthGuard)
   async me(@CurrUser() user: User): Promise<User> {
     return user;
+  }
+
+  @Query(() => [PlatformAuthWay])
+  async platform_auth_way(@Context() context): Promise<PlatformAuthWay[]> {
+    console.log(context);
+    return [
+      {
+        platform: ThirdPlatformEnum.GITHUB,
+        url: '/auth/github',
+      },
+    ];
   }
 }

@@ -196,6 +196,11 @@ type UserPaginated {
   totalCount: Int!
 }
 
+type PlatformAuthWay {
+  platform: String!
+  url: String!
+}
+
 type Topic {
   id: ID!
   title: String!
@@ -317,6 +322,7 @@ type Query {
   movie(id: ID!): Movie!
   movies_paginated(query: PaginatedQuery): MoviePaginated!
   me: User!
+  platform_auth_way: [PlatformAuthWay!]!
 
   """find user by uid."""
   user(uid: String!): User!
