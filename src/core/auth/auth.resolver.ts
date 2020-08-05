@@ -32,7 +32,7 @@ export class AuthResolver {
 
   @Query(() => [PlatformAuthWay])
   async platform_auth_way(@Context() context): Promise<PlatformAuthWay[]> {
-    console.log(context);
+    console.log(context.req.headers.origin);
     return [
       {
         platform: ThirdPlatformEnum.GITHUB,
