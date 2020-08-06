@@ -6,8 +6,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
-import { ObjectType, Field, ID, HideField, Int } from '@nestjs/graphql';
+import { ObjectType, Field, ID, HideField } from '@nestjs/graphql';
+import * as shortid from 'shortid';
 
 @ObjectType()
 @Entity()
@@ -16,8 +18,13 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   uid: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true, unique: true, length: 30, comment: 'username' })
+  @Field()
+  @PrimaryColumn({
+    unique: true,
+    length: 30,
+    default: () => `'Misser_${shortid.generate()}'`,
+    comment: 'username',
+  })
   username: string;
 
   // @Field()
