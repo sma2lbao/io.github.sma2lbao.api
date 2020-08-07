@@ -22,6 +22,14 @@ export class UsersResolver {
     @Inject(PUB_SUB) private readonly pubsub: PubSub,
   ) {}
 
+  @Query(() => Boolean, { description: 'find username exit.' })
+  async has_username(@Args('username') username: string): Promise<boolean> {
+    const exitCount = await this.usersService.count({
+      username,
+    });
+    return exitCount > 0 ? true : false;
+  }
+
   @Query(() => User, { description: 'find user by uid.' })
   async user(@Args('uid') uid: string): Promise<User> {
     const user = await this.usersService.findByUid(uid);

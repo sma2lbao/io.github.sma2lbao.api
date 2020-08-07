@@ -324,6 +324,9 @@ type Query {
   me: User!
   platform_auth_way: [PlatformAuthWay!]!
 
+  """find username exit."""
+  has_username(username: String!): Boolean!
+
   """find user by uid."""
   user(uid: String!): User!
 
