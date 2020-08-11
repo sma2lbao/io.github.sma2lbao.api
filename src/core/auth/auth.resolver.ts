@@ -1,6 +1,6 @@
-import { Resolver, Args, Mutation, Query, Context } from '@nestjs/graphql';
+import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { UnauthorizedException, UseGuards, Inject } from '@nestjs/common';
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { User } from '../users/entities/user.entity';
 import { GqlJwtAuthGuard } from './guards/auth.guard';
 import { CurrUser } from './decorators/auth.decorator';
@@ -31,8 +31,7 @@ export class AuthResolver {
   }
 
   @Query(() => [PlatformAuthWay])
-  async platform_auth_way(@Context() context): Promise<PlatformAuthWay[]> {
-    console.log(context.req.headers.origin);
+  async platform_auth_way(): Promise<PlatformAuthWay[]> {
     return [
       {
         platform: ThirdPlatformEnum.GITHUB,
