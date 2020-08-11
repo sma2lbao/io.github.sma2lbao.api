@@ -17,15 +17,20 @@ export class PlaylistsResolver {
   async playlists_paginated(
     @Args('query', { nullable: true }) query: PaginatedQuery,
     @Args('author_uid', { nullable: true }) author_uid: string,
+    @Args('author_username', { nullable: true }) author_username: string,
     @CurrUser() user: User,
   ): Promise<PlaylistPaginated> {
     const result = await this.playlistsService.findCursorPagition({
       query: query,
       key: 'create_at',
       where: {
-        author: {
-          uid: author_uid ? author_uid : user.uid,
-        },
+        author: author_username
+          ? {
+              username: author_username,
+            }
+          : {
+              uid: author_uid ? author_uid : user.uid,
+            },
       },
     });
     return result;
