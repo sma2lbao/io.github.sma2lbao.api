@@ -47,6 +47,9 @@ export class CreateMovieInput {
   description?: string;
 
   @Field({ nullable: true })
+  about?: string;
+
+  @Field({ nullable: true })
   region?: Region;
 
   @Field(() => [CreateCharacterInput], { nullable: true })

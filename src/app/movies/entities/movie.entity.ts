@@ -46,6 +46,10 @@ export class Movie extends BaseEntity {
   @Column({ nullable: true })
   public description: string;
 
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public about: string;
+
   @Field(() => Region)
   @Column({
     nullable: true,

@@ -74,6 +74,7 @@ type Movie {
   cover: String!
   posters: [String!]
   description: String
+  about: String
   region: Region!
   credits: [Character!]
   sources: [MovieMedium!]!
@@ -334,7 +335,7 @@ type Query {
   users_paginated(query: PaginatedQuery): UserPaginated!
   current_topic: Topic!
   movie_urges: [Movie!]!
-  movie_urges_by_movie(movie_id: Float!): [Movie!]!
+  movie_urges_by_movie(movie_id: ID!): [Movie!]!
   user_urges: [User!]!
   reviews_paginated(query: PaginatedQuery, medium_id: ID, type: ReviewMedium): ReviewPaginated!
   playlists_paginated(author_username: String, author_uid: String, query: PaginatedQuery): PlaylistPaginated!
@@ -402,6 +403,7 @@ input CreateMovieInput {
   cover: String!
   posters: [String!]
   description: String
+  about: String
   region: String
   credits: [CreateCharacterInput!]
   sources: [CreateMovieMediumInput!]
