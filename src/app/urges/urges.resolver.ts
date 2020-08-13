@@ -31,4 +31,13 @@ export class UrgesResolver {
   async user_urges(@CurrUser() user?: User): Promise<User[]> {
     return await this.urgesService.findUserUrges(user);
   }
+
+  @Query(() => [Movie])
+  @UseGuards(JwtAuthGuard({ required: false }))
+  async movie_next_urges_by_movie(
+    @Args('movie_id', { type: () => ID }) movie_id: number,
+    @CurrUser() user?: User,
+  ): Promise<Movie[]> {
+    return await this.urgesService.findMovieUrges(user);
+  }
 }

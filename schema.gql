@@ -337,6 +337,7 @@ type Query {
   movie_urges: [Movie!]!
   movie_urges_by_movie(movie_id: ID!): [Movie!]!
   user_urges: [User!]!
+  movie_next_urges_by_movie(movie_id: ID!): [Movie!]!
   reviews_paginated(query: PaginatedQuery, medium_id: ID, type: ReviewMedium): ReviewPaginated!
   playlists_paginated(author_username: String, author_uid: String, query: PaginatedQuery): PlaylistPaginated!
   playlist(playlist_id: Float!): Playlist!
