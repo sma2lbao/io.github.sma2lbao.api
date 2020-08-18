@@ -1,0 +1,76 @@
+name: GH-Page Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clean temp directory
+        run: |
+          rm -rf *
+
+      - name: Checkout
+        uses: actions/checkout@main
+
+      - name: Setup Node
+        uses: actions/setup-node@main
+        with:
+          node-version: '12.x'
+
+      - name: build
+        run: |
+          npm install
+          npm run build
+        env:
+          NODE_ENV: production
+          PROT: ${{ secrets.PROT }}
+          DB_TYPE: ${{ secrets.DB_TYPE }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_SYNCHRONIZE: ${{ secrets.DB_SYNCHRONIZE }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          MAIL_HOST: ${{ secrets.MAIL_HOST }}
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          MAIL_SECURE: ${{ secrets.MAIL_SECURE }}
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          THIRD_GITHUB_CLIENT_ID: ${{ secrets.THIRD_GITHUB_CLIENT_ID }}
+          THIRD_GITHUB_CLIENT_SECRET: ${{ secrets.THIRD_GITHUB_CLIENT_SECRET }}
+          THIRD_GITHUB_CALLBACK_URL: ${{ secrets.THIRD_GITHUB_CALLBACK_URL }}
+          APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
+          APOLLO_API_KEY: ${{ secrets.APOLLO_API_KEY }}
+          APOLLO_SCHEMA_TAG: ${{ secrets.APOLLO_SCHEMA_TAG }}
+          OSS_REGION: ${{ secrets.OSS_REGION }}
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+          OSS_BUCKET: ${{ secrets.OSS_BUCKET }}
+
+      - name: Copy dist
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: 'dist'
+          tartge: '~/io.github.sma2lbao.api'
+
+      - name: Public
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd ~/io.github.sma2lbao.api
+            pm2 start dist/main --name miss-api-node

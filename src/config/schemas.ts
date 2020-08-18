@@ -26,9 +26,9 @@ const schemas = Joi.object({
   MAIL_PASS: Joi.string().required(),
   MAIL_FROM: Joi.string().default('No Reply <664413073@qq.com>'),
   // github设置
-  GITHUB_CLIENT_ID: Joi.string().required(),
-  GITHUB_CLIENT_SECRET: Joi.string().required(),
-  GITHUB_CALLBACK_URL: Joi.string().required(),
+  THIRD_GITHUB_CLIENT_ID: Joi.string().required(),
+  THIRD_GITHUB_CLIENT_SECRET: Joi.string().required(),
+  THIRD_GITHUB_CALLBACK_URL: Joi.string().required(),
   // apollo setting
   APOLLO_KEY: Joi.string(),
   APOLLO_API_KEY: Joi.string(),
