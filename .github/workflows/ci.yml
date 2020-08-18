@@ -55,9 +55,10 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          # key: ${{ secrets.SSH_KEY }}
           port: 22
-          source: 'dist'
+          source: 'dist/*'
           target: '~/io.github.sma2lbao.api'
 
       - name: Public
