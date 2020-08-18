@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clean temp directory
-        run: |
-          rm -rf *
-
       - name: Checkout
         uses: actions/checkout@main
 
@@ -25,7 +21,7 @@ jobs:
       - name: build
         run: |
           npm install
-          npx nest --version
+          ./node_modules/@nestjs/cli/bin/nest --version
           npm run build
         env:
           NODE_ENV: production
