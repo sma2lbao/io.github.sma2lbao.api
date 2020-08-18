@@ -62,9 +62,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "shortid": "^2.2.15",
-    "typeorm": "^0.2.25"
-  },
-  "devDependencies": {
+    "typeorm": "^0.2.25",
     "@nestjs/cli": "^7.0.0",
     "@nestjs/schematics": "^7.0.0",
     "@nestjs/testing": "^7.0.0",
@@ -97,6 +95,7 @@
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.4"
   },
+  "devDependencies": {},
   "jest": {
     "moduleFileExtensions": [
       "js",
