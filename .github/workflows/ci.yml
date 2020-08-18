@@ -71,4 +71,4 @@ jobs:
           port: 22
           script: |
             cd ~/io.github.sma2lbao.api
-            pm2 start dist/main --name miss-api-node
+            pm2 start dist/main.js --name miss-api
