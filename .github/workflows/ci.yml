@@ -58,7 +58,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           source: 'dist'
-          tartge: '~/io.github.sma2lbao.api'
+          target: '~/io.github.sma2lbao.api'
 
       - name: Public
         uses: appleboy/ssh-action@master
