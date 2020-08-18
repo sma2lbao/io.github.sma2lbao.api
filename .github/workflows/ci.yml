@@ -25,6 +25,7 @@ jobs:
       - name: build
         run: |
           npm install
+          npx nest --version
           npm run build
         env:
           NODE_ENV: production
