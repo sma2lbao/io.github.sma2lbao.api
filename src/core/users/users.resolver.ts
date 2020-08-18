@@ -30,10 +30,18 @@ export class UsersResolver {
     return exitCount > 0 ? true : false;
   }
 
-  @Query(() => User, { description: 'find user by uid.' })
-  async user(@Args('uid') uid: string): Promise<User> {
-    const user = await this.usersService.findByUid(uid);
-    return user;
+  @Query(() => User, { description: 'find user by uid or username.' })
+  async user(
+    @Args('uid', { nullable: true }) uid: string,
+    @Args('username', { nullable: true }) username: string,
+  ): Promise<User> {
+    if (uid) {
+      return await this.usersService.findByUid(uid);
+    } else {
+      return await this.usersService.findOne({
+        username,
+      });
+    }
   }
 
   @Query(() => UserPaginated, { description: 'all user with paginated.' })
