@@ -45,4 +45,21 @@ export class MoviesResolver {
     });
     return result;
   }
+
+  @Query(() => MoviePaginated)
+  async user_movies_paginated(
+    @Args('author_username') author_username: string,
+    @Args('query', { nullable: true }) query: PaginatedQuery,
+  ): Promise<MoviePaginated> {
+    const result = await this.moviesService.findCursorPagition({
+      query: query,
+      key: 'create_at',
+      where: {
+        author: {
+          username: author_username,
+        },
+      },
+    });
+    return result;
+  }
 }

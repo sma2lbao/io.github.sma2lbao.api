@@ -322,14 +322,15 @@ type VideoPaginated {
 type Query {
   movie(id: ID!): Movie!
   movies_paginated(query: PaginatedQuery): MoviePaginated!
+  user_movies_paginated(query: PaginatedQuery, author_username: String!): MoviePaginated!
   me: User!
   platform_auth_way: [PlatformAuthWay!]!
 
   """find username exit."""
   has_username(username: String!): Boolean!
 
-  """find user by uid."""
-  user(uid: String!): User!
+  """find user by uid or username."""
+  user(username: String, uid: String): User!
 
   """all user with paginated."""
   users_paginated(query: PaginatedQuery): UserPaginated!
