@@ -1,6 +1,10 @@
 import { Resolver, Mutation, Args, ID, Query } from '@nestjs/graphql';
 import { Movie } from './entities/movie.entity';
-import { CreateMovieInput, MoviePaginated } from './dto/movies.dto';
+import {
+  CreateMovieInput,
+  MoviePaginated,
+  UpdateMovieInput,
+} from './dto/movies.dto';
 import { MoviesService } from './movies.service';
 import { UseGuards } from '@nestjs/common';
 import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
@@ -20,6 +24,16 @@ export class MoviesResolver {
     @CurrUser() user: User,
   ): Promise<Movie> {
     return await this.moviesService.create(createMovie, user);
+  }
+
+  @Mutation(() => Movie)
+  @UseGuards(GqlJwtAuthGuard)
+  async update_movie(
+    @Args('movie_id', { type: () => ID }) movie_id: number,
+    @Args('movie') updateMovie: UpdateMovieInput,
+    @CurrUser() user: User,
+  ): Promise<Movie> {
+    return await this.moviesService.updateById(movie_id, updateMovie, user);
   }
 
   @Mutation(() => Movie)

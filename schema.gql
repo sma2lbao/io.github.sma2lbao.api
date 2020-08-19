@@ -369,6 +369,7 @@ type Mutation {
   add_movie_to_tag(tag_id: Float!, movie_id: Float!): Boolean!
   add_category_to_tag(tag_id: Float!, category_id: Float!): Boolean!
   create_movie(movie: CreateMovieInput!): Movie!
+  update_movie(movie: UpdateMovieInput!, movie_id: ID!): Movie!
   add_mediums_to_movie(movie_medium: CreateMovieMediumInput!, movie_id: ID!): Movie!
   create_category(category: CreateCategoryInput!): Category!
   delete_category(id: ID!): Boolean!
@@ -425,6 +426,19 @@ input CreateMovieMediumInput {
   posters: [String!]
   description: String
   movie_id: ID
+}
+
+input UpdateMovieInput {
+  sub_title: String
+  alias_title: String
+  posters: [String!]
+  description: String
+  about: String
+  region: String
+  credits: [CreateCharacterInput!]
+  sources: [CreateMovieMediumInput!]
+  title: String
+  cover: String
 }
 
 input CreateCategoryInput {
