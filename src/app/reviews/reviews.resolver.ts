@@ -19,12 +19,14 @@ import { MovieReviewsService } from './services/movie_reviews.service';
 import { REVIEW_CREATED } from './reivews.constants';
 import { PubSub } from 'graphql-subscriptions';
 import { PUB_SUB } from '@/core/graphql/constants/graphql.constant';
+import { MediumReviewsService } from './services/medium_reviews.service';
 
 @Resolver('Reviews')
 export class ReviewsResolver {
   constructor(
     @Inject(PUB_SUB) private readonly pubsub: PubSub,
     private readonly reviewsService: ReviewsService,
+    private readonly mediumReviewsService: MediumReviewsService,
     private readonly movieReviewsService: MovieReviewsService,
   ) {}
 
@@ -34,12 +36,12 @@ export class ReviewsResolver {
     @Args('review') review: CreateReviewInput,
     @CurrUser() user: User,
   ): Promise<Review> {
-    const { type, medium_id } = review;
+    const { type, type_id } = review;
     const result = await this.reviewsService.create(review, user);
     this.pubsub.publish(REVIEW_CREATED, {
       review_created: result,
       type,
-      medium_id,
+      type_id,
     });
     return result;
   }
@@ -48,7 +50,7 @@ export class ReviewsResolver {
   async reviews_paginated(
     @Args('type', { type: () => ReviewMedium, nullable: true })
     type: ReviewMedium,
-    @Args('medium_id', { type: () => ID, nullable: true }) medium_id: number,
+    @Args('type_id', { type: () => ID, nullable: true }) type_id: number,
     @Args('query', { nullable: true }) query: PaginatedQuery,
   ): Promise<ReviewPaginated> {
     if (type === ReviewMedium.MOVIE) {
@@ -57,22 +59,26 @@ export class ReviewsResolver {
         key: 'create_at',
         where: {
           movie: {
-            id: medium_id,
+            id: type_id,
           },
         },
       });
     }
-    return await this.reviewsService.findCursorPagition({
+    return await this.mediumReviewsService.findCursorPagition({
       query: query,
       key: 'create_at',
+      where: {
+        medium: {
+          id: type_id,
+        },
+      },
     });
   }
 
   @Subscription(() => Review, {
     filter: (payload, variables) => {
       return (
-        payload.type === variables.type &&
-        payload.medium_id === variables.medium_id
+        payload.type === variables.type && payload.type_id === variables.type_id
       );
     },
   })
@@ -80,7 +86,7 @@ export class ReviewsResolver {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     @Args('type', { type: () => ReviewMedium }) type: ReviewMedium,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Args('medium_id', { type: () => ID }) medium_id: number,
+    @Args('type_id', { type: () => ID }) type_id: number,
   ): any {
     return this.pubsub.asyncIterator(REVIEW_CREATED);
   }

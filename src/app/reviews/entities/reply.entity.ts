@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Review } from './review.entity';
+import { User } from '@/core/users/entities/user.entity';
 
 @ObjectType()
 @Entity()
@@ -24,6 +25,14 @@ export class Reply extends BaseEntity {
 
   @ManyToOne(() => Review)
   review: Review;
+
+  @Field(() => User)
+  @ManyToOne(() => User)
+  author: User;
+
+  @Field(() => User, { nullable: true })
+  @ManyToOne(() => User)
+  replyto: User;
 
   @Field()
   @CreateDateColumn({

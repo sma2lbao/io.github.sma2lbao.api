@@ -15,7 +15,7 @@ export class CreateReviewInput {
   type: ReviewMedium;
 
   @Field(() => ID)
-  medium_id: number;
+  type_id: number;
 }
 
 @ObjectType()
