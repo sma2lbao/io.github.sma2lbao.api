@@ -15,13 +15,14 @@ import { ReviewsModule } from './app/reviews/reviews.module';
 import { PlaylistsModule } from './app/playlists/playlists.module';
 import { FollowsModule } from './app/follows/follows.module';
 import { VideosModule } from './app/videos/videos.module';
+import { VotesModule } from './app/votes/votes.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: configs,
-      envFilePath: [`.env.${process.env.NODE_ENV || 'production'}`],
+      envFilePath: [`.env.${process.env.NODE_ENV || 'local'}`],
       validationSchema: schemas,
     }),
     TagsModule,
@@ -36,6 +37,7 @@ import { VideosModule } from './app/videos/videos.module';
     PlaylistsModule,
     FollowsModule,
     VideosModule,
+    VotesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

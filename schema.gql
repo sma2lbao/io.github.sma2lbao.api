@@ -319,6 +319,22 @@ type VideoPaginated {
   totalCount: Int!
 }
 
+type Vote {
+  id: ID!
+  status: VoteStatus!
+  owner: User!
+  medium: Medium!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
+enum VoteStatus {
+  LIKD
+  DISLIKE
+  DEFAULT
+}
+
 type Query {
   movie(id: ID!): Movie!
   movies_paginated(query: PaginatedQuery): MoviePaginated!
@@ -351,6 +367,7 @@ type Query {
   is_following(follower_uid: String, owner_uid: String!): Boolean!
   video(id: ID!): Video!
   videos_paginated(query: PaginatedQuery): VideoPaginated!
+  vote(medium_id: Float!): Vote!
 }
 
 input PaginatedQuery {
@@ -392,6 +409,7 @@ type Mutation {
   remove_follow(follow: DeleteFollowInput!): Follow!
   create_video(video: CreateVideoInput!): Video!
   add_mediums_to_video(video_medium: CreateVideoMediumInput!, video_id: ID!): Video!
+  create_or_update_vote(vote: CreateVoteInput!): Vote!
 }
 
 input CreateTagInput {
@@ -537,6 +555,12 @@ input CreateVideoMediumInput {
   posters: [String!]
   description: String
   video_id: ID
+}
+
+input CreateVoteInput {
+  medium_id: Float!
+  status: VoteStatus!
+  owner_uid: String
 }
 
 type Subscription {
