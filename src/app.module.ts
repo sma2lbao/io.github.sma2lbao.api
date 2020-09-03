@@ -21,7 +21,7 @@ import { VideosModule } from './app/videos/videos.module';
     ConfigModule.forRoot({
       isGlobal: true,
       load: configs,
-      envFilePath: [`.env.${process.env.NODE_ENV || 'local'}`],
+      envFilePath: [`.env.${process.env.NODE_ENV || 'production'}`],
       validationSchema: schemas,
     }),
     TagsModule,
