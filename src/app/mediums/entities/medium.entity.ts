@@ -8,9 +8,11 @@ import {
   TableInheritance,
   BaseEntity,
   DeleteDateColumn,
+  RelationCount,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ChildMedium } from '../interfaces/mediums.interface';
+import { Vote } from '@/app/votes/entities/vote.entity';
 
 @Entity()
 @ObjectType()

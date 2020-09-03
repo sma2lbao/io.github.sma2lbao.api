@@ -26,6 +26,22 @@ type Character {
   tags: [String!]
 }
 
+type Vote {
+  id: ID!
+  status: VoteStatus!
+  owner: User!
+  medium: Medium!
+  create_at: Date!
+  update_at: Date!
+  delete_at: Date!
+}
+
+enum VoteStatus {
+  LIKD
+  DISLIKE
+  DEFAULT
+}
+
 type Medium {
   id: ID!
   name: String
@@ -319,22 +335,6 @@ type VideoPaginated {
   totalCount: Int!
 }
 
-type Vote {
-  id: ID!
-  status: VoteStatus!
-  owner: User!
-  medium: Medium!
-  create_at: Date!
-  update_at: Date!
-  delete_at: Date!
-}
-
-enum VoteStatus {
-  LIKD
-  DISLIKE
-  DEFAULT
-}
-
 type Query {
   movie(id: ID!): Movie!
   movies_paginated(query: PaginatedQuery): MoviePaginated!
@@ -368,6 +368,7 @@ type Query {
   video(id: ID!): Video!
   videos_paginated(query: PaginatedQuery): VideoPaginated!
   vote(medium_id: Float!): Vote!
+  medium_vote_count(status: String!, medium_id: Float!): Int!
 }
 
 input PaginatedQuery {
