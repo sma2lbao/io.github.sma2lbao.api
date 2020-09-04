@@ -18,6 +18,7 @@ import { DateScalar } from './scalars/date.scalar';
         // typePaths: [join(__dirname, '../', '/**/*.graphql')],
         autoSchemaFile: 'schema.gql',
         debug: true,
+        playground: true,
         introspection: true,
         resolverValidationOptions: {
           requireResolversForResolveType: false,
