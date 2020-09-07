@@ -443,6 +443,7 @@ input CreateMovieMediumInput {
   name: String!
   url: String!
   alias_name: String
+  cover: String
   posters: [String!]
   description: String
   movie_id: ID
@@ -554,6 +555,7 @@ input CreateVideoMediumInput {
   name: String!
   url: String!
   alias_name: String
+  cover: String
   posters: [String!]
   description: String
   video_id: ID
