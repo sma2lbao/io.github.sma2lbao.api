@@ -1,5 +1,4 @@
 import { InputType, Field, ID } from '@nestjs/graphql';
-import { type } from 'os';
 
 @InputType()
 export class CreateTopicInput {

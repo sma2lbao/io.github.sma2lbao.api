@@ -17,6 +17,10 @@ export class TopicsResolver {
   // TODO
   @Query(() => Topic)
   async current_topic(): Promise<Topic> {
-    return await this.topicsService.findOneByConditions({});
+    return await this.topicsService.findOne({
+      order: {
+        create_at: -1,
+      },
+    });
   }
 }
