@@ -8,7 +8,6 @@ import { UsersService } from '@/core/users/users.service';
 import { CreateVoteInput } from './dto/votes.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { UserNotFound } from '@/global/exceptions/users/user.exception';
-import { throws } from 'assert';
 import { MediumNotFoundException } from '@/global/exceptions/mediums/medium.exception';
 
 @Injectable()
