@@ -21,8 +21,11 @@ export class UploadService {
     const day = moment(now).get('date');
     const filename = `${prefix}/${year}/${month}/${day}/${now}`;
     const stream = file.createReadStream();
-    const { mimetype } = file;
-    const result = await this.oss.put(filename, stream, { mime: mimetype });
+    const result = await this.oss.put(filename, stream, {
+      timeout: 1000 * 60 * 60,
+      mime: file.mimetype,
+    });
+    console.log('upload result: ', result);
     return result.url;
   }
 
@@ -42,5 +45,14 @@ export class UploadService {
         .on('error', error => reject(error))
         .on('finish', () => resolve(filename)),
     );
+  }
+
+  streamToBuffer(stream: ReadStream): Promise<Buffer | undefined> {
+    return new Promise((resolve, reject) => {
+      const buffers = [];
+      stream.on('error', reject);
+      stream.on('data', data => buffers.push(data));
+      stream.on('end', () => resolve(Buffer.concat(buffers)));
+    });
   }
 }

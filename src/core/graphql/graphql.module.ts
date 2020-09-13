@@ -48,7 +48,7 @@ import { DateScalar } from './scalars/date.scalar';
           dateScalarMode: 'timestamp',
         },
         uploads: {
-          maxFieldSize: 30000,
+          maxFieldSize: 1024 * 1024 * 5,
         },
       }),
     }),
