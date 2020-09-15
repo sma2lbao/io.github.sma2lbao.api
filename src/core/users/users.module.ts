@@ -23,6 +23,7 @@ export class UsersModule implements OnModuleInit {
         password: '000000',
         nickname: `昵称-${i.toString().padStart(3, '0')}`,
         email: `sma2lbao${i.toString().padStart(3, '0')}`,
+        address: `address-${i.toString().padStart(3, '0')}`,
       };
       const userDB = await this.usersService.findOne({
         username: user.username,

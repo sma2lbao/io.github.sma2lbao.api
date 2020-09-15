@@ -29,12 +29,12 @@ export class Topic extends BaseEntity {
   description: string;
 
   @Field(() => Movie, { nullable: true })
-  @ManyToOne(() => Movie)
+  @ManyToOne(() => Movie, { eager: true })
   top_movie: Movie;
 
   @Field(() => [Movie], { nullable: true })
-  @ManyToMany(() => Movie)
-  // @JoinTable()
+  @ManyToMany(() => Movie, { eager: true })
+  @JoinTable()
   top_movies: Movie[];
 
   @Field()

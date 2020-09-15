@@ -21,8 +21,14 @@ export enum FollowExceptionStutus {
   FOLLOW_NOT_FOUND = 400404,
 }
 
+export enum MovieExceptionStatus {
+  ERROR = 500000,
+  MEDIUM_NOT_FOUND = 500404,
+}
+
 export type ExceptionStatus =
   | BaseExceptionStatus
   | MediumExceptionStatus
   | UserExceptionStatus
-  | FollowExceptionStutus;
+  | FollowExceptionStutus
+  | MovieExceptionStatus;

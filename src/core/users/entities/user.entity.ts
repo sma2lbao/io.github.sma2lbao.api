@@ -22,7 +22,7 @@ export class User extends BaseEntity {
   @PrimaryColumn({
     unique: true,
     length: 30,
-    default: () => `'Misser_${shortid.generate()}'`,
+    default: () => `'MIS_${shortid.generate()}'`,
     comment: 'username',
   })
   username: string;
