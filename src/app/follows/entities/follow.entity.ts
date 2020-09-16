@@ -37,7 +37,7 @@ export class Follow {
   })
   public update_at: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @DeleteDateColumn({
     precision: 3,
   })

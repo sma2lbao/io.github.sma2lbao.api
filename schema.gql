@@ -13,7 +13,7 @@ type User {
   description: String
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 """Date custom scalar type"""
@@ -33,7 +33,7 @@ type Vote {
   medium: Medium!
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 enum VoteStatus {
@@ -58,7 +58,7 @@ type Medium {
   super_quality_url: String
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
   version: Float!
 }
 
@@ -78,7 +78,7 @@ type MovieMedium {
   super_quality_url: String
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
   version: Float!
 }
 
@@ -97,7 +97,7 @@ type Movie {
   author: User!
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 enum Region {
@@ -116,7 +116,7 @@ type Category {
   description: String
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
   children: [Category!]
   parent: Category
 }
@@ -162,7 +162,7 @@ type Video {
   author: User!
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 type VideoMedium {
@@ -181,7 +181,7 @@ type VideoMedium {
   super_quality_url: String
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
   version: Float!
 }
 
@@ -226,7 +226,7 @@ type Topic {
   top_movies: [Movie!]
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 type Review {
@@ -235,7 +235,7 @@ type Review {
   author: User!
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 type ReviewEdge {
@@ -267,7 +267,7 @@ type Playlist {
   author: User!
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 type PlaylistEdge {
@@ -294,7 +294,7 @@ type Follow {
   owner: User!
   create_at: Date!
   update_at: Date!
-  delete_at: Date!
+  delete_at: Date
 }
 
 type FollowEdge {

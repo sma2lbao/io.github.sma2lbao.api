@@ -63,7 +63,7 @@ export class Playlist extends BaseEntity {
   })
   public update_at: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @DeleteDateColumn({
     precision: 3,
   })
