@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { UserNotFound } from '@/global/exceptions/users/user.exception';
+import { UserUnauthorized } from '@/global/exceptions/users/user.exception';
 
 export interface JwtAuthGuardOptions {
   required?: boolean;
@@ -25,7 +25,7 @@ function createJwtAuthGuard({ required = true } = {}) {
     }
     handleRequest(err: any, user: any, info: any) {
       if (err || (!user && required)) {
-        throw new UserNotFound();
+        throw new UserUnauthorized();
       }
       return user;
     }

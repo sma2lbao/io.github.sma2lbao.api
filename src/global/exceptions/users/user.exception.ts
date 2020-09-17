@@ -6,6 +6,11 @@ export const UserException = ExceptionWrap(
   UserExceptionStatus.ERROR,
 );
 
+export const UserUnauthorized = ExceptionWrap(
+  'User Unauthorized',
+  UserExceptionStatus.USER_UNAUTHORIZED,
+);
+
 export const UserNotFound = ExceptionWrap(
   'User Not Found Exception',
   UserExceptionStatus.USER_NOT_FOUND,

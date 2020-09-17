@@ -1,7 +1,7 @@
 import { Resolver, Args, Mutation, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { UseGuards } from '@nestjs/common';
-import { UserNotFound } from '@/global/exceptions/users/user.exception';
+import { UserUnauthorized } from '@/global/exceptions/users/user.exception';
 import { User } from '../users/entities/user.entity';
 import { GqlJwtAuthGuard } from './guards/auth.guard';
 import { CurrUser } from './decorators/auth.decorator';
@@ -19,7 +19,7 @@ export class AuthResolver {
   ): Promise<string | undefined> {
     const user = await this.authService.validateLocalUser(username, password);
     if (!user) {
-      throw new UserNotFound();
+      throw new UserUnauthorized();
     }
     const { access_token } = await this.authService.login(user);
     return access_token;
