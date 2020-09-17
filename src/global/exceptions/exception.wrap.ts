@@ -1,4 +1,3 @@
-import { HttpException } from '@nestjs/common';
 import {
   ExceptionStatus,
   BaseExceptionStatus,
@@ -8,20 +7,18 @@ export function ExceptionWrap(
   baseDescription?: string,
   baseStatus?: ExceptionStatus,
 ): any {
-  class BaseException extends HttpException {
+  class BaseException extends Error {
+    private status: ExceptionStatus;
+    private description: string;
+
     constructor(
-      objectOrError?: string | unknown | any,
+      message?: string,
       description?: string,
       status?: ExceptionStatus,
     ) {
-      super(
-        HttpException.createBody(
-          objectOrError,
-          description || baseDescription || 'Base Exception.',
-          status || baseStatus || BaseExceptionStatus.ERROR,
-        ),
-        status || baseStatus || BaseExceptionStatus.ERROR,
-      );
+      super(message || description || baseDescription || 'Base Exception.');
+      this.status = status || baseStatus || BaseExceptionStatus.ERROR;
+      this.description = description || baseDescription || 'Base Exception.';
     }
   }
   return BaseException;

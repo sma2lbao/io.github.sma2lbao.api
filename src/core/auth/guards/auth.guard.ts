@@ -4,10 +4,10 @@ import {
   Type,
   Injectable,
   ExecutionContext,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { UserNotFound } from '@/global/exceptions/users/user.exception';
 
 export interface JwtAuthGuardOptions {
   required?: boolean;
@@ -24,11 +24,8 @@ function createJwtAuthGuard({ required = true } = {}) {
       return ctx.getContext().req;
     }
     handleRequest(err: any, user: any, info: any) {
-      // if (info instanceof TokenExpiredError) {
-      //     throw new ApolloError('token已过期', TOKEN_EXPIRED)
-      // }
       if (err || (!user && required)) {
-        throw new UnauthorizedException();
+        throw new UserNotFound();
       }
       return user;
     }

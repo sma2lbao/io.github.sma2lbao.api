@@ -36,12 +36,15 @@ import { DateScalar } from './scalars/date.scalar';
           const {
             message,
             path,
-            extensions: { code },
+            extensions: {
+              exception: { status, description },
+            },
           } = error;
           return {
             message: message,
-            code: code,
             path: path,
+            status,
+            description,
           };
         },
         buildSchemaOptions: {
