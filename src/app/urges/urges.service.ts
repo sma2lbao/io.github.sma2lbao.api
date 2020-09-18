@@ -13,7 +13,7 @@ export class UrgesService {
 
   async findMovieUrges(user?: User): Promise<Movie[]> {
     const movies = await this.moviesService.find({
-      take: 10,
+      take: 8,
     });
     return movies;
   }
