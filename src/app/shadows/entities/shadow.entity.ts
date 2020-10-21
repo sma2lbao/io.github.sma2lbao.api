@@ -11,11 +11,13 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
-import { VideoMedium } from '@/app/mediums/entities/video_medium.entity';
+import { Region } from '../interfaces/shadows.interface';
+import { Character } from './character.entity';
+import { ShadowMedium } from '../../mediums/entities/shadow_medium.entity';
 
 @ObjectType()
 @Entity()
-export class Video extends BaseEntity {
+export class Shadow extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   public id: number;
@@ -44,13 +46,30 @@ export class Video extends BaseEntity {
   @Column({ nullable: true })
   public description: string;
 
-  @Field(() => [VideoMedium])
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public about: string;
+
+  @Field(() => Region)
+  @Column({
+    nullable: true,
+    type: 'enum',
+    enum: Region,
+    default: Region.Mainland,
+  })
+  public region: Region;
+
+  @Field(() => [Character], { nullable: true })
+  @Column({ type: 'json', nullable: true })
+  public credits: Character[];
+
+  @Field(() => [ShadowMedium])
   @OneToMany(
-    () => VideoMedium,
-    videoMedium => videoMedium.video,
+    () => ShadowMedium,
+    shadowMedium => shadowMedium.shadow,
     { cascade: true, eager: true },
   )
-  public sources: VideoMedium[];
+  public sources: ShadowMedium[];
 
   @Field(() => User)
   @ManyToOne(() => User, {

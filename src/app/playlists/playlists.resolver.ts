@@ -42,7 +42,7 @@ export class PlaylistsResolver {
     @Args('playlist_id') playlist_id: number,
     @CurrUser() user: User,
   ): Promise<Playlist> {
-    return await this.playlistsService.findOneWithMoviesPagition({
+    return await this.playlistsService.findOneWithShadowsPagition({
       id: playlist_id,
       author: user,
     });
@@ -59,13 +59,13 @@ export class PlaylistsResolver {
 
   @Mutation(() => Boolean)
   @UseGuards(GqlJwtAuthGuard)
-  async add_movie_to_playlist(
-    @Args('movie_id') movie_id: number,
+  async add_shadow_to_playlist(
+    @Args('shadow_id') shadow_id: number,
     @Args('playlist_id') playlist_id: number,
     @CurrUser() user: User,
   ): Promise<boolean> {
-    return await this.playlistsService.addMovieToPlaylist(
-      movie_id,
+    return await this.playlistsService.addShadowToPlaylist(
+      shadow_id,
       playlist_id,
       user.uid,
     );

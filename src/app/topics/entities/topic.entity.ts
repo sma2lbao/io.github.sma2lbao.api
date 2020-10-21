@@ -11,7 +11,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Movie } from '@/app/movies/entities/movie.entity';
+import { Shadow } from '@/app/shadows/entities/shadow.entity';
 
 @Entity()
 @ObjectType()
@@ -28,14 +28,14 @@ export class Topic extends BaseEntity {
   @Column({ nullable: true })
   description: string;
 
-  @Field(() => Movie, { nullable: true })
-  @ManyToOne(() => Movie, { eager: true })
-  top_movie: Movie;
+  @Field(() => Shadow, { nullable: true })
+  @ManyToOne(() => Shadow, { eager: true })
+  top_shadow: Shadow;
 
-  @Field(() => [Movie], { nullable: true })
-  @ManyToMany(() => Movie, { eager: true })
+  @Field(() => [Shadow], { nullable: true })
+  @ManyToMany(() => Shadow, { eager: true })
   @JoinTable()
-  top_movies: Movie[];
+  top_shadows: Shadow[];
 
   @Field()
   @CreateDateColumn({

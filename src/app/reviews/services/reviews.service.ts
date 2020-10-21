@@ -7,9 +7,9 @@ import { BaseService } from '@/global/services/base.service';
 import { CreateReviewInput } from '../dto/reviews.dto';
 import { UsersService } from '@/core/users/users.service';
 import { User } from '@/core/users/entities/user.entity';
-import { MovieReview } from '../entities/movie_review.entity';
+import { ShadowReview } from '../entities/shadow_review.entity';
 import { ReviewMedium } from '../interfaces/reviews.interface';
-import { MoviesService } from '../../movies/movies.service';
+import { ShadowsService } from '../../shadows/shadows.service';
 import { UserNotFound } from '@/global/exceptions/users/user.exception';
 import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 import { MediumsService } from '@/app/mediums/services/mediums.service';
@@ -24,10 +24,10 @@ export class ReviewsService extends BaseService<Review> {
     private readonly replyRepository: Repository<Reply>,
     @InjectRepository(MediumReview)
     private readonly mediumReviewRepository: Repository<MediumReview>,
-    @InjectRepository(MovieReview)
-    private readonly movieReviewRepository: Repository<MovieReview>,
+    @InjectRepository(ShadowReview)
+    private readonly shadowReviewRepository: Repository<ShadowReview>,
     private readonly usersService: UsersService,
-    private readonly moviesService: MoviesService,
+    private readonly shadowsService: ShadowsService,
     private readonly mediumsService: MediumsService,
   ) {
     super(reviewRepository);
@@ -42,15 +42,15 @@ export class ReviewsService extends BaseService<Review> {
       throw new UserNotFound();
     }
     let review = null;
-    if (type === ReviewMedium.MOVIE) {
-      const movie = await this.moviesService.findOne({ id: type_id });
-      if (!movie) {
+    if (type === ReviewMedium.SHADOW) {
+      const shadow = await this.shadowsService.findOne({ id: type_id });
+      if (!shadow) {
         throw new EntityNotFoundException();
       }
-      review = this.movieReviewRepository.create(rest);
-      review.movie = movie;
+      review = this.shadowReviewRepository.create(rest);
+      review.shadow = shadow;
       review.author = author;
-      return await this.movieReviewRepository.save(review);
+      return await this.shadowReviewRepository.save(review);
     } else {
       const medium = await this.mediumsService.findOne({ id: type_id });
       if (!medium) {

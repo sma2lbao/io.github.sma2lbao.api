@@ -9,8 +9,8 @@ export class CreateTopicInput {
   description?: string;
 
   @Field(() => ID, { nullable: true })
-  top_movie_id?: number;
+  top_shadow_id?: number;
 
   @Field(() => [ID], { nullable: true })
-  top_movies_ids?: number[];
+  top_shadows_ids?: number[];
 }

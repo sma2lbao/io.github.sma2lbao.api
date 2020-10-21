@@ -4,41 +4,41 @@ import { Topic } from './entities/topic.entity';
 import { Repository, In } from 'typeorm';
 import { CreateTopicInput } from './dto/topics.dto';
 import { BaseService } from '@/global/services/base.service';
-import { MoviesService } from '../movies/movies.service';
-import { MovieNotFoundException } from '@/global/exceptions/movies/movie.exception';
+import { ShadowsService } from '../shadows/shadows.service';
+import { ShadowNotFoundException } from '@/global/exceptions/shadows/shadow.exception';
 
 @Injectable()
 export class TopicsService extends BaseService<Topic> {
   constructor(
     @InjectRepository(Topic)
     private readonly topicRepository: Repository<Topic>,
-    private readonly moviesService: MoviesService,
+    private readonly shadowsService: ShadowsService,
   ) {
     super(topicRepository);
   }
 
   async create(createTopic: CreateTopicInput): Promise<Topic> {
-    const { top_movie_id, top_movies_ids, ...rest } = createTopic;
+    const { top_shadow_id, top_shadows_ids, ...rest } = createTopic;
     const topic = this.topicRepository.create(rest);
-    if (top_movie_id) {
-      const topMovie = await this.moviesService.findOne({
-        id: top_movie_id,
+    if (top_shadow_id) {
+      const topShadow = await this.shadowsService.findOne({
+        id: top_shadow_id,
       });
-      if (!topMovie) {
-        throw new MovieNotFoundException();
+      if (!topShadow) {
+        throw new ShadowNotFoundException();
       }
-      topic.top_movie = topMovie;
+      topic.top_shadow = topShadow;
     }
-    if (top_movies_ids) {
-      const topMovies = await this.moviesService.find({
+    if (top_shadows_ids) {
+      const topShadows = await this.shadowsService.find({
         where: {
-          id: In(top_movies_ids),
+          id: In(top_shadows_ids),
         },
       });
-      if (!topMovies || topMovies.length !== top_movies_ids.length) {
-        throw new MovieNotFoundException();
+      if (!topShadows || topShadows.length !== top_shadows_ids.length) {
+        throw new ShadowNotFoundException();
       }
-      topic.top_movies = topMovies;
+      topic.top_shadows = topShadows;
     }
     return await this.topicRepository.save(topic);
   }

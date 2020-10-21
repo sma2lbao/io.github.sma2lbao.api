@@ -1,15 +1,8 @@
-import {
-  InputType,
-  Field,
-  ID,
-  ObjectType,
-  PickType,
-  OmitType,
-} from '@nestjs/graphql';
-import { Region } from '../interfaces/movies.interface';
+import { InputType, Field, ObjectType, OmitType } from '@nestjs/graphql';
+import { Region } from '../interfaces/shadows.interface';
 import { Paginated } from '@/global/types/paginated.type';
-import { Movie } from '../entities/movie.entity';
-import { CreateMovieMediumInput } from '@/app/mediums/dto/mediums.dto';
+import { Shadow } from '../entities/shadow.entity';
+import { CreateShadowMediumInput } from '@/app/mediums/dto/mediums.dto';
 
 @InputType()
 export class CreateCharacterInput {
@@ -27,7 +20,7 @@ export class CreateCharacterInput {
 }
 
 @InputType()
-export class CreateMovieInput {
+export class CreateShadowInput {
   @Field()
   title: string;
 
@@ -58,12 +51,12 @@ export class CreateMovieInput {
   // @Field(() => [ID])
   // source_ids?: number[];
 
-  @Field(() => [CreateMovieMediumInput], { nullable: true })
-  sources?: CreateMovieMediumInput[];
+  @Field(() => [CreateShadowMediumInput], { nullable: true })
+  sources?: CreateShadowMediumInput[];
 }
 
 @InputType()
-export class UpdateMovieInput extends OmitType(CreateMovieInput, [
+export class UpdateShadowInput extends OmitType(CreateShadowInput, [
   'title' as const,
   'cover' as const,
 ]) {
@@ -75,4 +68,4 @@ export class UpdateMovieInput extends OmitType(CreateMovieInput, [
 }
 
 @ObjectType()
-export class MoviePaginated extends Paginated(Movie) {}
+export class ShadowPaginated extends Paginated(Shadow) {}

@@ -15,7 +15,7 @@ import { User } from '@/core/users/entities/user.entity';
 import { CreateReviewInput, ReviewPaginated } from './dto/reviews.dto';
 import { PaginatedQuery } from '@/global/dto/paginated.dto';
 import { ReviewMedium } from './interfaces/reviews.interface';
-import { MovieReviewsService } from './services/movie_reviews.service';
+import { ShadowReviewsService } from './services/shadow_reviews.service';
 import { REVIEW_CREATED } from './reivews.constants';
 import { PubSub } from 'graphql-subscriptions';
 import { PUB_SUB } from '@/core/graphql/constants/graphql.constant';
@@ -27,7 +27,7 @@ export class ReviewsResolver {
     @Inject(PUB_SUB) private readonly pubsub: PubSub,
     private readonly reviewsService: ReviewsService,
     private readonly mediumReviewsService: MediumReviewsService,
-    private readonly movieReviewsService: MovieReviewsService,
+    private readonly shadowReviewsService: ShadowReviewsService,
   ) {}
 
   @Mutation(() => Review)
@@ -53,12 +53,12 @@ export class ReviewsResolver {
     @Args('type_id', { type: () => ID, nullable: true }) type_id: number,
     @Args('query', { nullable: true }) query: PaginatedQuery,
   ): Promise<ReviewPaginated> {
-    if (type === ReviewMedium.MOVIE) {
-      return await this.movieReviewsService.findCursorPagition({
+    if (type === ReviewMedium.SHADOW) {
+      return await this.shadowReviewsService.findCursorPagition({
         query: query,
         key: 'create_at',
         where: {
-          movie: {
+          shadow: {
             id: type_id,
           },
         },

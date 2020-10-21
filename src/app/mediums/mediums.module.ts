@@ -1,21 +1,14 @@
 import { Module } from '@nestjs/common';
 import { MediumsService } from './services/mediums.service';
-import { MovieMediumsService } from './services/movie_mediums.service';
+import { ShadowMediumsService } from './services/shadow_mediums.service';
 import { MediumsResolver } from './mediums.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Medium } from './entities/medium.entity';
-import { MovieMedium } from './entities/movie_medium.entity';
-import { VideoMedium } from './entities/video_medium.entity';
-import { VideoMediumsService } from './services/video_mediums.service';
+import { ShadowMedium } from './entities/shadow_medium.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Medium, MovieMedium, VideoMedium])],
-  providers: [
-    MediumsService,
-    MovieMediumsService,
-    MediumsResolver,
-    VideoMediumsService,
-  ],
-  exports: [MediumsService, MovieMediumsService, VideoMediumsService],
+  imports: [TypeOrmModule.forFeature([Medium, ShadowMedium])],
+  providers: [MediumsService, ShadowMediumsService, MediumsResolver],
+  exports: [MediumsService, ShadowMediumsService],
 })
 export class MediumsModule {}

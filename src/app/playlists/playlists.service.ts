@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreatePlaylistInput } from './dto/playlists.dto';
 import { User } from '@/core/users/entities/user.entity';
-import { MoviesService } from '../movies/movies.service';
+import { ShadowsService } from '../shadows/shadows.service';
 import { UsersService } from '@/core/users/users.service';
 import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 
@@ -14,7 +14,7 @@ export class PlaylistsService extends BaseService<Playlist> {
   constructor(
     @InjectRepository(Playlist)
     private readonly playlistsRepository: Repository<Playlist>,
-    private readonly moviesService: MoviesService,
+    private readonly shadowsService: ShadowsService,
     private readonly usersService: UsersService,
   ) {
     super(playlistsRepository);
@@ -29,31 +29,31 @@ export class PlaylistsService extends BaseService<Playlist> {
     return await this.playlistsRepository.save(playlist);
   }
 
-  async addMovieToPlaylist(
-    movie_id: number,
+  async addShadowToPlaylist(
+    shadow_id: number,
     playlist_id: number,
     author_uid: string,
   ): Promise<boolean> {
-    const movie = await this.moviesService.findOne({
-      id: movie_id,
+    const shadow = await this.shadowsService.findOne({
+      id: shadow_id,
     });
     const author = await this.usersService.findByUid(author_uid);
     const playlist = await this.playlistsRepository.findOne({
       id: playlist_id,
       author: author,
     });
-    if (!movie || !playlist) {
+    if (!shadow || !playlist) {
       throw new EntityNotFoundException();
     }
     await this.playlistsRepository
       .createQueryBuilder()
-      .relation('movies')
+      .relation('shadows')
       .of(playlist)
-      .add(movie);
+      .add(shadow);
     return true;
   }
 
-  async findOneWithMoviesPagition(
+  async findOneWithShadowsPagition(
     optionsOrConditions?: unknown,
     maybeOptions?: unknown,
   ): Promise<Playlist | undefined> {
@@ -61,16 +61,16 @@ export class PlaylistsService extends BaseService<Playlist> {
       optionsOrConditions as any,
       maybeOptions,
     );
-    playlist.movies = await this.moviesService
-      .createQueryBuilder('movie')
+    playlist.shadows = await this.shadowsService
+      .createQueryBuilder('shadow')
       .innerJoinAndSelect(Playlist, 'playlist', 'playlist.id = :playlist_id', {
         playlist_id: playlist.id,
       })
       .innerJoinAndMapMany(
-        'playlist.movies',
-        'playlist_movies_movie',
+        'playlist.shadows',
+        'playlist_shadows_shadow',
         'pm',
-        'pm.movie_id = movie.id',
+        'pm.shadow_id = shadow.id',
       )
       // .take(10)
       .getMany();

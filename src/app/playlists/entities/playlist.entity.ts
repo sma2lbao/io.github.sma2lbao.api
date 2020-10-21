@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
-import { Movie } from '@/app/movies/entities/movie.entity';
+import { Shadow } from '@/app/shadows/entities/shadow.entity';
 
 @ObjectType()
 @Entity()
@@ -34,14 +34,14 @@ export class Playlist extends BaseEntity {
   @Column({ nullable: true })
   cover: string;
 
-  @Field(() => [Movie], { nullable: true })
-  @ManyToMany(() => Movie)
+  @Field(() => [Shadow], { nullable: true })
+  @ManyToMany(() => Shadow)
   @JoinTable()
-  movies: Movie[];
+  shadows: Shadow[];
 
   @Field({ nullable: true })
-  @RelationCount((playlist: Playlist) => playlist.movies)
-  movies_count: number;
+  @RelationCount((playlist: Playlist) => playlist.shadows)
+  shadows_count: number;
 
   @Field(() => User)
   @ManyToOne(() => User, {

@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
-import { MoviesService } from '../movies/movies.service';
-import { Movie } from '../movies/entities/movie.entity';
+import { ShadowsService } from '../shadows/shadows.service';
+import { Shadow } from '../shadows/entities/shadow.entity';
 import { User } from '@/core/users/entities/user.entity';
 import { UsersService } from '@/core/users/users.service';
 
 @Injectable()
 export class UrgesService {
   constructor(
-    private readonly moviesService: MoviesService,
+    private readonly shadowsService: ShadowsService,
     private readonly usersService: UsersService,
   ) {}
 
-  async findMovieUrges(user?: User): Promise<Movie[]> {
-    const movies = await this.moviesService.find({
+  async findShadowUrges(user?: User): Promise<Shadow[]> {
+    const shadows = await this.shadowsService.find({
       take: 8,
     });
-    return movies;
+    return shadows;
   }
 
   async findUserUrges(user?: User): Promise<User[]> {

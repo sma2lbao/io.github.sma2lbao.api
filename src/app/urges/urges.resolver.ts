@@ -1,5 +1,5 @@
 import { Resolver, Query, Args, ID } from '@nestjs/graphql';
-import { Movie } from '../movies/entities/movie.entity';
+import { Shadow } from '../shadows/entities/shadow.entity';
 import { UseGuards } from '@nestjs/common';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
@@ -11,19 +11,19 @@ import { type } from 'os';
 export class UrgesResolver {
   constructor(private readonly urgesService: UrgesService) {}
 
-  @Query(() => [Movie])
+  @Query(() => [Shadow])
   @UseGuards(JwtAuthGuard({ required: false }))
-  async movie_urges(@CurrUser() user?: User): Promise<Movie[]> {
-    return await this.urgesService.findMovieUrges(user);
+  async shadow_urges(@CurrUser() user?: User): Promise<Shadow[]> {
+    return await this.urgesService.findShadowUrges(user);
   }
 
-  @Query(() => [Movie])
+  @Query(() => [Shadow])
   @UseGuards(JwtAuthGuard({ required: false }))
-  async movie_urges_by_movie(
-    @Args('movie_id', { type: () => ID }) movie_id: number,
+  async shadow_urges_by_shadow(
+    @Args('shadow_id', { type: () => ID }) shadow_id: number,
     @CurrUser() user?: User,
-  ): Promise<Movie[]> {
-    return await this.urgesService.findMovieUrges(user);
+  ): Promise<Shadow[]> {
+    return await this.urgesService.findShadowUrges(user);
   }
 
   @Query(() => [User])
@@ -32,12 +32,12 @@ export class UrgesResolver {
     return await this.urgesService.findUserUrges(user);
   }
 
-  @Query(() => [Movie])
+  @Query(() => [Shadow])
   @UseGuards(JwtAuthGuard({ required: false }))
-  async movie_next_urges_by_movie(
-    @Args('movie_id', { type: () => ID }) movie_id: number,
+  async shadow_next_urges_by_shadow(
+    @Args('shadow_id', { type: () => ID }) shadow_id: number,
     @CurrUser() user?: User,
-  ): Promise<Movie[]> {
-    return await this.urgesService.findMovieUrges(user);
+  ): Promise<Shadow[]> {
+    return await this.urgesService.findShadowUrges(user);
   }
 }

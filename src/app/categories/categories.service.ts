@@ -37,11 +37,8 @@ export class CategoriesService extends BaseService<Category> {
   }
 
   async deleteById(id: number): Promise<any> {
-    console.log(id);
     const category = await this.findById(id);
-    console.log('category', category);
     const res = await this.categoryTreeReposity.remove(category);
-    console.log(res);
     return res;
   }
 

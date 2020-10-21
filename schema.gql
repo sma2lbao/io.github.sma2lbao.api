@@ -62,7 +62,7 @@ type Medium {
   version: Float!
 }
 
-type MovieMedium {
+type ShadowMedium {
   id: ID!
   name: String
   alias_name: String
@@ -82,7 +82,7 @@ type MovieMedium {
   version: Float!
 }
 
-type Movie {
+type Shadow {
   id: ID!
   title: String!
   sub_title: String
@@ -93,7 +93,7 @@ type Movie {
   about: String
   region: Region!
   credits: [Character!]
-  sources: [MovieMedium!]!
+  sources: [ShadowMedium!]!
   author: User!
   create_at: Date!
   update_at: Date!
@@ -125,64 +125,29 @@ type Tag {
   id: ID!
   label: String!
   description: String
-  movies: [Movie!]
+  shadows: [Shadow!]
   categories: [Category!]
   create_at: Date!
   update_at: Date!
 }
 
-type MovieEdge {
+type ShadowEdge {
   cursor: String!
-  node: Movie!
+  node: Shadow!
 }
 
-type MoviePageInfo {
+type ShadowPageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
   startCursor: String!
   endCursor: String!
 }
 
-type MoviePaginated {
-  edges: [MovieEdge!]
-  nodes: [Movie!]
-  pageInfo: MoviePageInfo!
+type ShadowPaginated {
+  edges: [ShadowEdge!]
+  nodes: [Shadow!]
+  pageInfo: ShadowPageInfo!
   totalCount: Int!
-}
-
-type Video {
-  id: ID!
-  title: String!
-  sub_title: String
-  alias_title: String
-  cover: String!
-  posters: [String!]
-  description: String
-  sources: [VideoMedium!]!
-  author: User!
-  create_at: Date!
-  update_at: Date!
-  delete_at: Date
-}
-
-type VideoMedium {
-  id: ID!
-  name: String
-  alias_name: String
-  cover: String
-  posters: [String!]
-  description: String
-  duration: Float
-  preview_url: String
-  url: String!
-  low_quality_url: String
-  medium_quality_url: String
-  high_quality_url: String
-  super_quality_url: String
-  create_at: Date!
-  update_at: Date!
-  delete_at: Date
-  version: Float!
 }
 
 type Bullet {
@@ -222,8 +187,8 @@ type Topic {
   id: ID!
   title: String!
   description: String
-  top_movie: Movie
-  top_movies: [Movie!]
+  top_shadow: Shadow
+  top_shadows: [Shadow!]
   create_at: Date!
   update_at: Date!
   delete_at: Date
@@ -262,8 +227,8 @@ type Playlist {
   title: String!
   description: String
   cover: String
-  movies: [Movie!]
-  movies_count: Float
+  shadows: [Shadow!]
+  shadows_count: Float
   author: User!
   create_at: Date!
   update_at: Date!
@@ -316,29 +281,10 @@ type FollowPaginated {
   totalCount: Int!
 }
 
-type VideoEdge {
-  cursor: String!
-  node: Video!
-}
-
-type VideoPageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: String!
-  endCursor: String!
-}
-
-type VideoPaginated {
-  edges: [VideoEdge!]
-  nodes: [Video!]
-  pageInfo: VideoPageInfo!
-  totalCount: Int!
-}
-
 type Query {
-  movie(id: ID!): Movie!
-  movies_paginated(query: PaginatedQuery): MoviePaginated!
-  user_movies_paginated(query: PaginatedQuery, author_username: String!): MoviePaginated!
+  shadow(id: ID!): Shadow!
+  shadows_paginated(query: PaginatedQuery): ShadowPaginated!
+  user_shadows_paginated(query: PaginatedQuery, author_username: String!): ShadowPaginated!
   me: User!
   platform_auth_way: [PlatformAuthWay!]!
 
@@ -351,10 +297,10 @@ type Query {
   """all user with paginated."""
   users_paginated(query: PaginatedQuery): UserPaginated!
   current_topic: Topic!
-  movie_urges: [Movie!]!
-  movie_urges_by_movie(movie_id: ID!): [Movie!]!
+  shadow_urges: [Shadow!]!
+  shadow_urges_by_shadow(shadow_id: ID!): [Shadow!]!
   user_urges: [User!]!
-  movie_next_urges_by_movie(movie_id: ID!): [Movie!]!
+  shadow_next_urges_by_shadow(shadow_id: ID!): [Shadow!]!
   reviews_paginated(query: PaginatedQuery, type_id: ID, type: ReviewMedium): ReviewPaginated!
   playlists_paginated(author_username: String, author_uid: String, query: PaginatedQuery): PlaylistPaginated!
   playlist(playlist_id: Float!): Playlist!
@@ -365,8 +311,6 @@ type Query {
   fans_paginated(query: PaginatedQuery): FollowPaginated!
   fans_total(owner_uid: String): Int!
   is_following(follower_uid: String, owner_uid: String!): Boolean!
-  video(id: ID!): Video!
-  videos_paginated(query: PaginatedQuery): VideoPaginated!
   vote(medium_id: Float!): Vote!
   medium_vote_count(status: String!, medium_id: Float!): Int!
 }
@@ -380,16 +324,16 @@ input PaginatedQuery {
 
 enum ReviewMedium {
   MEDIUM
-  MOVIE
+  SHADOW
 }
 
 type Mutation {
   create_tag(tag: CreateTagInput!): Tag!
-  add_movie_to_tag(tag_id: Float!, movie_id: Float!): Boolean!
+  add_shadow_to_tag(tag_id: Float!, shadow_id: Float!): Boolean!
   add_category_to_tag(tag_id: Float!, category_id: Float!): Boolean!
-  create_movie(movie: CreateMovieInput!): Movie!
-  update_movie(movie: UpdateMovieInput!, movie_id: ID!): Movie!
-  add_mediums_to_movie(movie_medium: CreateMovieMediumInput!, movie_id: ID!): Movie!
+  create_shadow(shadow: CreateShadowInput!): Shadow!
+  update_shadow(shadow: UpdateShadowInput!, shadow_id: ID!): Shadow!
+  add_mediums_to_shadow(shadow_medium: CreateShadowMediumInput!, shadow_id: ID!): Shadow!
   create_category(category: CreateCategoryInput!): Category!
   delete_category(id: ID!): Boolean!
   create_bullet(bullet: CreateBulletInput!): Bullet!
@@ -406,11 +350,9 @@ type Mutation {
   create_topic(topic: CreateTopicInput!): Topic!
   create_review(review: CreateReviewInput!): Review!
   create_playlist(playlist: CreatePlaylistInput!): Playlist!
-  add_movie_to_playlist(playlist_id: Float!, movie_id: Float!): Boolean!
+  add_shadow_to_playlist(playlist_id: Float!, shadow_id: Float!): Boolean!
   create_follow(follow: CreateFollowInput!): Follow!
   remove_follow(follow: DeleteFollowInput!): Follow!
-  create_video(video: CreateVideoInput!): Video!
-  add_mediums_to_video(video_medium: CreateVideoMediumInput!, video_id: ID!): Video!
   create_or_update_vote(vote: CreateVoteInput!): Vote!
 }
 
@@ -419,7 +361,7 @@ input CreateTagInput {
   description: String
 }
 
-input CreateMovieInput {
+input CreateShadowInput {
   title: String!
   sub_title: String
   alias_title: String
@@ -429,7 +371,7 @@ input CreateMovieInput {
   about: String
   region: String
   credits: [CreateCharacterInput!]
-  sources: [CreateMovieMediumInput!]
+  sources: [CreateShadowMediumInput!]
 }
 
 input CreateCharacterInput {
@@ -439,17 +381,17 @@ input CreateCharacterInput {
   tags: [String!]
 }
 
-input CreateMovieMediumInput {
+input CreateShadowMediumInput {
   name: String!
   url: String!
   alias_name: String
   cover: String
   posters: [String!]
   description: String
-  movie_id: ID
+  shadow_id: ID
 }
 
-input UpdateMovieInput {
+input UpdateShadowInput {
   sub_title: String
   alias_title: String
   posters: [String!]
@@ -457,7 +399,7 @@ input UpdateMovieInput {
   about: String
   region: String
   credits: [CreateCharacterInput!]
-  sources: [CreateMovieMediumInput!]
+  sources: [CreateShadowMediumInput!]
   title: String
   cover: String
 }
@@ -514,8 +456,8 @@ scalar Upload
 input CreateTopicInput {
   title: String!
   description: String
-  top_movie_id: ID
-  top_movies_ids: [ID!]
+  top_shadow_id: ID
+  top_shadows_ids: [ID!]
 }
 
 input CreateReviewInput {
@@ -539,26 +481,6 @@ input CreateFollowInput {
 input DeleteFollowInput {
   follower_uid: ID
   owner_uid: ID!
-}
-
-input CreateVideoInput {
-  title: String!
-  sub_title: String
-  alias_title: String
-  cover: String!
-  posters: [String!]
-  description: String
-  sources: [CreateVideoMediumInput!]
-}
-
-input CreateVideoMediumInput {
-  name: String!
-  url: String!
-  alias_name: String
-  cover: String
-  posters: [String!]
-  description: String
-  video_id: ID
 }
 
 input CreateVoteInput {

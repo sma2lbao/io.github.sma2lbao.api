@@ -13,11 +13,11 @@ export class TagsResolver {
   }
 
   @Mutation(() => Boolean)
-  async add_movie_to_tag(
-    @Args('movie_id') movie_id: number,
+  async add_shadow_to_tag(
+    @Args('shadow_id') shadow_id: number,
     @Args('tag_id') tag_id: number,
   ): Promise<boolean> {
-    return await this.tagsService.addMovieToTag(movie_id, tag_id);
+    return await this.tagsService.addShadowToTag(shadow_id, tag_id);
   }
 
   @Mutation(() => Boolean)

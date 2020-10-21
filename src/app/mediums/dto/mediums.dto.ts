@@ -22,9 +22,9 @@ export class CreateMediumInput {
 }
 
 @InputType()
-export class CreateMovieMediumInput extends CreateMediumInput {
+export class CreateShadowMediumInput extends CreateMediumInput {
   @Field(() => ID, { nullable: true })
-  movie_id?: number;
+  shadow_id?: number;
 }
 
 @InputType()

@@ -8,13 +8,12 @@ import { CategoriesModule } from './app/categories/categories.module';
 import { MediumsModule } from './app/mediums/mediums.module';
 import { BulletsModule } from './app/bullets/bullets.module';
 import { CoreModule } from './core/core.module';
-import { MoviesModule } from './app/movies/movies.module';
+import { ShadowsModule } from './app/shadows/shadows.module';
 import { TopicsModule } from './app/topics/topics.module';
 import { UrgesModule } from './app/urges/urges.module';
 import { ReviewsModule } from './app/reviews/reviews.module';
 import { PlaylistsModule } from './app/playlists/playlists.module';
 import { FollowsModule } from './app/follows/follows.module';
-import { VideosModule } from './app/videos/videos.module';
 import { VotesModule } from './app/votes/votes.module';
 import { ViewsModule } from './app/views/views.module';
 
@@ -31,13 +30,12 @@ import { ViewsModule } from './app/views/views.module';
     MediumsModule,
     BulletsModule,
     CoreModule,
-    MoviesModule,
+    ShadowsModule,
     TopicsModule,
     UrgesModule,
     ReviewsModule,
     PlaylistsModule,
     FollowsModule,
-    VideosModule,
     VotesModule,
     ViewsModule,
   ],
