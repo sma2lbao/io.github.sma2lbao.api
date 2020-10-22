@@ -26,9 +26,3 @@ export class CreateShadowMediumInput extends CreateMediumInput {
   @Field(() => ID, { nullable: true })
   shadow_id?: number;
 }
-
-@InputType()
-export class CreateVideoMediumInput extends CreateMediumInput {
-  @Field(() => ID, { nullable: true })
-  video_id?: number;
-}

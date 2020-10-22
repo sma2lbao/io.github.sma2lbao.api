@@ -5,7 +5,6 @@ import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
 import { UrgesService } from './urges.service';
 import { JwtAuthGuard } from '@/core/auth/guards/auth.guard';
-import { type } from 'os';
 
 @Resolver('Urges')
 export class UrgesResolver {
