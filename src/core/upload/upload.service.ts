@@ -14,7 +14,7 @@ export class UploadService {
   constructor(@Inject(OSS_INTERCEPTOR) private readonly oss: OSS) {}
 
   async aliyunUpload(file: FileUpload): Promise<string> {
-    const prefix = 'test';
+    const prefix = 'miss';
     const now = Date.now();
     const year = moment(now).get('year');
     const month = moment(now).get('month') + 1;
