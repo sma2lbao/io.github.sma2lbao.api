@@ -25,7 +25,6 @@ export class UploadService {
       timeout: 1000 * 60 * 60,
       mime: file.mimetype,
     });
-    console.log('upload result: ', result);
     return result.url;
   }
 
