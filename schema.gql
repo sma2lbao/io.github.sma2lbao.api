@@ -56,6 +56,9 @@ type Medium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
+  votes: [Vote!]
+  vote_like_count: Float
+  vote_dislike_count: Float
   create_at: Date!
   update_at: Date!
   delete_at: Date
@@ -76,6 +79,9 @@ type ShadowMedium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
+  votes: [Vote!]
+  vote_like_count: Float
+  vote_dislike_count: Float
   create_at: Date!
   update_at: Date!
   delete_at: Date

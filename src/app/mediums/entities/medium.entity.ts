@@ -9,10 +9,13 @@ import {
   BaseEntity,
   DeleteDateColumn,
   RelationCount,
+  ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ChildMedium } from '../interfaces/mediums.interface';
 import { Vote } from '@/app/votes/entities/vote.entity';
+import { VoteStatus } from '@/app/votes/interfaces/votes.interface';
 
 @Entity()
 @ObjectType()
@@ -71,6 +74,29 @@ export class Medium extends BaseEntity {
   @Field({ nullable: true })
   @Column({ nullable: true })
   public super_quality_url: string;
+
+  @Field(() => [Vote], { nullable: true })
+  @OneToMany(
+    () => Vote,
+    vote => vote.medium,
+  )
+  public votes: Vote[];
+
+  @Field({ nullable: true })
+  @RelationCount(
+    (medium: Medium) => medium.votes,
+    undefined,
+    qb => qb.where('vote.status = :status', { status: VoteStatus.LIKD }),
+  )
+  public vote_like_count: number;
+
+  @Field({ nullable: true })
+  @RelationCount(
+    (medium: Medium) => medium.votes,
+    undefined,
+    qb => qb.where('vote.status = :status', { status: VoteStatus.DISLIKE }),
+  )
+  public vote_dislike_count: number;
 
   @Field()
   @CreateDateColumn({
