@@ -6,7 +6,6 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  PrimaryColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID, HideField } from '@nestjs/graphql';
 import * as shortid from 'shortid';
@@ -19,7 +18,7 @@ export class User extends BaseEntity {
   uid: string;
 
   @Field()
-  @PrimaryColumn({
+  @Column({
     unique: true,
     length: 30,
     default: () => `'MIS_${shortid.generate()}'`,

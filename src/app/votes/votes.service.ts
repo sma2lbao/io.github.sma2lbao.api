@@ -36,11 +36,24 @@ export class VotesService extends BaseService<Vote> {
     if (!medium) {
       throw new MediumNotFoundException();
     }
-    const vote = this.voteRepository.create({
+    let vote = this.voteRepository.create({
       status,
       owner: curOwner,
       medium: medium,
     });
+    const existVote = await this.voteRepository.findOne({
+      where: {
+        owner: {
+          uid: curOwner.uid,
+        },
+        medium: {
+          id: medium.id,
+        },
+      },
+    });
+    if (existVote) {
+      vote = this.voteRepository.merge(existVote, vote);
+    }
     return await this.voteRepository.save(vote);
   }
 }
