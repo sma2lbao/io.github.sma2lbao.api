@@ -118,7 +118,7 @@ export class Medium extends BaseEntity {
   })
   public delete_at: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @VersionColumn({ name: 'version' })
   public version: number;
 }
