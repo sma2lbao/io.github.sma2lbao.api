@@ -16,7 +16,7 @@ import { ReviewMedium } from '../interfaces/reviews.interface';
 @ObjectType()
 @Entity()
 @TableInheritance({
-  column: { name: 'type', type: 'simple-enum', enum: ReviewMedium },
+  column: { name: 'type', type: 'enum', enum: ReviewMedium },
 })
 export class Review extends BaseEntity {
   @Field(() => ID)

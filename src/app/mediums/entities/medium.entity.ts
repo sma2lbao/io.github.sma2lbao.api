@@ -20,7 +20,7 @@ import { VoteStatus } from '@/app/votes/interfaces/votes.interface';
 @Entity()
 @ObjectType()
 @TableInheritance({
-  column: { name: 'type', type: 'simple-enum', enum: ChildMedium },
+  column: { name: 'type', type: 'enum', enum: ChildMedium },
 })
 export class Medium extends BaseEntity {
   @Field(() => ID)

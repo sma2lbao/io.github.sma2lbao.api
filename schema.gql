@@ -62,7 +62,7 @@ type Medium {
   create_at: Date!
   update_at: Date!
   delete_at: Date
-  version: Float!
+  version: Float
 }
 
 type ShadowMedium {
@@ -85,7 +85,7 @@ type ShadowMedium {
   create_at: Date!
   update_at: Date!
   delete_at: Date
-  version: Float!
+  version: Float
 }
 
 type Shadow {
