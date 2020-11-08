@@ -16,7 +16,7 @@ import {
 } from '../interfaces/base_service.interface';
 
 export class BaseService<T> {
-  constructor(private repository: Repository<T>) {}
+  constructor(private repository: Repository<T>) { }
 
   createQueryBuilder(
     alias?: string,
@@ -86,10 +86,10 @@ export class BaseService<T> {
       order,
     } = queryCursor;
     const orderByCursor = {
-      [key]: before ? -1 : 1,
+      [key]: last ? -1 : 1,
     } as {
-      [P in keyof T]?: 'ASC' | 'DESC' | 1 | -1;
-    };
+        [P in keyof T]?: 'ASC' | 'DESC' | 1 | -1;
+      };
     const pagitionQuery: PagitionQuery<T> = {
       key: key,
       limit: first || last,
