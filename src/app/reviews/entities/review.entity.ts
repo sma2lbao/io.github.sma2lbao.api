@@ -28,7 +28,7 @@ export class Review extends BaseEntity {
   content: string;
 
   @Field(() => User)
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { cascade: true, eager: true })
   author: User;
 
   @Field()

@@ -28,7 +28,7 @@ export class ReviewsResolver {
     private readonly reviewsService: ReviewsService,
     private readonly mediumReviewsService: MediumReviewsService,
     private readonly shadowReviewsService: ShadowReviewsService,
-  ) {}
+  ) { }
 
   @Mutation(() => Review)
   @UseGuards(GqlJwtAuthGuard)
