@@ -9,6 +9,7 @@ import { ShadowMediumsService } from '../mediums/services/shadow_mediums.service
 import { CreateShadowMediumInput } from '../mediums/dto/mediums.dto';
 import { UserNotFound } from '@/global/exceptions/users/user.exception';
 import { EntityNotFoundException } from '@/global/exceptions/base.exception';
+import { TagsService } from '../tags/tags.service';
 
 @Injectable()
 export class ShadowsService extends BaseService<Shadow> {
@@ -16,6 +17,7 @@ export class ShadowsService extends BaseService<Shadow> {
     @InjectRepository(Shadow)
     private readonly shadowRepository: Repository<Shadow>,
     private readonly shadowMediumsService: ShadowMediumsService,
+    private readonly tagsService: TagsService,
   ) {
     super(shadowRepository);
   }
@@ -75,6 +77,29 @@ export class ShadowsService extends BaseService<Shadow> {
       .relation('sources')
       .of(shadow)
       .add(shadowMedium);
+    return await this.shadowRepository.findOne(shadow_id);
+  }
+
+  async addTagsToShadow(shadow_id: number, tag_ids: number[]) {
+    const shadow = await this.shadowRepository.findOne(shadow_id);
+    if (!shadow) {
+      throw new EntityNotFoundException();
+    }
+    const tags = await this.tagsService.find({
+      where: {
+        id: In(tag_ids),
+      },
+    });
+
+    if (tags.length !== tag_ids.length) {
+      throw new EntityNotFoundException();
+    }
+
+    await this.shadowRepository
+      .createQueryBuilder()
+      .relation('tags')
+      .of(shadow)
+      .add(tags);
     return await this.shadowRepository.findOne(shadow_id);
   }
 }

@@ -23,6 +23,10 @@ export class Tag {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
+  alias: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public description: string;
 
   @Field(() => [Category], { nullable: true })

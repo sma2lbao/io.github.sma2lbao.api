@@ -15,8 +15,8 @@ export class CreateCharacterInput {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(() => [String], { nullable: true })
-  tags?: string[];
+  // @Field(() => [String], { nullable: true })
+  // tag_ids?: number[];
 }
 
 @InputType()

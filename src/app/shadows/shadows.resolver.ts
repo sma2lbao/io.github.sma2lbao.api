@@ -47,6 +47,14 @@ export class ShadowsResolver {
     );
   }
 
+  @Mutation(() => Shadow)
+  async add_tags_to_shadow(
+    @Args('shadow_id', { type: () => ID }) shadow_id: number,
+    @Args('tag_ids', { type: () => [ID] }) tag_ids: number[],
+  ): Promise<Shadow> {
+    return await this.shadowsService.addTagsToShadow(shadow_id, tag_ids);
+  }
+
   @Query(() => Shadow)
   async shadow(@Args('id', { type: () => ID }) id: number): Promise<Shadow> {
     return await this.shadowsService.findOne({ id: id });

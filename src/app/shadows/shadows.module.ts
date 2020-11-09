@@ -6,9 +6,11 @@ import { Shadow } from './entities/shadow.entity';
 import { MediumsModule } from '../mediums/mediums.module';
 import { CreateShadowInput } from './dto/shadows.dto';
 import { UsersService } from '@/core/users/users.service';
+import { TagsModule } from '../tags/tags.module';
+import { TagsService } from '../tags/tags.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Shadow]), MediumsModule],
+  imports: [TypeOrmModule.forFeature([Shadow]), MediumsModule, TagsModule],
   providers: [ShadowsResolver, ShadowsService],
   exports: [ShadowsService],
 })

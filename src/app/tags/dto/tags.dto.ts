@@ -1,10 +1,12 @@
-import { InputType, OmitType, Field } from '@nestjs/graphql';
-import { Tag } from '../entities/tag.entity';
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class CreateTagInput {
   @Field()
   readonly label: string;
+
+  @Field({ nullable: true })
+  readonly alias?: string;
 
   @Field({ nullable: true })
   readonly description?: string;

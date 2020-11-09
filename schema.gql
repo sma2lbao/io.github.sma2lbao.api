@@ -20,6 +20,7 @@ scalar Date
 type Tag {
   id: ID!
   label: String!
+  alias: String
   description: String
   categories: [Category!]
   create_at: Date!
@@ -354,6 +355,7 @@ type Mutation {
   create_shadow(shadow: CreateShadowInput!): Shadow!
   update_shadow(shadow: UpdateShadowInput!, shadow_id: ID!): Shadow!
   add_mediums_to_shadow(shadow_medium: CreateShadowMediumInput!, shadow_id: ID!): Shadow!
+  add_tags_to_shadow(tag_ids: [ID!]!, shadow_id: ID!): Shadow!
   create_topic(topic: CreateTopicInput!): Topic!
   create_review(review: CreateReviewInput!): Review!
   create_playlist(playlist: CreatePlaylistInput!): Playlist!
@@ -365,6 +367,7 @@ type Mutation {
 
 input CreateTagInput {
   label: String!
+  alias: String
   description: String
 }
 
@@ -434,7 +437,6 @@ input CreateCharacterInput {
   name: String!
   avatar: String
   description: String
-  tags: [String!]
 }
 
 input CreateShadowMediumInput {

@@ -9,6 +9,7 @@ import {
   DeleteDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
@@ -75,7 +76,8 @@ export class Shadow extends BaseEntity {
   public sources: ShadowMedium[];
 
   @Field(() => [Tag], { nullable: true })
-  @ManyToMany(() => Tag, { nullable: true })
+  @ManyToMany(() => Tag, { nullable: true, eager: true })
+  @JoinTable()
   public tags: Tag[];
 
   @Field(() => User)
