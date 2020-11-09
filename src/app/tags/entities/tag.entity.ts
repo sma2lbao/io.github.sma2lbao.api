@@ -8,7 +8,6 @@ import {
   JoinTable,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Shadow } from '@/app/shadows/entities/shadow.entity';
 import { Category } from '@/app/categories/entities/category.entity';
 
 @ObjectType()
@@ -25,11 +24,6 @@ export class Tag {
   @Field({ nullable: true })
   @Column({ nullable: true })
   public description: string;
-
-  @Field(() => [Shadow], { nullable: true })
-  @ManyToMany(() => Shadow, { nullable: true })
-  @JoinTable()
-  public shadows: Shadow[];
 
   @Field(() => [Category], { nullable: true })
   @ManyToMany(() => Category, { nullable: true })

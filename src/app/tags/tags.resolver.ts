@@ -13,14 +13,6 @@ export class TagsResolver {
   }
 
   @Mutation(() => Boolean)
-  async add_shadow_to_tag(
-    @Args('shadow_id') shadow_id: number,
-    @Args('tag_id') tag_id: number,
-  ): Promise<boolean> {
-    return await this.tagsService.addShadowToTag(shadow_id, tag_id);
-  }
-
-  @Mutation(() => Boolean)
   async add_category_to_tag(
     @Args('category_id') category_id: number,
     @Args('tag_id') tag_id: number,

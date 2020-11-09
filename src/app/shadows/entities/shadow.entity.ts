@@ -8,12 +8,15 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
 import { Region } from '../interfaces/shadows.interface';
 import { Character } from './character.entity';
 import { ShadowMedium } from '../../mediums/entities/shadow_medium.entity';
+import { Category } from '@/app/categories/entities/category.entity';
+import { Tag } from '@/app/tags/entities/tag.entity';
 
 @ObjectType()
 @Entity()
@@ -71,11 +74,19 @@ export class Shadow extends BaseEntity {
   )
   public sources: ShadowMedium[];
 
+  @Field(() => [Tag], { nullable: true })
+  @ManyToMany(() => Tag, { nullable: true })
+  public tags: Tag[];
+
   @Field(() => User)
   @ManyToOne(() => User, {
     eager: true,
   })
   public author: User;
+
+  @Field(() => Category, { nullable: true })
+  @ManyToOne(() => Category, { eager: true })
+  public clazz: Category;
 
   @Field()
   @CreateDateColumn({

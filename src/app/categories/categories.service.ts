@@ -43,8 +43,11 @@ export class CategoriesService extends BaseService<Category> {
   }
 
   async findById(id: number): Promise<Category> {
-    return await this.categoryReposity.findOne({
-      id: id,
+    return await this.categoryTreeReposity.findOne({
+      where: {
+        id,
+      },
+      relations: ['children'],
     });
   }
 }

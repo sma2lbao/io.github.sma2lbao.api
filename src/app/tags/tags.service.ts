@@ -3,7 +3,6 @@ import { Repository } from 'typeorm';
 import { Tag } from './entities/tag.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTagInput } from './dto/tags.dto';
-import { ShadowsService } from '../shadows/shadows.service';
 import { BaseService } from '@/global/services/base.service';
 import { CategoriesService } from '../categories/categories.service';
 import { EntityNotFoundException } from '@/global/exceptions/base.exception';
@@ -12,7 +11,6 @@ import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 export class TagsService extends BaseService<Tag> {
   constructor(
     @InjectRepository(Tag) private readonly tagsReposity: Repository<Tag>,
-    private readonly shadowsService: ShadowsService,
     private readonly categoriesService: CategoriesService,
   ) {
     super(tagsReposity);
@@ -21,24 +19,6 @@ export class TagsService extends BaseService<Tag> {
   async created(createTag: CreateTagInput): Promise<Tag> {
     const tag = this.tagsReposity.create(createTag);
     return await this.tagsReposity.save(tag);
-  }
-
-  async addShadowToTag(shadow_id: number, tag_id: number): Promise<boolean> {
-    const shadow = await this.shadowsService.findOne({
-      id: shadow_id,
-    });
-    const tag = await this.tagsReposity.findOne({
-      id: tag_id,
-    });
-    if (!shadow || !tag) {
-      throw new EntityNotFoundException();
-    }
-    await this.tagsReposity
-      .createQueryBuilder()
-      .relation('shadows')
-      .of(tag)
-      .add(shadow);
-    return true;
   }
 
   async addCategoryToTag(

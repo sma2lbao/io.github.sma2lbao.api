@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CategoriesResolver } from './categories.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -9,4 +9,10 @@ import { Category } from './entities/category.entity';
   providers: [CategoriesService, CategoriesResolver],
   exports: [CategoriesService],
 })
-export class CategoriesModule {}
+export class CategoriesModule implements OnModuleInit {
+  constructor() {}
+
+  onModuleInit() {
+    // throw new Error('Method not implemented.');
+  }
+}
