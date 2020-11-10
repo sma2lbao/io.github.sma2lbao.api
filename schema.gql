@@ -60,6 +60,7 @@ enum VoteStatus {
 type Medium {
   id: ID!
   name: String
+  sub_name: String
   alias_name: String
   cover: String
   posters: [String!]
@@ -119,6 +120,7 @@ enum Region {
 type ShadowMedium {
   id: ID!
   name: String
+  sub_name: String
   alias_name: String
   cover: String
   posters: [String!]
@@ -442,6 +444,7 @@ input CreateCharacterInput {
 input CreateShadowMediumInput {
   name: String!
   url: String!
+  sub_name: String
   alias_name: String
   cover: String
   posters: [String!]

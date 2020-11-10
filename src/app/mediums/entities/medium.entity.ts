@@ -33,6 +33,10 @@ export class Medium extends BaseEntity {
 
   @Field({ nullable: true })
   @Column({ nullable: true })
+  public sub_name: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   public alias_name: string;
 
   @Field({ nullable: true })
