@@ -322,7 +322,7 @@ type Query {
   fans_paginated(query: PaginatedQuery): FollowPaginated!
   fans_total(owner_uid: String): Int!
   is_following(follower_uid: String, owner_uid: String!): Boolean!
-  vote(medium_id: Float!): Vote!
+  vote(medium_id: ID!): Vote!
   medium_vote_count(status: String!, medium_id: Float!): Int!
 }
 

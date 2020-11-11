@@ -9,6 +9,7 @@ import { CreateVoteInput } from './dto/votes.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { UserNotFound } from '@/global/exceptions/users/user.exception';
 import { MediumNotFoundException } from '@/global/exceptions/mediums/medium.exception';
+import { VoteStatus } from './interfaces/votes.interface';
 
 @Injectable()
 export class VotesService extends BaseService<Vote> {
@@ -55,5 +56,32 @@ export class VotesService extends BaseService<Vote> {
       vote = this.voteRepository.merge(existVote, vote);
     }
     return await this.voteRepository.save(vote);
+  }
+
+  async findOrDefaultOne(medium_id: number, user: User): Promise<Vote> {
+    if (!user) {
+      throw new UserNotFound();
+    }
+    const medium = await this.mediumsService.findOne({ id: medium_id });
+    if (!medium) {
+      throw new MediumNotFoundException();
+    }
+    const result = await this.voteRepository.findOne({
+      where: {
+        medium: {
+          id: medium_id,
+        },
+        owner: user,
+      },
+    });
+    if (result) {
+      return result;
+    } else {
+      return await this.voteRepository.create({
+        status: VoteStatus.DEFAULT,
+        owner: user,
+        medium: medium,
+      });
+    }
   }
 }

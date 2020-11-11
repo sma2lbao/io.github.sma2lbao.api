@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query, Int, ID } from '@nestjs/graphql';
 import { VotesService } from './votes.service';
 import { Vote } from './entities/vote.entity';
 import { UseGuards } from '@nestjs/common';
@@ -24,17 +24,10 @@ export class VotesResolver {
   @Query(() => Vote)
   @UseGuards(GqlJwtAuthGuard)
   async vote(
-    @Args('medium_id') medium_id: number,
+    @Args('medium_id', { type: () => ID }) medium_id: number,
     @CurrUser() user: User,
   ): Promise<Vote> {
-    return await this.votesService.findOne({
-      where: {
-        medium: {
-          id: medium_id,
-        },
-        owner: user,
-      },
-    });
+    return await this.votesService.findOrDefaultOne(medium_id, user);
   }
 
   @Query(() => Int)
