@@ -1,6 +1,6 @@
-import { Module, OnModuleInit, Global } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { MailerService } from './mailer.service';
-import { MAILER_TRANSPORTER, MAILER_INTERCEPTOR } from './mailer.constant';
+import { MAILER_INTERCEPTOR } from './mailer.constant';
 import { ConfigService } from '@nestjs/config';
 import { createTransport } from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
@@ -53,10 +53,4 @@ import { join } from 'path';
   ],
   exports: [MailerService],
 })
-export class MailerModule implements OnModuleInit {
-  constructor(private readonly mailerService: MailerService) {}
-
-  onModuleInit() {
-    // this.mailerService.sendMailTest();
-  }
-}
+export class MailerModule {}
