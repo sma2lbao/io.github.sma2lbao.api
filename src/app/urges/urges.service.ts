@@ -14,6 +14,9 @@ export class UrgesService {
   async findShadowUrges(user?: User): Promise<Shadow[]> {
     const shadows = await this.shadowsService.find({
       take: 8,
+      order: {
+        create_at: 'DESC',
+      },
     });
     return shadows;
   }
