@@ -36,8 +36,8 @@ type User {
   mobile: String
   address: String
   description: String
-  create_at: Date!
-  update_at: Date!
+  create_at: Date
+  update_at: Date
   delete_at: Date
 }
 
@@ -99,7 +99,7 @@ type Shadow {
   about: String
   region: Region!
   credits: [Character!]
-  sources: [ShadowMedium!]!
+  sources: [ShadowMedium!]
   tags: [Tag!]
   author: User!
   clazz: Category

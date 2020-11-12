@@ -68,7 +68,7 @@ export class Shadow extends BaseEntity {
   @Column({ type: 'json', nullable: true })
   public credits: Character[];
 
-  @Field(() => [ShadowMedium])
+  @Field(() => [ShadowMedium], { nullable: true })
   @OneToMany(
     () => ShadowMedium,
     shadowMedium => shadowMedium.shadow,

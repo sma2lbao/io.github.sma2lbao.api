@@ -55,14 +55,14 @@ export class User extends BaseEntity {
   @Column({ nullable: true, comment: 'description' })
   description: string;
 
-  @Field()
+  @Field({ nullable: true })
   @CreateDateColumn({
     precision: 3,
     default: () => 'CURRENT_TIMESTAMP(3)',
   })
   public create_at: Date;
 
-  @Field()
+  @Field({ nullable: true })
   @UpdateDateColumn({
     precision: 3,
     default: () => 'CURRENT_TIMESTAMP(3)',
