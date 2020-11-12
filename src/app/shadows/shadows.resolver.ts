@@ -76,15 +76,6 @@ export class ShadowsResolver {
     @Args('author_username') author_username: string,
     @Args('query', { nullable: true }) query: PaginatedQuery,
   ): Promise<ShadowPaginated> {
-    const result = await this.shadowsService.findCursorPagition({
-      query: query,
-      key: 'create_at',
-      where: {
-        author: {
-          username: author_username,
-        },
-      },
-    });
-    return result;
+    return this.shadowsService.findUserShadows(author_username, query);
   }
 }

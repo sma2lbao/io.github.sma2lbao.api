@@ -1,8 +1,8 @@
 import { registerEnumType } from '@nestjs/graphql';
 
 export enum ReviewMedium {
-  MEDIUM = 'medium',
-  SHADOW = 'shadow',
+  MEDIUM = 'medium_review',
+  SHADOW = 'shadow_review',
 }
 
 registerEnumType(ReviewMedium, {

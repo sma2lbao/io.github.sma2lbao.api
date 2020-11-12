@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Shadow } from './entities/shadow.entity';
 import { Repository, In } from 'typeorm';
-import { CreateShadowInput, UpdateShadowInput } from './dto/shadows.dto';
+import {
+  CreateShadowInput,
+  UpdateShadowInput,
+  ShadowPaginated,
+} from './dto/shadows.dto';
 import { User } from '@/core/users/entities/user.entity';
 import { BaseService } from '@/global/services/base.service';
 import { ShadowMediumsService } from '../mediums/services/shadow_mediums.service';
@@ -10,6 +14,8 @@ import { CreateShadowMediumInput } from '../mediums/dto/mediums.dto';
 import { UserNotFound } from '@/global/exceptions/users/user.exception';
 import { EntityNotFoundException } from '@/global/exceptions/base.exception';
 import { TagsService } from '../tags/tags.service';
+import { UsersService } from '@/core/users/users.service';
+import { PaginatedQuery } from '@/global/dto/paginated.dto';
 
 @Injectable()
 export class ShadowsService extends BaseService<Shadow> {
@@ -18,6 +24,7 @@ export class ShadowsService extends BaseService<Shadow> {
     private readonly shadowRepository: Repository<Shadow>,
     private readonly shadowMediumsService: ShadowMediumsService,
     private readonly tagsService: TagsService,
+    private readonly usersService: UsersService,
   ) {
     super(shadowRepository);
   }
@@ -101,5 +108,27 @@ export class ShadowsService extends BaseService<Shadow> {
       .of(shadow)
       .add(tags);
     return await this.shadowRepository.findOne(shadow_id);
+  }
+
+  async findUserShadows(
+    author_username: string,
+    query: PaginatedQuery,
+  ): Promise<ShadowPaginated> {
+    const author = await this.usersService.findOne({
+      username: author_username,
+    });
+
+    if (!author) {
+      throw new UserNotFound();
+    }
+
+    const result = await this.findCursorPagition({
+      query: query,
+      key: 'create_at',
+      where: {
+        author: author,
+      },
+    });
+    return result;
   }
 }

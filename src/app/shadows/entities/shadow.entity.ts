@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { User } from '@/core/users/entities/user.entity';
@@ -84,6 +85,7 @@ export class Shadow extends BaseEntity {
   @ManyToOne(() => User, {
     eager: true,
   })
+  @JoinColumn()
   public author: User;
 
   @Field(() => Category, { nullable: true })

@@ -59,6 +59,8 @@ export class SnakeNamingStrategy extends DefaultNamingStrategy
   }
 
   eagerJoinRelationAlias(alias: string, propertyPath: string): string {
-    return alias + '__' + propertyPath.replace('.', '_');
+    let out = alias + '_' + propertyPath.replace('.', '_');
+    let match = out.match(/_/g) || [];
+    return out + match.length;
   }
 }
