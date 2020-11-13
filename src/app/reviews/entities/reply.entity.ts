@@ -20,7 +20,7 @@ export class Reply extends BaseEntity {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ length: 500 })
   content: string;
 
   @ManyToOne(() => Review)

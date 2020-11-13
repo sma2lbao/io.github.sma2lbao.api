@@ -25,7 +25,7 @@ export class Topic extends BaseEntity {
   title: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 2000 })
   description: string;
 
   @Field(() => Shadow, { nullable: true })

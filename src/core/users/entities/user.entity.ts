@@ -52,7 +52,7 @@ export class User extends BaseEntity {
   address: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, comment: 'description' })
+  @Column({ nullable: true, comment: 'description', length: 2000 })
   description: string;
 
   @Field({ nullable: true })

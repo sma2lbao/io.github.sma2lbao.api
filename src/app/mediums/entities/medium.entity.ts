@@ -48,7 +48,7 @@ export class Medium extends BaseEntity {
   public posters: string[];
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 2000 })
   public description: string;
 
   @Field({ nullable: true })
