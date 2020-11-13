@@ -25,7 +25,7 @@ export class UploadService {
       timeout: 1000 * 60 * 60,
       mime: file.mimetype,
     });
-    return result.url;
+    return 'http://sma2lbao.cn/files/' + result.name;
   }
 
   // TODO
