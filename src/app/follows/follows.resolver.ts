@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query, Int } from '@nestjs/graphql';
 import { FollowsService } from './follows.service';
 import { UseGuards } from '@nestjs/common';
 import { Follow } from './entities/follow.entity';
-import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
+import { GqlJwtAuthGuard, JwtAuthGuard } from '@/core/auth/guards/auth.guard';
 import { User } from '@/core/users/entities/user.entity';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import {
@@ -48,7 +48,7 @@ export class FollowsResolver {
   }
 
   @Query(() => Int)
-  @UseGuards(GqlJwtAuthGuard)
+  @UseGuards(JwtAuthGuard({ required: false }))
   async follows_total(
     @CurrUser() user: User,
     @Args('follower_uid', { nullable: true }) follower_uid?: string,
@@ -89,7 +89,7 @@ export class FollowsResolver {
   }
 
   @Query(() => Int)
-  @UseGuards(GqlJwtAuthGuard)
+  @UseGuards(JwtAuthGuard({ required: false }))
   async fans_total(
     @CurrUser() user: User,
     @Args('owner_uid', { nullable: true }) owner_uid?: string,

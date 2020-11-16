@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query, Int, ID } from '@nestjs/graphql';
 import { VotesService } from './votes.service';
 import { Vote } from './entities/vote.entity';
 import { UseGuards } from '@nestjs/common';
-import { GqlJwtAuthGuard } from '@/core/auth/guards/auth.guard';
+import { GqlJwtAuthGuard, JwtAuthGuard } from '@/core/auth/guards/auth.guard';
 import { CreateVoteInput } from './dto/votes.dto';
 import { CurrUser } from '@/core/auth/decorators/auth.decorator';
 import { User } from '@/core/users/entities/user.entity';
@@ -22,7 +22,7 @@ export class VotesResolver {
   }
 
   @Query(() => Vote)
-  @UseGuards(GqlJwtAuthGuard)
+  @UseGuards(JwtAuthGuard({ required: false }))
   async vote(
     @Args('medium_id', { type: () => ID }) medium_id: number,
     @CurrUser() user: User,

@@ -59,12 +59,16 @@ export class VotesService extends BaseService<Vote> {
   }
 
   async findOrDefaultOne(medium_id: number, user: User): Promise<Vote> {
-    if (!user) {
-      throw new UserNotFound();
-    }
     const medium = await this.mediumsService.findOne({ id: medium_id });
     if (!medium) {
       throw new MediumNotFoundException();
+    }
+    if (!user) {
+      return await this.voteRepository.create({
+        status: VoteStatus.DEFAULT,
+        owner: user,
+        medium: medium,
+      });
     }
     const result = await this.voteRepository.findOne({
       where: {
