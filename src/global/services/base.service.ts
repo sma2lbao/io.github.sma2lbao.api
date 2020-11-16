@@ -16,7 +16,7 @@ import {
 } from '../interfaces/base_service.interface';
 
 export class BaseService<T> {
-  constructor(private repository: Repository<T>) { }
+  constructor(private repository: Repository<T>) {}
 
   createQueryBuilder(
     alias?: string,
@@ -56,7 +56,7 @@ export class BaseService<T> {
 
   async findPagition(pagitionQuery: PagitionQuery<T>): Promise<[T[], number]> {
     const { key, limit = 10, after, before, order, where } = pagitionQuery;
-    let condition = {};
+    let condition = null;
     if (after) {
       condition = {
         [key]: MoreThan(after),
@@ -66,15 +66,20 @@ export class BaseService<T> {
         [key]: LessThan(before),
       };
     }
+    let whereRes = condition
+      ? where instanceof Array
+        ? where.map(item => ({ ...item, ...condition }))
+        : {
+            ...where,
+            ...condition,
+          }
+      : where;
     return await this.repository.findAndCount({
       take: limit,
       order: {
         ...order,
       },
-      where: {
-        ...where,
-        ...condition,
-      },
+      where: whereRes,
     });
   }
 
@@ -88,8 +93,8 @@ export class BaseService<T> {
     const orderByCursor = {
       [key]: last ? -1 : 1,
     } as {
-        [P in keyof T]?: 'ASC' | 'DESC' | 1 | -1;
-      };
+      [P in keyof T]?: 'ASC' | 'DESC' | 1 | -1;
+    };
     const pagitionQuery: PagitionQuery<T> = {
       key: key,
       limit: first || last,
@@ -105,9 +110,7 @@ export class BaseService<T> {
       pagitionQuery,
     );
     const totalCount = await this.count({
-      where: {
-        ...where,
-      },
+      where,
     });
     const edges = nodes.map(node => {
       return {

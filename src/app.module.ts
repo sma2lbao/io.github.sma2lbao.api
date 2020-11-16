@@ -16,6 +16,7 @@ import { PlaylistsModule } from './app/playlists/playlists.module';
 import { FollowsModule } from './app/follows/follows.module';
 import { VotesModule } from './app/votes/votes.module';
 import { ViewsModule } from './app/views/views.module';
+import { SearchesModule } from './app/searches/searches.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ViewsModule } from './app/views/views.module';
     FollowsModule,
     VotesModule,
     ViewsModule,
+    SearchesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

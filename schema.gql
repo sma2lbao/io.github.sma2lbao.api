@@ -324,6 +324,7 @@ type Query {
   is_following(follower_uid: String, owner_uid: String!): Boolean!
   vote(medium_id: ID!): Vote!
   medium_vote_count(status: String!, medium_id: Float!): Int!
+  search_shadows_paginated(query: PaginatedQuery, word: String): ShadowPaginated!
 }
 
 input PaginatedQuery {
