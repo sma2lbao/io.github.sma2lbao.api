@@ -74,12 +74,13 @@ export class BaseService<T> {
             ...condition,
           }
       : where;
+    console.log(whereRes);
     return await this.repository.findAndCount({
       take: limit,
       order: {
         ...order,
       },
-      where: whereRes,
+      ...(whereRes ? { where: whereRes } : {}),
     });
   }
 
@@ -104,13 +105,13 @@ export class BaseService<T> {
         ...order,
         ...orderByCursor,
       },
-      where,
+      ...(where ? { where } : {}),
     };
     const [nodes, total]: [T[], number] = await this.findPagition(
       pagitionQuery,
     );
     const totalCount = await this.count({
-      where,
+      ...(where ? { where } : {}),
     });
     const edges = nodes.map(node => {
       return {
