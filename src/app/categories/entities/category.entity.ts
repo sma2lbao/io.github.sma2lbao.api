@@ -20,6 +20,10 @@ export class Category {
   id: number;
 
   @Field()
+  @Column({ unique: true })
+  mark: string;
+
+  @Field()
   @Column()
   label: string;
 

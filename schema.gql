@@ -4,6 +4,7 @@
 
 type Category {
   id: ID!
+  mark: String!
   label: String!
   alias: String
   description: String
@@ -375,6 +376,7 @@ input CreateTagInput {
 }
 
 input CreateCategoryInput {
+  mark: String!
   label: String!
   alias: String
   description: String

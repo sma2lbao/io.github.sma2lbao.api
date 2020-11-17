@@ -3,6 +3,9 @@ import { InputType, Field } from '@nestjs/graphql';
 @InputType()
 export class CreateCategoryInput {
   @Field()
+  readonly mark: string;
+
+  @Field()
   readonly label: string;
 
   @Field({ nullable: true })
