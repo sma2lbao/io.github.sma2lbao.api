@@ -10,6 +10,7 @@ import { UserNotFound } from '@/global/exceptions/users/user.exception';
 import {
   FollowerOwnerRepeat,
   FollowNotFound,
+  FollowExisted,
 } from '@/global/exceptions/follows/follow.exception';
 
 @Injectable()
@@ -37,6 +38,14 @@ export class FollowsService extends BaseService<Follow> {
     if (follower.uid === owner.uid) {
       throw new FollowerOwnerRepeat();
     }
+    const followLocal = await this.findOne({
+      owner: owner,
+      follower: follower,
+    });
+    if (followLocal) {
+      throw new FollowExisted();
+    }
+
     const follow = this.followRepository.create();
     follow.follower = follower;
     follow.owner = owner;

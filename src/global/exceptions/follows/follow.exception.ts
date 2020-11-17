@@ -15,3 +15,8 @@ export const FollowNotFound = ExceptionWrap(
   'Follow Not Found Exception',
   FollowExceptionStutus.FOLLOW_NOT_FOUND,
 );
+
+export const FollowExisted = ExceptionWrap(
+  'Follow Already Existed',
+  FollowExceptionStutus.FOLLOW_EXISTED,
+);

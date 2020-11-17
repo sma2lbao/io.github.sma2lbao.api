@@ -19,6 +19,7 @@ export enum UserExceptionStatus {
 export enum FollowExceptionStutus {
   ERROR = 400000,
   FOLLOWER_OWNER_REPEAT = 400001,
+  FOLLOW_EXISTED = 400002,
   FOLLOW_NOT_FOUND = 400404,
 }
 
