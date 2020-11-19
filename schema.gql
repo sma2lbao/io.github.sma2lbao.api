@@ -73,6 +73,7 @@ type Medium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
+  youtube_url: String
   votes: [Vote!]
   vote_like_count: Float
   vote_dislike_count: Float
@@ -133,6 +134,7 @@ type ShadowMedium {
   medium_quality_url: String
   high_quality_url: String
   super_quality_url: String
+  youtube_url: String
   votes: [Vote!]
   vote_like_count: Float
   vote_dislike_count: Float
@@ -447,6 +449,7 @@ input CreateCharacterInput {
 input CreateShadowMediumInput {
   name: String!
   url: String!
+  youtube_url: String
   sub_name: String
   alias_name: String
   cover: String

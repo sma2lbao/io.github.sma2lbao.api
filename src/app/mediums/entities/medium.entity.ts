@@ -79,6 +79,10 @@ export class Medium extends BaseEntity {
   @Column({ nullable: true })
   public super_quality_url: string;
 
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  public youtube_url: string;
+
   @Field(() => [Vote], { nullable: true })
   @OneToMany(
     () => Vote,

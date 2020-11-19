@@ -9,6 +9,9 @@ export class CreateMediumInput {
   url: string;
 
   @Field({ nullable: true })
+  youtube_url?: string;
+
+  @Field({ nullable: true })
   sub_name?: string;
 
   @Field({ nullable: true })
